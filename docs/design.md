@@ -34,6 +34,20 @@ Case Study 블록 모델에 `demo` 한 종을 더했다([types.ts](../src/data/c
 - 패널은 한 칸에 겹쳐 높이가 흔들리지 않고, 숨긴 패널은 `visibility`로 접근성 트리와 Tab 순서에서 빠진다. 전환은 180ms 투명도이고, `prefers-reduced-motion: reduce`에서는 즉시 바뀐다. `:has()`를 모르는 브라우저에서는 첫 상태만 보인다.
 - 평가 단계 데모에서 면접 단계의 목록을 "서류 합격자 목록"으로 둔 것은 설명용 재구성이다. 실제 명세의 필드 · 목록과 일치하는지는 확인이 필요하다.
 
+<a id="intro"></a>
+
+### 바탕화면과 큐레이터 커서
+
+사이트 전체를 창 하나로 보여주는 연출을 바탕화면까지 넓혔다. `lg`(64rem) 이상에서만 쓰고, 모바일 · 태블릿 화면은 바뀌지 않는다.
+
+- **바탕화면 아이콘**([DeskIcons](../src/components/desk/DeskIcons.tsx)): 창 왼쪽 76px 열에 포트폴리오 · 프로젝트 · 경력 · 교육 경험 · GitHub · 연락처 아이콘을 둔다. 마우스는 한 번 눌러 고르고 두 번 눌러 열고, 키보드(Enter · Space)와 터치는 한 번에 연다. 페이지 바로가기는 그 페이지를 연 탭이 있으면 그 탭으로, 없으면 새 탭으로 연다. DOM에서는 창 뒤에 두어 Tab 순서가 창의 크롬부터 시작한다.
+- **첫 방문 연출**([intro.ts](../src/lib/intro.ts), [Curator](../src/components/desk/Curator.tsx)): 홈으로 처음 들어오면 창 없이 아이콘만 있는 바탕화면에서 연출 커서가 나타나 Figma 커서 채팅처럼 인사를 한 글자씩 타이핑하고([curator.ts](../src/data/curator.ts)), 포트폴리오 아이콘으로 가서 더블클릭한다. 창은 그 아이콘 자리에서 0.3배 → 1배로 펼쳐진다(440ms). 전체 약 6초이고, 아무 키나 누르거나 화면을 누르거나 "건너뛰기"를 누르면 바로 창이 열린다. 본 뒤에는 `localStorage`의 `intro-seen`으로 다시 재생하지 않는다.
+- **연출 조건**: `lg` 이상, `prefers-reduced-motion` 없음, 홈(`/`)으로 들어온 첫 방문. 이력서 링크로 상세 페이지에 바로 온 방문자는 기다리게 하지 않는다. 창을 숨기는 일은 테마처럼 `<body>` 안 동기 스크립트가 첫 페인트 전에 `data-intro`로 하고, 하이드레이션까지 아무도 이어받지 않으면 8초 뒤 스스로 푼다. 저장소 접근이 막힌 환경에서는 매번 재생하지 않도록 건너뛴다.
+- **큐레이터 커서**: 방문자를 안내하는 연출 커서다. 연출 뒤에는 아이콘 아래에서 움직이지 않고 쉰다. 방문자의 커서를 따라다니지 않는다. 부가 설명이 필요한 자리는 `curator.say({ text, target })`([curatorChannel.ts](../src/components/desk/curatorChannel.ts))로 부르면 그 요소 곁으로 다가가 말하고 돌아온다. 방문자가 스크롤하면 말을 접는다. 아직 이 호출을 쓰는 자리는 없다.
+- **클랩**: 방문자 커서가 큐레이터에 부딪히면 서로 다가갔다 튕기며(420ms) 부딪힌 자리에 Accent 선 8개가 퍼지고, 말풍선이 "짝!" 같은 반응을 차례로 말한다. 0.9초 간격을 둔다.
+- **색**: 커서 · 이름표 · 말풍선은 루트 색맥락(Mocha)의 `hue-deep` 바탕에 `paper` 글자, 손뼉 선은 글자가 닿지 않는 장식이라 Accent다. 그림자는 쓰지 않는다.
+- **접근성**: 커서와 말풍선은 장식(`aria-hidden`)이다. 연출 동안 인사 전체를 `role="status"`로 한 번 읽히고, 건너뛰기 버튼을 둔다. 연출 커서의 움직임은 JS가 맡으므로 모션 감소 설정에서는 연출을 재생하지 않고, `say`의 이동은 바로 옮기며 클랩은 말풍선만 바뀐다.
+
 <a id="hero"></a>
 
 ### 홈 첫 화면(HERO)
@@ -51,7 +65,7 @@ Case Study 블록 모델에 `demo` 한 종을 더했다([types.ts](../src/data/c
 - **화면이 없는 프로젝트**: Make A Wish는 화면을 지어내지 않고 점선 칸에 "화면 준비 중" · 이름 · 운영 시점을 둔다. 샘플 계정 화면을 확보하면 `preview.src`만 채운다.
 - **크기**: `lg` 이상 4열, 그 아래 2 × 2. 칸 비율은 모바일 3 : 4, `md` 1 : 1, `lg` 이상 4 : 5이고, 넓은 화면에서는 `max-height: calc(100dvh − 32rem)`(최소 16rem)로 막아 창 높이에서 크롬 · 문구 높이를 뺀 만큼만 키운다. HERO 높이를 100vh로 고정하지 않는다. 1440 × 900, 1280 × 800, 1024 × 768에서 메인 문구 · 직무 · 4개 칸의 이름 · 서비스 종류까지 첫 화면에 들어오고(2026-10-10 실측), 1920 × 1080에서는 칸이 4 : 5 그대로 커진다.
 - **선택(인터랙션)**: 레퍼런스(GSAP Vault developer portfolio)의 "포인터 · 포커스가 닿은 프로젝트만 그 색으로 선택되고 화면이 앞으로 나오는" 방식을, 한 장이 앞을 독점하는 화면 겹침 대신 같은 크기의 칸으로 옮겼다. 쉴 때는 모든 칸이 무채색으로 같은 무게다. hover · 키보드 포커스가 닿은 칸 하나만 프로젝트 색 테두리 2px, 이름 밑 tint 면(텍스트를 고른 듯한 표시), "작업 과정 보기" 표시가 나타나고 화면이 1.045배 다가온다(260ms). 나머지 칸은 투명도 0.55 · 채도 0.4로 물러난다. 한 번에 한 프로젝트 색만 보이므로 [한 섹션 한 색](#hue) 원칙을 지킨다.
-- **터치 · 모션 감소**: 이름과 서비스 종류는 늘 보이므로 hover가 없는 화면에서도 정보가 같고, 탭하면 바로 Case Study로 간다. `prefers-reduced-motion: reduce`에서는 확대와 전환 없이 색 · 테두리로만 선택을 알린다. 자동으로 넘어가는 캐러셀, 패럴랙스, 3D, 긴 등장 연출은 쓰지 않는다. 애니메이션 라이브러리는 추가하지 않았다.
+- **터치 · 모션 감소**: 이름과 서비스 종류는 늘 보이므로 hover가 없는 화면에서도 정보가 같고, 탭하면 바로 Case Study로 간다. `prefers-reduced-motion: reduce`에서는 확대와 전환 없이 색 · 테두리로만 선택을 알린다. 자동으로 넘어가는 캐러셀, 패럴랙스, 3D, HERO 자체의 등장 연출은 쓰지 않는다(첫 방문 창 열기 연출은 [바탕화면과 큐레이터](#intro)). 애니메이션 라이브러리는 추가하지 않았다.
 - **내부 브라우저**: 홈 탭 제목은 "박정우 포트폴리오"로 이 창이 누구의 포트폴리오인지 말한다(내비 링크 이름은 "홈" 그대로). 탭 · 주소창 · 뒤로 · 앞으로 · 새로고침 동작은 바꾸지 않았다.
 
 ### 남은 제한
@@ -260,7 +274,7 @@ Accent는 장식면 전용이다. 라이트 값은 `#A47864`, 다크 값은 `#B9
 
 ## Motion
 
-모션은 기능 상태의 피드백과 설명용 데모에만 쓴다. 기능을 기다리게 하지 않고, 초기 콘텐츠는 등장 연출 없이 바로 보인다. 전역 문단 fade-up · section reveal은 쓰지 않는다.
+모션은 기능 상태의 피드백과 설명용 데모, 그리고 [바탕화면 · 큐레이터 연출](#intro)에만 쓴다. 기능을 기다리게 하지 않고, 초기 콘텐츠는 등장 연출 없이 바로 보인다. 예외는 홈 첫 방문의 창 열기 연출 하나이며, 언제든 키 하나로 건너뛸 수 있다. 전역 문단 fade-up · section reveal은 쓰지 않는다.
 
 | 상호작용 | 동작 | 시간 |
 | --- | --- | --- |
@@ -268,8 +282,10 @@ Accent는 장식면 전용이다. 라이트 값은 `#A47864`, 다크 값은 `#B9
 | 화면 주석 강조 | 짝이 되는 점 확대 · 목록 번호 채움 | 140ms |
 | 화면 전환 · 설명용 데모 | 겹친 패널의 투명도 전환 | 180ms |
 | HERO 프로젝트 선택 | 선택 칸 확대 1.045 · 테두리 · 이름 밑 면, 나머지 칸 물러남 | 160–260ms |
+| 첫 방문 창 열기 | 큐레이터 인사 타이핑 → 아이콘 더블클릭 → 아이콘 자리에서 창이 펼쳐짐 | 약 6초, 창 440ms |
+| 큐레이터 이동 · 클랩 | 휘어진 경로 이동, 부딪힘 반동 · 손뼉 선 | 700–900ms, 420–480ms |
 
-금지 범위는 scroll hijacking, 과한 parallax, cursor follower, 지속적인 background animation, 자동 슬라이드, 읽기를 방해하는 움직임이다. `prefers-reduced-motion: reduce`에서는 animation · transition · smooth scroll을 사실상 끄고([globals.css](../src/app/globals.css) 맨 아래), 선택 결과와 설명은 그대로 바뀐다.
+금지 범위는 scroll hijacking, 과한 parallax, cursor follower(큐레이터는 방문자 커서를 따라다니지 않는다), 지속적인 background animation, 자동 슬라이드, 읽기를 방해하는 움직임이다. `prefers-reduced-motion: reduce`에서는 animation · transition · smooth scroll을 사실상 끄고([globals.css](../src/app/globals.css) 맨 아래), 선택 결과와 설명은 그대로 바뀐다.
 
 <a id="responsive"></a>
 
@@ -278,7 +294,7 @@ Accent는 장식면 전용이다. 라이트 값은 `#A47864`, 다크 값은 `#B9
 | 항목 | 규칙 |
 | --- | --- |
 | 창 연출 | `md`(48rem) 이상에서만. 모바일은 창 테두리·크롬 없이 일반 페이지 |
-| 데스크 여백 | `12px` at `48rem`, `16px` at `64rem`, `20px` at `96rem` |
+| 데스크 여백 | `12px` at `48rem`, `16px` at `64rem`, `20px` at `96rem`. `64rem` 이상은 왼쪽에 바탕화면 아이콘 열(76px + 12px)이 더 붙는다 |
 | 창 폭 | 최대 `1760px`. 본문 전체의 최대 폭은 없고 긴 문단만 `672px` |
 | 데스크 크롬 | 탭줄(탭·닫기·새 탭) + 도구줄(뒤로·앞으로·새로고침·주소창·주요 페이지·연락처·GitHub·테마) 2행. GitHub은 `lg` 이상 |
 | 모바일 상단 | 이름·테마 토글 + 주요 페이지 링크. 문서 전체가 스크롤된다 |
@@ -361,7 +377,7 @@ Accent는 장식면 전용이다. 라이트 값은 `#A47864`, 다크 값은 `#B9
 
 ## Browser Frame
 
-창 프레임은 `--window-shadow`의 1px 링 하나로 테두리를 대신한다. 둥근 모서리는 창 셸에 `overflow`를 주지 않고 크롬(위)과 Viewport(아래)가 각자 맞춘다. 창 셸에는 `overflow` · `transform` · `filter`를 주지 않는다.
+창 프레임은 `--window-shadow`의 1px 링 하나로 테두리를 대신한다. 둥근 모서리는 창 셸에 `overflow`를 주지 않고 크롬(위)과 Viewport(아래)가 각자 맞춘다. 창 셸에는 `overflow` · `transform` · `filter`를 주지 않는다. 예외는 [첫 방문 창 열기](#intro) 애니메이션 440ms 동안의 `transform`이며, fill 없이 끝나면 사라진다.
 
 브라우저 창 프레임은 AI 디자인 느낌 줄이기 규칙의 유일한 예외다. 사이트 전체가 하나의 창으로 읽혀야 하므로 창 하나에 필요한 radius와 shadow만 허용한다.
 
@@ -393,6 +409,10 @@ Accent는 장식면 전용이다. 라이트 값은 `#A47864`, 다크 값은 `#B9
 | [Toolbar.tsx](../src/components/browser/Toolbar.tsx) | 뒤로·앞으로·새로고침·주소창, 서버에서 받은 주요 페이지 링크, 테마 |
 | [icons.tsx](../src/components/browser/icons.tsx) | 크롬 컨트롤 선 아이콘 |
 | [Viewport.tsx](../src/components/browser/Viewport.tsx) | 창 안 본문 스크롤, 빈 창 |
+| [DeskIcons.tsx](../src/components/desk/DeskIcons.tsx) | 창 왼쪽 바탕화면 아이콘(`lg` 이상), 큐레이터가 쉬는 자리 |
+| [Curator.tsx](../src/components/desk/Curator.tsx) | 연출 커서 — 첫 방문 연출, 클랩, `say` 처리 |
+| [curatorChannel.ts](../src/components/desk/curatorChannel.ts) | 어느 클라이언트 컴포넌트에서든 큐레이터에게 말을 시키는 `curator.say` |
+| [intro.ts](../src/lib/intro.ts) | 첫 방문 연출 조건과 첫 페인트 전 창 숨김 스크립트 |
 | [address.ts](../src/lib/address.ts) | 주소창 입력 해석과 표시 |
 | [Contact.tsx](../src/components/layout/Contact.tsx) | 모든 페이지의 연락처 |
 | [Footer.tsx](../src/components/layout/Footer.tsx) | 공통 Footer |

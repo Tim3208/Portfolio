@@ -25,7 +25,7 @@ function scrollParent(el: HTMLElement): HTMLElement {
 
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
 
-function animateScroll(target: HTMLElement) {
+export function animateScroll(target: HTMLElement) {
   const scroller = scrollParent(target);
   const isDoc = scroller === document.scrollingElement || scroller === document.documentElement;
   const scrollerTop = isDoc ? 0 : scroller.getBoundingClientRect().top;

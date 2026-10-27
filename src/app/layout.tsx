@@ -5,6 +5,7 @@ import { Contact } from "@/components/layout/Contact";
 import { Footer } from "@/components/layout/Footer";
 import { PROFILE } from "@/data/profile";
 import { SITE, SITE_URL } from "@/lib/site";
+import { INTRO_INIT_SCRIPT } from "@/lib/intro";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 // 폰트는 node_modules 에서 self-host 한다. CDN 링크를 쓰면 초기 렌더에서
@@ -65,6 +66,8 @@ export default function RootLayout({
         {/* 첫 페인트 전에 저장된 테마를 적용한다. 위치가 곧 동작이라
             <body> 의 첫 자식이어야 한다 (src/lib/theme.ts 참고). */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        {/* 첫 방문 연출이면 첫 페인트 전에 창을 숨긴다 (src/lib/intro.ts 참고). */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_INIT_SCRIPT }} />
 
         <a
           href="#content"

@@ -5,6 +5,8 @@ import { BrowserProvider } from "@/components/browser/BrowserProvider";
 import { TabStrip } from "@/components/browser/TabStrip";
 import { Toolbar } from "@/components/browser/Toolbar";
 import { Viewport } from "@/components/browser/Viewport";
+import { Curator } from "@/components/desk/Curator";
+import { DeskIcons } from "@/components/desk/DeskIcons";
 import { SmoothAnchor } from "@/components/ui/SmoothAnchor";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { PROJECTS_WITH_CASE_STUDY } from "@/data/caseStudies";
@@ -22,7 +24,8 @@ const PAGE_LINK =
  * 데스크톱(md 이상): 화면 높이에 맞춘 창 하나가 가운데 놓이고, 크롬은
  * 탭줄 · 도구줄 2행이다. 주요 페이지 링크는 도구줄 오른쪽에 둔다.
  * 창 바깥 여백은 12 · 16 · 20px 로 최소로 두고, 창은 최대 1760px 까지 넓어진다.
- * 본문은 Viewport 안에서만 스크롤된다.
+ * 본문은 Viewport 안에서만 스크롤된다. lg 이상에서는 창 왼쪽에 바탕화면
+ * 아이콘이 놓이고, 연출 커서(Curator)가 그 아래에서 쉰다.
  * 모바일: 창 연출을 풀고 일반 페이지처럼 스크롤한다. 크롬 대신 간단한
  * 상단 내비를 둔다.
  *
@@ -45,7 +48,10 @@ export function BrowserWindow({ children }: { children: ReactNode }) {
   return (
     <BrowserProvider host={host} titles={titles}>
       <div className="md:flex md:h-dvh md:p-3 lg:p-4 2xl:p-5">
-        <div className="mx-auto flex w-full max-w-window flex-col bg-paper md:min-h-0 md:rounded-window md:shadow-(--window-shadow)">
+        <div
+          data-browser-shell
+          className="mx-auto flex w-full max-w-window min-w-0 flex-col bg-paper md:min-h-0 md:rounded-window md:shadow-(--window-shadow)"
+        >
           {/* 데스크톱 크롬 — 탭줄 · 도구줄 */}
           <div className="hidden shrink-0 rounded-t-window bg-chrome md:block">
             <TabStrip />
@@ -97,7 +103,9 @@ export function BrowserWindow({ children }: { children: ReactNode }) {
 
           <Viewport>{children}</Viewport>
         </div>
+        <DeskIcons />
       </div>
+      <Curator />
     </BrowserProvider>
   );
 }

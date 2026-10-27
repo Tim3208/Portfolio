@@ -32,6 +32,7 @@ type Browser = {
   switchTo: (id: string) => void;
   close: (id: string) => void;
   openNewTab: () => void;
+  openPage: (url: string) => void;
   submitAddress: (input: string) => void;
   back: () => void;
   forward: () => void;
@@ -147,6 +148,22 @@ export function BrowserProvider({
     router.push(NEW_TAB_PATH);
   }
 
+  /** 바탕화면 바로가기. 그 페이지를 연 탭이 있으면 그 탭으로, 없으면 새 탭으로 연다. */
+  function openPage(url: string) {
+    const s = tabStore.getSnapshot();
+    const open = s?.tabs.find((t) => pathOf(current(t)) === pathOf(url));
+    if (open) {
+      switchTo(open.id);
+      return;
+    }
+    rememberScroll();
+    tabStore.open(url);
+    if (pathOf(url) === pathname && viewportRef.current) {
+      viewportRef.current.scrollTop = 0;
+    }
+    router.push(url);
+  }
+
   function submitAddress(input: string) {
     const parsed = parseAddress(input, host);
     if (!parsed) return;
@@ -184,6 +201,7 @@ export function BrowserProvider({
         switchTo,
         close,
         openNewTab,
+        openPage,
         submitAddress,
         back: () => step(-1),
         forward: () => step(1),
