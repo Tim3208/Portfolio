@@ -67,7 +67,7 @@
 
 > **현재 단계: 도색 시안 3안(`design/3-claude`).** 디자인은 스케치(기획) → 도색 → 마감 순서로 진행한다. 이 브랜치는 스케치 위에 보존해 둔 아래 색 기준을 되살리고, 실제 스크린샷에 화면 주석을 다는 [3안](docs/design.md#option-3)으로 칠했다. 실제 화면이 없는 자리만 [Placeholder](src/components/ui/Placeholder.tsx)나 담당 범위 도식으로 둔다. 모션은 기능 피드백, 설명용 데모, [바탕화면 · 큐레이터 연출](docs/design.md#intro)에만 쓴다. 채택 여부는 아직 정하지 않았다.
 
-- Cloud Dancer 지면, Earthen Pastels 6계열, 장식용 Accent를 유지한다. 색을 JSX에 하드코딩하지 않고 기존 토큰과 `Project.hue`를 사용한다.
+- 중성 지면, 여섯 색 계열, 장식용 Accent를 유지한다([Color](docs/design.md#color), 2026-11-18에 Cloud Dancer · Earthen Pastels에서 변경). 지면과 본문 글자에는 색을 넣지 않고, 여섯 계열은 지면 위 대비를 같게 맞춘다. 색을 JSX에 하드코딩하지 않고 기존 토큰과 `Project.hue`를 사용한다.
 - 한 섹션에 한 색 계열을 쓴다. 여섯 색을 모으는 예외는 Contact 하단 색표본과 OG 이미지다. `tint` 위에는 `ink`·`ink-2`·`hue-deep`만 쓴다.
 - Accent는 글자가 닿지 않는 장식면 전용이다. 글자색이나 글자가 있는 버튼 배경으로 사용하지 않는다. 그라디언트·순백·임의 숙련도 그래프를 추가하지 않는다.
 - 창 프레임은 `--window-shadow`의 링 하나로 표현한다. 큰 radius와 그림자는 창 프레임·크롬 컨트롤에 한정하고, 창 셸에 `overflow`·`transform`·`filter`를 주지 않는다(첫 방문 창 열기 애니메이션 동안의 `transform`만 예외). 본문 스크롤은 창 셸이 아니라 `Viewport`가 맡는다.

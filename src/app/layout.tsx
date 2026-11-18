@@ -50,8 +50,8 @@ export const viewport: Viewport = {
   // 실제 브라우저 UI 와 맞닿는 면. 테마 색을 쓰는 모바일에는 창 연출이 없어
   // 본문 지면(paper)이 곧 맞닿는 면이다. globals.css 의 --color-paper 와 같은 값.
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f0eee9" },
-    { media: "(prefers-color-scheme: dark)", color: "#171613" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f7f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#101113" },
   ],
 };
 

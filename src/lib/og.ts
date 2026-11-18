@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 /**
- * OG 이미지 공통 (Blueprint 10 — Cloud Dancer 지면 + 하단 6색 스트립)
+ * OG 이미지 공통 (Blueprint 10 — 라이트 지면 + 하단 6색 스트립)
  *
  * satori 는 woff2 를 읽지 못하므로 Pretendard 의 otf 를 쓴다. OG 라우트는
  * 전부 빌드 타임에 정적 생성되므로 폰트를 읽는 비용은 빌드에서 한 번 끝난다.
@@ -40,26 +40,26 @@ export async function ogFonts() {
 
 /** 라이트 테마 토큰과 같은 값. OG 는 언제나 라이트 지면으로 낸다. */
 export const OG = {
-  paper: "#F0EEE9",
-  ink: "#1E1C18",
-  ink2: "#57544C",
-  ink3: "#6E6A62",
-  rule: "#DCD8CF",
-  strip: ["#E2D5CD", "#E3CFCC", "#E3DCCC", "#D6DFD0", "#DDD2DA", "#DFD0D3"],
+  paper: "#F7F7F5",
+  ink: "#15161A",
+  ink2: "#40434A",
+  ink3: "#63666D",
+  rule: "#E1E1DE",
+  strip: ["#F9D4B9", "#FFD0C7", "#E6DDB4", "#C4E7CA", "#E9D3F7", "#FDCED9"],
   deep: {
-    mocha: "#6C4D3A",
-    terracotta: "#78463E",
-    wheat: "#60522F",
-    sage: "#46583B",
-    plum: "#674A5E",
-    blush: "#714850",
+    mocha: "#884700",
+    terracotta: "#963B2F",
+    wheat: "#675800",
+    sage: "#01672C",
+    plum: "#74458F",
+    blush: "#933958",
   },
   tint: {
-    mocha: "#E2D5CD",
-    terracotta: "#E3CFCC",
-    wheat: "#E3DCCC",
-    sage: "#D6DFD0",
-    plum: "#DDD2DA",
-    blush: "#DFD0D3",
+    mocha: "#F9D4B9",
+    terracotta: "#FFD0C7",
+    wheat: "#E6DDB4",
+    sage: "#C4E7CA",
+    plum: "#E9D3F7",
+    blush: "#FDCED9",
   },
 } as const;

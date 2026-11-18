@@ -11,6 +11,8 @@ AGENTS 원문은 `--paper`, `--ink`처럼 짧은 토큰 이름을 쓴다. 실제
 
 `design/3-claude` 브랜치의 도색 시안이다. 스케치(`sketch/browser-remake`) 위에서 2026-10-10 리디자인 제안 초안(DESIGN.md, PROPOSED)의 흐름을 우선해 칠했다. 1안(연구 노트)·2안(형광펜)과 달리 팔레트를 새로 만들지 않고, 이 문서에 보존해 둔 Cloud Dancer · Earthen Pastels 토큰을 그대로 되살렸다. 이 안을 채택하지 않으면 이 절을 지우고 스케치 기준으로 돌아간다.
 
+색은 2026-11-18에 다시 정했다. 크림 지면과 서로 구분되지 않는 갈색 여섯이 화면 전체를 한 가지 색으로 보이게 해서, 중성 지면에 색상이 다른 여섯 계열을 올리는 값으로 바꿨다. 토큰 이름과 쓰는 규칙은 그대로이고 값만 [Color](#color) 이하의 표로 바뀌었다.
+
 - **핵심 표현**: 실제 스크린샷 위에 번호 점을 찍고, 화면 아래 같은 번호의 목록으로 그 자리에서 내린 판단을 적는다([Shot](../src/components/ui/Shot.tsx), 주석 원본은 [annotations.ts](../src/data/annotations.ts)). 목록이 항상 보이므로 조작하지 않아도 읽히고, 한쪽에 포인터를 올리면 짝이 함께 강조된다. 화면에는 다른 브라우저 크롬이나 기기 프레임을 덧씌우지 않는다.
 - **선택적 체험**: 한 번에 한 상태를 고르는 [Switcher](../src/components/ui/Switcher.tsx)를 대표 프로젝트 행의 화면 전환과 설명용 데모가 함께 쓴다. 라디오 묶음이라 서버 렌더 그대로 JS 없이 동작한다. 데모 목록은 [아래](#option-3-demos)에 있다.
 - **창과 폭**: 창은 최대 `110rem`(1760px), 바깥 여백 12 · 16 · 20px, 크롬은 탭줄 + 도구줄 2행이다. 예전 북마크바의 주요 페이지 링크는 도구줄 오른쪽으로 옮겼다(768–1023px에서는 GitHub 링크만 본문 · 연락처에 맡긴다). 본문 전체의 최대 폭은 없애고 섹션 거터(16 · 24 · 32px)를 [Container](../src/components/ui/Container.tsx) 한 곳에서만 준다. 긴 문단만 `max-w-measure`(672px)를 지킨다.
@@ -155,9 +157,9 @@ Work는 대표 프로젝트 행, 보조 프로젝트 비교 목록(넓은 화면
 
 ## Color
 
-팔레트는 PANTONE 11-4201 TCX Cloud Dancer 지면, Earthen Pastels 6계열, 장식용 Accent 하나로 고정한다. 순백 `#FFFFFF`은 사용하지 않는다. 라이트 테마의 Cloud Dancer는 강조색이 아니라 지면이다.
+팔레트는 중성 지면, 여섯 색 계열, 장식용 Accent 하나로 고정한다(2026-11-18 변경. 이전 값은 Cloud Dancer 지면과 Earthen Pastels였다). 지면과 글자는 색을 띠지 않는 회색이고, 색은 여섯 계열만 맡는다. 순백 `#FFFFFF`은 사용하지 않는다.
 
-색은 장식이 아니라 정보 구조다. 섹션마다 하나의 hue를 걸고, 링크, 수치, 포커스링, 식별 바가 같은 색맥락을 공유한다. 색을 새로 추가하려면 `#F0EEE9`와 `#171613` 양쪽 대비를 실제로 계산한다.
+색은 장식이 아니라 정보 구조다. 섹션마다 하나의 hue를 걸고, 링크, 수치, 포커스링, 식별 바가 같은 색맥락을 공유한다. 여섯 계열은 밝기(지면 위 대비)는 같고 색상만 달라, 섹션이 바뀌면 색이 바뀐 것이 보인다. 색을 새로 추가하려면 `#F7F7F5`와 `#101113` 양쪽 대비를 실제로 계산한다.
 
 <a id="ground"></a>
 
@@ -165,15 +167,15 @@ Work는 대표 프로젝트 행, 보조 프로젝트 비교 목록(넓은 화면
 
 | 실제 토큰 | 원문 | 값 | 용도 |
 | --- | --- | ---: | --- |
-| `--color-paper` | `--paper` | `#F0EEE9` | 창 안쪽 지면 |
-| `--color-paper-raised` | `--paper-raised` | `#F7F6F2` | 밝게 띄운 면 |
-| `--color-paper-sunk` | `--paper-sunk` | `#E7E4DC` | 코드, Before 블록 |
-| `--color-deep-ground` | `--deep-ground` | `#22201B` | Contact/Footer 반전 블록 |
-| `--color-desk` | `--desk` | `#E6E2DA` | 창 바깥 데스크 |
-| `--color-chrome` | `--chrome` | `#EAE7E0` | 브라우저 크롬바 |
-| `--color-omnibox` | `--omnibox` | `#F2F0EC` | 주소창 면 |
+| `--color-paper` | `--paper` | `#F7F7F5` | 창 안쪽 지면 |
+| `--color-paper-raised` | `--paper-raised` | `#FDFDFC` | 밝게 띄운 면 |
+| `--color-paper-sunk` | `--paper-sunk` | `#ECECEA` | 코드, Before 블록 |
+| `--color-deep-ground` | `--deep-ground` | `#15161A` | Contact/Footer 반전 블록 |
+| `--color-desk` | `--desk` | `#CFD1D6` | 창 바깥 데스크 |
+| `--color-chrome` | `--chrome` | `#E6E7E9` | 브라우저 크롬바 |
+| `--color-omnibox` | `--omnibox` | `#F3F3F2` | 주소창 면 |
 
-도색 단계에서 [Contact](../src/components/layout/Contact.tsx)와 [Footer](../src/components/layout/Footer.tsx)는 `--color-deep-ground` 위에 놓인다. 이 영역에서는 Cloud Dancer가 글자색이 된다.
+데스크는 지면보다 한 단계 어두워(`1.42 : 1`, 이전 `1.11 : 1`) 창이 바탕과 구분된다. [Contact](../src/components/layout/Contact.tsx)와 [Footer](../src/components/layout/Footer.tsx)는 `--color-deep-ground` 위에 놓이고, 이 영역의 글자는 `--color-deep-ink`다.
 
 <a id="ink"></a>
 
@@ -181,30 +183,32 @@ Work는 대표 프로젝트 행, 보조 프로젝트 비교 목록(넓은 화면
 
 | 실제 토큰 | 원문 | 값 | 용도 |
 | --- | --- | ---: | --- |
-| `--color-ink` | `--ink` | `#1E1C18` | Heading, 강한 본문 |
-| `--color-ink-2` | `--ink-2` | `#57544C` | 기본 본문 |
-| `--color-ink-3` | `--ink-3` | `#6E6A62` | 메타데이터, 라벨 |
-| `--color-rule` | `--rule` | `#DCD8CF` | Hairline |
-| `--color-rule-strong` | `--rule-strong` | `#C6C1B6` | 강조 Hairline |
-| `--color-deep-ink` | - | `#F0EEE9` | deep-ground 위 주 텍스트 |
-| `--color-deep-ink-2` | - | `#9B968B` | deep-ground 위 보조 텍스트 |
+| `--color-ink` | `--ink` | `#15161A` | Heading, 강한 본문 |
+| `--color-ink-2` | `--ink-2` | `#40434A` | 기본 본문 |
+| `--color-ink-3` | `--ink-3` | `#63666D` | 메타데이터, 라벨 |
+| `--color-rule` | `--rule` | `#E1E1DE` | Hairline |
+| `--color-rule-strong` | `--rule-strong` | `#C7C8CA` | 강조 Hairline |
+| `--color-deep-ink` | - | `#F3F3F1` | deep-ground 위 주 텍스트 |
+| `--color-deep-ink-2` | - | `#9A9DA3` | deep-ground 위 보조 텍스트 |
 
-`--color-ink-3`는 지면과 wash 위에서만 쓴다. tint 위에서는 대비가 부족하다. 라이트 메타데이터·라벨 색을 `#6E6A62`보다 더 밝게 내리지 않는다.
+지면 위 대비는 `--color-ink` `16.85 : 1`, `--color-ink-2` `9.24 : 1`(이전 `6.52 : 1`), `--color-ink-3` `5.36 : 1`이다. 본문이 흐려 보이지 않도록 `--color-ink-2`를 진하게 잡았다. `--color-ink-3`는 지면과 wash 위에서만 쓴다. tint 위에서는 대비가 부족하다. 라이트 메타데이터·라벨 색을 `#63666D`보다 더 밝게 내리지 않는다.
 
 <a id="palette"></a>
 
 ## Palette
 
-Earthen Pastels는 wash, tint, deep 3단 램프로만 쓴다. `wash`는 섹션 지면, `tint`는 채워진 면, `deep`은 링크/버튼/수치/섹션 번호/포커스링이다.
+여섯 계열은 wash, tint, deep 3단 램프로만 쓴다. `wash`는 섹션 지면, `tint`는 채워진 면, `deep`은 링크/버튼/수치/섹션 번호/포커스링이다. 계열 이름은 흙빛 팔레트 때 붙인 것을 토큰 이름으로 그대로 쓴다.
 
-| 계열 | wash | tint | deep | 배정 |
-| --- | ---: | ---: | ---: | --- |
-| Earth Mocha | `#F2EDEA` | `#E2D5CD` | `#6C4D3A` | 시스템 기본값, syu-likelion |
-| Earth Terracotta | `#F3EBEA` | `#E3CFCC` | `#78463E` | Skills, CCTV Scheduler |
-| Earth Wheat | `#F3F0EA` | `#E3DCCC` | `#60522F` | Experience |
-| Earth Sage | `#EEF1EC` | `#D6DFD0` | `#46583B` | Teaching, 삼육대 어디야 |
-| Earth Plum | `#F1ECEF` | `#DDD2DA` | `#674A5E` | Oshi Calendar |
-| Earth Blush | `#F2EBED` | `#DFD0D3` | `#714850` | About |
+| 계열 | 색상 | wash | tint | deep | 배정 |
+| --- | --- | ---: | ---: | ---: | --- |
+| Mocha | 주황빛 갈색 | `#FBEDE3` | `#F9D4B9` | `#884700` | 시스템 기본값, syu-likelion |
+| Terracotta | 벽돌색 | `#FDECE8` | `#FFD0C7` | `#963B2F` | CCTV Scheduler |
+| Wheat | 겨자색 | `#F3F1E2` | `#E6DDB4` | `#675800` | 경력, AgentFlow |
+| Sage | 초록 | `#E7F4E9` | `#C4E7CA` | `#01672C` | 교육 경험, 삼육대 어디야 |
+| Plum | 보라 | `#F5EDFA` | `#E9D3F7` | `#74458F` | Oshi Calendar |
+| Blush | 장미색 | `#FDEBEF` | `#FDCED9` | `#933958` | Make A Wish |
+
+값은 OKLCH에서 계열마다 색상각을 정하고(58 · 30 · 98 · 150 · 312 · 2), deep은 지면 위 대비가 `6.6 : 1`이 되는 밝기로 맞춰 얻었다. 계열을 더하거나 고칠 때도 같은 방법으로 밝기를 맞춘다.
 
 프로젝트 색 배정은 [projects.ts](../src/data/projects.ts)의 `Project.hue`가 단일 출처다. Work 카드, 상세 Hero, 프로젝트 탭과 이전·다음 프로젝트 Navigation이 이 값을 공유한다.
 
@@ -231,48 +235,48 @@ Earthen Pastels는 wash, tint, deep 3단 램프로만 쓴다. `wash`는 섹션 �
 
 ## Contrast
 
-`deep` 6종은 Cloud Dancer 위에서 `6.56 : 1`부터 `6.66 : 1` 범위로 맞춘다. 편차는 `0.1` 이내다. tint 위에서도 `5.12 : 1`부터 `5.64 : 1`까지의 대비를 지킨다.
+`deep` 6종은 지면(`#F7F7F5`) 위에서 `6.55 : 1`부터 `6.64 : 1` 범위로 맞춘다. 편차는 `0.1` 이내다. 같은 계열의 wash 위에서는 `6.15 ~ 6.22 : 1`, tint 위에서는 `5.06 ~ 5.25 : 1`을 지킨다. 버튼처럼 deep 면에 지면색 글자를 올릴 때도 같은 `6.55 : 1` 이상이다.
 
 | tint 위 허용 색 | 대비 기준 |
 | --- | ---: |
-| `--color-ink` | `11.2 : 1` |
-| `--color-ink-2` | `4.9 : 1` |
-| `--hue-deep` | `5.0 ~ 5.6 : 1` |
+| `--color-ink` | `12.9 ~ 13.5 : 1` |
+| `--color-ink-2` | `7.1 ~ 7.4 : 1` |
+| `--hue-deep` | `5.06 ~ 5.25 : 1` |
 
-`--color-ink-3`는 tint 위에서 `3.5 : 1`로 떨어지므로 쓰지 않는다.
+`--color-ink-3`는 tint 위에서 `4.1 ~ 4.3 : 1`로 떨어지므로 쓰지 않는다. wash 위에서는 `5.0 : 1`이라 쓸 수 있다.
 
 <a id="color-prohibitions"></a>
 
 ## Color Prohibitions
 
-- 그라디언트를 쓰지 않는다. 파스텔은 언제나 단색 면이다.
+- 그라디언트를 쓰지 않는다. wash와 tint는 언제나 단색 면이다.
 - 한 섹션에 두 계열 이상을 섞지 않는다.
-- 파스텔을 본문이나 Heading 색으로 쓰지 않는다.
+- 여섯 색을 본문이나 Heading 색으로 쓰지 않는다. 지면과 본문 글자에는 색을 넣지 않는다.
 - tint 위에 `--color-ink-3`를 올리지 않는다.
 - 색만으로 정보를 전달하지 않는다. 프로젝트 색에는 항상 이름을 함께 둔다.
-- 대비 범위를 벗어나는 파스텔을 추가하지 않는다.
+- 대비 범위를 벗어나는 색을 추가하지 않는다.
 - JSX에 색상 hex를 하드코딩하지 않는다. 색은 토큰, hue 데이터, OG 토큰 중 하나에서 온다.
 
 <a id="dark-theme"></a>
 
 ## Dark Theme
 
-다크 테마는 반전이 아니라 역할 교체다. Cloud Dancer는 지면에서 잉크로 올라오고, 파스텔은 다크 지면에서 읽히는 값으로 다시 정의된다.
+다크 테마는 반전이 아니라 역할 교체다. 밝은 중성색은 지면에서 잉크로 올라오고, 여섯 색은 다크 지면에서 읽히는 값으로 다시 정의된다.
 
 다크 값은 `@media (prefers-color-scheme: dark)`의 `:root:not([data-theme="light"])`와 `:root[data-theme="dark"]`에 같은 값으로 둔다. `.hue-*` 스코프와 컴포넌트 CSS는 바꾸지 않는다.
 
 | 묶음 | 다크 값 |
 | --- | --- |
-| 지면/잉크 | `--color-paper #171613`, `--color-paper-raised #1F1E1A`, `--color-paper-sunk #100F0D`, `--color-deep-ground #0C0B09`, `--color-ink #F0EEE9`, `--color-ink-2 #A8A398`, `--color-ink-3 #8B8779`, `--color-rule #2E2C27`, `--color-rule-strong #423F38` |
-| Mocha | `#211B17`, `#45352B`, `#CEB7AB` |
-| Terracotta | `#211817`, `#462E2A`, `#D2B6B1` |
-| Wheat | `#221E16`, `#473E29`, `#C8BA9B` |
-| Sage | `#1B1F19`, `#36412F`, `#B0C1A7` |
-| Plum | `#1F191D`, `#40303B`, `#C9B7C3` |
-| Blush | `#20181A`, `#422E32`, `#CDB6BB` |
-| 창 프레임 | `--color-desk #0F0E0C`, `--color-chrome #1C1B17`, `--color-omnibox #232019`, `--color-accent #B98D77`, `--window-shadow 0 0 0 1px #423F38, 0 24px 60px -24px rgb(0 0 0 / 0.7)` |
+| 지면/잉크 | `--color-paper #101113`, `--color-paper-raised #17181B`, `--color-paper-sunk #0A0A0B`, `--color-deep-ground #050506`, `--color-ink #F3F3F1`, `--color-ink-2 #B3B6BC`, `--color-ink-3 #8A8D94`, `--color-rule #25272B`, `--color-rule-strong #3A3D43` |
+| Mocha | `#21170F`, `#4D2E14`, `#EDA975` |
+| Terracotta | `#231613`, `#512A24`, `#F8A293` |
+| Wheat | `#1C1A0E`, `#3F370C`, `#C9B966` |
+| Sage | `#121C14`, `#1D3F26`, `#82C891` |
+| Plum | `#1D1721`, `#412D4D`, `#D2A8EC` |
+| Blush | `#221519`, `#502934`, `#F59FB7` |
+| 창 프레임 | `--color-desk #050506`, `--color-chrome #17181B`, `--color-omnibox #1E2024`, `--color-accent #D98A5F`, `--window-shadow 0 0 0 1px #3A3D43, 0 24px 60px -24px rgb(0 0 0 / 0.8)` |
 
-다크의 `deep` 6종은 `#171613` 위에서 `9.44 : 1 ~ 9.54 : 1`로 맞춘다. 두 다크 블록의 18개 파스텔 토큰과 창 프레임 5개 값을 함께 유지한다. Contact/Footer의 `--color-deep-ink`, `--color-deep-ink-2`, 여섯 `--color-strip-*`는 테마와 무관한 상수다.
+다크의 `deep` 6종은 `#101113` 위에서 `9.47 : 1 ~ 9.55 : 1`로 맞춘다. tint 위에서는 `5.93 ~ 6.20 : 1`이고, `--color-ink-3`는 다크에서도 tint 위에 올리지 않는다(`3.5 ~ 3.7 : 1`). 두 다크 블록의 18개 색 계열 토큰과 창 프레임 5개 값을 함께 유지한다. Contact/Footer의 `--color-deep-ink`, `--color-deep-ink-2`, 여섯 `--color-strip-*`는 테마와 무관한 상수다.
 
 테마 상태는 셋이다. 시스템은 `data-theme` 없음, 라이트 고정은 `data-theme="light"`, 다크 고정은 `data-theme="dark"`다. 시스템 상태에서 속성이 없어야 OS 다크 모드를 따른다.
 
@@ -282,11 +286,11 @@ Earthen Pastels는 wash, tint, deep 3단 램프로만 쓴다. `wash`는 섹션 �
 
 ## Accent
 
-Accent는 장식면 전용이다. 라이트 값은 `#A47864`, 다크 값은 `#B98D77`이다.
+Accent는 장식면 전용이다. 라이트 값은 `#C8683A`, 다크 값은 `#D98A5F`이다.
 
-`#A47864`는 Cloud Dancer 위에서 `3.32 : 1`이고, `#F0EEE9` 글자를 올려도 `3.32 : 1`이다. 본문 색, 링크 색, 버튼 배경으로 쓰지 않는다.
+`#C8683A`는 지면 위에서 `3.56 : 1`이고, `#F7F7F5` 글자를 올려도 `3.56 : 1`이다. 본문 색, 링크 색, 버튼 배경으로 쓰지 않는다.
 
-허용 위치는 탭 활성 라인, 신호등 점, 식별 바, 보더처럼 글자가 닿지 않는 면이다. 텍스트, 링크, 버튼 배경이 필요하면 `--color-mocha-deep` `#6C4D3A`를 쓴다. 라이트 버튼은 `bg-mocha-deep` + `text-paper` 조합으로 `6.56 : 1`을 확보한다. 리뷰에서는 `text-accent`와 글자가 있는 `bg-accent` 사용을 확인한다.
+허용 위치는 탭 활성 라인, 신호등 점, 식별 바, 보더처럼 글자가 닿지 않는 면이다. 텍스트, 링크, 버튼 배경이 필요하면 `--color-mocha-deep` `#884700`을 쓴다. 라이트 버튼은 `bg-mocha-deep` + `text-paper` 조합으로 `6.64 : 1`을 확보한다. 리뷰에서는 `text-accent`와 글자가 있는 `bg-accent` 사용을 확인한다.
 
 <a id="motion"></a>
 

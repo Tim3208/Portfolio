@@ -3,7 +3,8 @@
 /* ==========================================================================
    디자인 3안 — 주석 단 실물 화면 (docs/design.md#option-3)
 
-   Cloud Dancer 지면 · Earthen Pastels 6계열 · 장식용 Accent 하나.
+   중성 지면 · 여섯 색 계열 · 장식용 Accent 하나 (docs/design.md#color).
+   지면과 글자는 색을 띠지 않는 회색이고, 색은 여섯 계열만 맡는다.
    색은 정보 구조다. 한 섹션에는 .hue-* 하나만 걸고, 선택 상태 · 화면 주석 ·
    도식의 연결 · 포커스링이 그 색을 공유한다. 실제 스크린샷의 색은 바꾸지 않는다.
 
@@ -14,53 +15,54 @@
   --color-*: initial;
 
   /* 지면 — 창 바깥부터 안쪽 순서 */
-  --color-desk: #e6e2da;
-  --color-chrome: #eae7e0; /* 탭줄 */
-  --color-omnibox: #f2f0ec; /* 활성 탭 · 도구줄 */
-  --color-paper: #f0eee9; /* 본문 지면 (Cloud Dancer) */
-  --color-paper-raised: #f7f6f2;
-  --color-paper-sunk: #e7e4dc;
-  --color-deep-ground: #22201b; /* 연락처 · Footer 반전 블록 */
+  --color-desk: #cfd1d6;
+  --color-chrome: #e6e7e9; /* 탭줄 */
+  --color-omnibox: #f3f3f2; /* 활성 탭 · 도구줄 */
+  --color-paper: #f7f7f5; /* 본문 지면 */
+  --color-paper-raised: #fdfdfc;
+  --color-paper-sunk: #ececea;
+  --color-deep-ground: #15161a; /* 연락처 · Footer 반전 블록 */
 
   /* 잉크 */
-  --color-ink: #1e1c18;
-  --color-ink-2: #57544c;
-  --color-ink-3: #6e6a62; /* 지면 · wash 위에서만. tint · chrome 위에서는 대비가 모자란다 */
-  --color-rule: #dcd8cf;
-  --color-rule-strong: #c6c1b6;
-  --color-deep-ink: #f0eee9; /* deep-ground 위 — 테마와 무관한 상수 */
-  --color-deep-ink-2: #9b968b;
+  --color-ink: #15161a;
+  --color-ink-2: #40434a;
+  --color-ink-3: #63666d; /* 지면 · wash 위에서만. tint 위에서는 대비가 모자란다 */
+  --color-rule: #e1e1de;
+  --color-rule-strong: #c7c8ca;
+  --color-deep-ink: #f3f3f1; /* deep-ground 위 — 테마와 무관한 상수 */
+  --color-deep-ink-2: #9a9da3;
 
   /* 장식면 전용. 글자색 · 글자가 있는 버튼 배경으로 쓰지 않는다 */
-  --color-accent: #a47864;
+  --color-accent: #c8683a;
 
-  /* Earthen Pastels — wash(섹션 지면) · tint(채운 면) · deep(글자 · 선 · 주석) */
-  --color-mocha-wash: #f2edea;
-  --color-mocha-tint: #e2d5cd;
-  --color-mocha-deep: #6c4d3a;
-  --color-terracotta-wash: #f3ebea;
-  --color-terracotta-tint: #e3cfcc;
-  --color-terracotta-deep: #78463e;
-  --color-wheat-wash: #f3f0ea;
-  --color-wheat-tint: #e3dccc;
-  --color-wheat-deep: #60522f;
-  --color-sage-wash: #eef1ec;
-  --color-sage-tint: #d6dfd0;
-  --color-sage-deep: #46583b;
-  --color-plum-wash: #f1ecef;
-  --color-plum-tint: #ddd2da;
-  --color-plum-deep: #674a5e;
-  --color-blush-wash: #f2ebed;
-  --color-blush-tint: #dfd0d3;
-  --color-blush-deep: #714850;
+  /* 여섯 색 계열 — wash(섹션 지면) · tint(채운 면) · deep(글자 · 선 · 주석).
+     deep 은 지면 위 대비를 6.55–6.64 : 1 로 맞춰 밝기는 같고 색상만 다르다 */
+  --color-mocha-wash: #fbede3;
+  --color-mocha-tint: #f9d4b9;
+  --color-mocha-deep: #884700;
+  --color-terracotta-wash: #fdece8;
+  --color-terracotta-tint: #ffd0c7;
+  --color-terracotta-deep: #963b2f;
+  --color-wheat-wash: #f3f1e2;
+  --color-wheat-tint: #e6ddb4;
+  --color-wheat-deep: #675800;
+  --color-sage-wash: #e7f4e9;
+  --color-sage-tint: #c4e7ca;
+  --color-sage-deep: #01672c;
+  --color-plum-wash: #f5edfa;
+  --color-plum-tint: #e9d3f7;
+  --color-plum-deep: #74458f;
+  --color-blush-wash: #fdebef;
+  --color-blush-tint: #fdced9;
+  --color-blush-deep: #933958;
 
-  /* Footer 색표본 — 여섯 색이 한곳에 모이는 예외. 테마와 무관한 상수 */
-  --color-strip-mocha: #e2d5cd;
-  --color-strip-terracotta: #e3cfcc;
-  --color-strip-wheat: #e3dccc;
-  --color-strip-sage: #d6dfd0;
-  --color-strip-plum: #ddd2da;
-  --color-strip-blush: #dfd0d3;
+  /* Footer 색표본 — 여섯 색이 한곳에 모이는 예외. 테마와 무관한 상수(라이트 tint 와 같은 값) */
+  --color-strip-mocha: #f9d4b9;
+  --color-strip-terracotta: #ffd0c7;
+  --color-strip-wheat: #e6ddb4;
+  --color-strip-sage: #c4e7ca;
+  --color-strip-plum: #e9d3f7;
+  --color-strip-blush: #fdced9;
 
   --font-sans:
     "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
@@ -110,8 +112,8 @@
   --hue-deep: var(--color-mocha-deep);
   /* 그림자는 창 하나에만. 다크 오버라이드가 먹도록 @theme 이 아니라 :root 에 둔다 */
   --window-shadow:
-    0 0 0 1px rgb(30 28 24 / 0.12), 0 1px 2px rgb(30 28 24 / 0.06),
-    0 18px 44px -22px rgb(30 28 24 / 0.32);
+    0 0 0 1px rgb(21 22 26 / 0.16), 0 1px 2px rgb(21 22 26 / 0.08),
+    0 22px 50px -24px rgb(21 22 26 / 0.4);
   /* 창 안 본문 영역(Viewport)의 높이 = 화면 − 창 바깥 여백(위아래) − 크롬 2행(탭줄 40 + 도구줄 44).
      라이브 탭이 본문 영역을 꼭 채우는 데 쓴다. BrowserWindow 의 여백 · 크롬 높이와 함께 바꾼다. */
   --viewport-height: calc(100dvh - 1.5rem - 5.25rem);
@@ -167,75 +169,75 @@
 /* 다크는 반전이 아니라 역할 교체다. 두 블록은 같은 값을 유지한다. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-desk: #0f0e0c;
-    --color-chrome: #1c1b17;
-    --color-omnibox: #232019;
-    --color-paper: #171613;
-    --color-paper-raised: #1f1e1a;
-    --color-paper-sunk: #100f0d;
-    --color-deep-ground: #0c0b09;
-    --color-ink: #f0eee9;
-    --color-ink-2: #a8a398;
-    --color-ink-3: #8b8779;
-    --color-rule: #2e2c27;
-    --color-rule-strong: #423f38;
-    --color-accent: #b98d77;
-    --color-mocha-wash: #211b17;
-    --color-mocha-tint: #45352b;
-    --color-mocha-deep: #ceb7ab;
-    --color-terracotta-wash: #211817;
-    --color-terracotta-tint: #462e2a;
-    --color-terracotta-deep: #d2b6b1;
-    --color-wheat-wash: #221e16;
-    --color-wheat-tint: #473e29;
-    --color-wheat-deep: #c8ba9b;
-    --color-sage-wash: #1b1f19;
-    --color-sage-tint: #36412f;
-    --color-sage-deep: #b0c1a7;
-    --color-plum-wash: #1f191d;
-    --color-plum-tint: #40303b;
-    --color-plum-deep: #c9b7c3;
-    --color-blush-wash: #20181a;
-    --color-blush-tint: #422e32;
-    --color-blush-deep: #cdb6bb;
-    --window-shadow: 0 0 0 1px #423f38, 0 24px 60px -24px rgb(0 0 0 / 0.7);
+    --color-desk: #050506;
+    --color-chrome: #17181b;
+    --color-omnibox: #1e2024;
+    --color-paper: #101113;
+    --color-paper-raised: #17181b;
+    --color-paper-sunk: #0a0a0b;
+    --color-deep-ground: #050506;
+    --color-ink: #f3f3f1;
+    --color-ink-2: #b3b6bc;
+    --color-ink-3: #8a8d94;
+    --color-rule: #25272b;
+    --color-rule-strong: #3a3d43;
+    --color-accent: #d98a5f;
+    --color-mocha-wash: #21170f;
+    --color-mocha-tint: #4d2e14;
+    --color-mocha-deep: #eda975;
+    --color-terracotta-wash: #231613;
+    --color-terracotta-tint: #512a24;
+    --color-terracotta-deep: #f8a293;
+    --color-wheat-wash: #1c1a0e;
+    --color-wheat-tint: #3f370c;
+    --color-wheat-deep: #c9b966;
+    --color-sage-wash: #121c14;
+    --color-sage-tint: #1d3f26;
+    --color-sage-deep: #82c891;
+    --color-plum-wash: #1d1721;
+    --color-plum-tint: #412d4d;
+    --color-plum-deep: #d2a8ec;
+    --color-blush-wash: #221519;
+    --color-blush-tint: #502934;
+    --color-blush-deep: #f59fb7;
+    --window-shadow: 0 0 0 1px #3a3d43, 0 24px 60px -24px rgb(0 0 0 / 0.8);
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-desk: #0f0e0c;
-  --color-chrome: #1c1b17;
-  --color-omnibox: #232019;
-  --color-paper: #171613;
-  --color-paper-raised: #1f1e1a;
-  --color-paper-sunk: #100f0d;
-  --color-deep-ground: #0c0b09;
-  --color-ink: #f0eee9;
-  --color-ink-2: #a8a398;
-  --color-ink-3: #8b8779;
-  --color-rule: #2e2c27;
-  --color-rule-strong: #423f38;
-  --color-accent: #b98d77;
-  --color-mocha-wash: #211b17;
-  --color-mocha-tint: #45352b;
-  --color-mocha-deep: #ceb7ab;
-  --color-terracotta-wash: #211817;
-  --color-terracotta-tint: #462e2a;
-  --color-terracotta-deep: #d2b6b1;
-  --color-wheat-wash: #221e16;
-  --color-wheat-tint: #473e29;
-  --color-wheat-deep: #c8ba9b;
-  --color-sage-wash: #1b1f19;
-  --color-sage-tint: #36412f;
-  --color-sage-deep: #b0c1a7;
-  --color-plum-wash: #1f191d;
-  --color-plum-tint: #40303b;
-  --color-plum-deep: #c9b7c3;
-  --color-blush-wash: #20181a;
-  --color-blush-tint: #422e32;
-  --color-blush-deep: #cdb6bb;
-  --window-shadow: 0 0 0 1px #423f38, 0 24px 60px -24px rgb(0 0 0 / 0.7);
+  --color-desk: #050506;
+  --color-chrome: #17181b;
+  --color-omnibox: #1e2024;
+  --color-paper: #101113;
+  --color-paper-raised: #17181b;
+  --color-paper-sunk: #0a0a0b;
+  --color-deep-ground: #050506;
+  --color-ink: #f3f3f1;
+  --color-ink-2: #b3b6bc;
+  --color-ink-3: #8a8d94;
+  --color-rule: #25272b;
+  --color-rule-strong: #3a3d43;
+  --color-accent: #d98a5f;
+  --color-mocha-wash: #21170f;
+  --color-mocha-tint: #4d2e14;
+  --color-mocha-deep: #eda975;
+  --color-terracotta-wash: #231613;
+  --color-terracotta-tint: #512a24;
+  --color-terracotta-deep: #f8a293;
+  --color-wheat-wash: #1c1a0e;
+  --color-wheat-tint: #3f370c;
+  --color-wheat-deep: #c9b966;
+  --color-sage-wash: #121c14;
+  --color-sage-tint: #1d3f26;
+  --color-sage-deep: #82c891;
+  --color-plum-wash: #1d1721;
+  --color-plum-tint: #412d4d;
+  --color-plum-deep: #d2a8ec;
+  --color-blush-wash: #221519;
+  --color-blush-tint: #502934;
+  --color-blush-deep: #f59fb7;
+  --window-shadow: 0 0 0 1px #3a3d43, 0 24px 60px -24px rgb(0 0 0 / 0.8);
 }
 
 @layer base {
