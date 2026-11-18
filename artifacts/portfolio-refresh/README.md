@@ -50,26 +50,9 @@
 | 브라우저 런타임 오류 | 없음 |
 | 독립 코드·콘텐츠 리뷰 | 차단 문제 없음, 지적된 인코딩·파일 끝 줄바꿈 정리 |
 
-상세 수치는 [검사 결과 JSON](checks.json), 변경 전 구조는 [기준 JSON](baseline-checks.json), 모바일 앵커는 [추가 검사 기록](mobile-anchors.json), 시각 검토는 [판정 기록](visual-review.json)에 있다. 전체 32개 최종 캡처와 16개 변경 전 캡처는 로컬 `.omx/portfolio-refresh/`에 보관했다. 이 폴더에는 비교에 필요한 대표 캡처만 포함한다.
+전체 32개 최종 캡처와 16개 변경 전 캡처는 로컬 `.omx/portfolio-refresh/`에 보관했다. 이 폴더에는 비교에 필요한 대표 캡처만 포함한다. 검증 스크립트와 검사 결과 JSON은 2026-11-18에 저장소에서 지웠다.
 
 기여·성과 대조에서는 syu 가입 148명·지원자 64명·모집 당일 최대 조회 200·자료 30건과 확인 시점, 삼육대 어디야 123개 장소·스크랩 81·좋아요 41·긍정 댓글 12, 교육 27명·수학 지도 8명·해외 IT 교육 160시간을 보존했다. 출결의 팀원 기여, 프론트엔드 STAFF Guard 범위, CCTV 비공개·장기 운영 미확인, Oshi의 샘플 수치 구분도 유지했다.
-
-## 재실행
-
-저장소 루트에서 빌드 후 별도 터미널로 서버를 실행한다.
-
-```powershell
-npm.cmd run build
-npm.cmd run start -- --port 3002
-```
-
-[검증 스크립트](verify.mjs)는 기존 Playwright 모듈의 절대 경로를 첫 인수로 받는다. 현재 환경의 Chrome 설치 경로는 스크립트 안에 명시되어 있다. 아래 경로 자리에는 해당 머신에 이미 설치된 모듈 경로를 넣는다.
-
-```powershell
-node artifacts/portfolio-refresh/verify.mjs "C:/path/to/node_modules/playwright" http://127.0.0.1:3002
-```
-
-결과와 전체 캡처는 `.omx/portfolio-refresh/after/`에 생성된다. 서버와 스크립트는 외부 서비스를 변경하지 않는다.
 
 ## 후속 범위
 
