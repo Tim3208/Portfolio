@@ -55,43 +55,38 @@ export function ProjectCover({
 /**
  * 담당 범위 도식 — 화면을 확보하기 전의 대표 자리.
  * 내가 구현한 화면과 팀원 · 백엔드가 맡은 부분을 같은 높이에 나란히 둔다.
+ * 확보할 화면은 방문자에게 적지 않는다(데이터의 cover.alt 와 TODO 가 기억한다).
  */
 function OwnershipMap({ project }: { project: Project }) {
   const { mine, others } = project.ownership ?? { mine: [] };
   return (
-    <figure className="flex flex-col gap-3">
-      <div className="grid overflow-hidden rounded-xs border border-rule md:grid-cols-[3fr_2fr]">
-        <div className="flex flex-col gap-3 bg-hue-wash p-5">
-          <p className="text-sm font-semibold text-hue-deep">내가 구현한 화면</p>
-          <ol className="flex flex-col gap-2">
-            {mine.map((item, i) => (
-              <li key={item} className="flex gap-3 rounded-xs border border-hue-deep/40 bg-paper-raised px-3 py-2.5">
-                <span className="font-mono text-xs leading-6 text-hue-deep tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span>{item}</span>
+    <div className="grid overflow-hidden rounded-xs border border-rule md:grid-cols-[3fr_2fr]">
+      <div className="flex flex-col gap-3 bg-hue-wash p-5">
+        <p className="text-sm font-semibold text-hue-deep">내가 구현한 화면</p>
+        <ol className="flex flex-col gap-2">
+          {mine.map((item, i) => (
+            <li key={item} className="flex gap-3 rounded-xs border border-hue-deep/40 bg-paper-raised px-3 py-2.5">
+              <span className="font-mono text-xs leading-6 text-hue-deep tabular-nums">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+      {others?.length ? (
+        <div className="flex flex-col gap-3 border-t border-rule bg-paper p-5 md:border-t-0 md:border-l">
+          <p className="text-sm text-ink-2">팀원 · 백엔드가 맡은 부분</p>
+          <ul className="flex flex-col gap-2">
+            {others.map((item) => (
+              <li key={item} className="rounded-xs border border-dashed border-rule-strong px-3 py-2.5 text-sm text-ink-2">
+                {item}
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
-        {others?.length ? (
-          <div className="flex flex-col gap-3 border-t border-rule bg-paper p-5 md:border-t-0 md:border-l">
-            <p className="text-sm text-ink-2">팀원 · 백엔드가 맡은 부분</p>
-            <ul className="flex flex-col gap-2">
-              {others.map((item) => (
-                <li key={item} className="rounded-xs border border-dashed border-rule-strong px-3 py-2.5 text-sm text-ink-2">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-      </div>
-      <figcaption className="max-w-measure text-sm text-ink-2">
-        공개할 수 있는 실제 화면을 확보하기 전이라 담당 범위를 도식으로 보여줍니다.
-        {project.cover?.alt ? ` 확보할 화면: ${project.cover.alt}` : null}
-      </figcaption>
-    </figure>
+      ) : null}
+    </div>
   );
 }
 
@@ -116,13 +111,23 @@ export function ProjectMeta({ project }: { project: Project }) {
 /**
  * 수치. 읽는 범위는 note 로 덧붙인다.
  * 출처·시점은 상세 페이지에서만 보여준다(withSource). 홈과 목록은 수치만 간결하게 둔다.
+ * limit 은 앞에서부터 보여줄 개수다 — 홈은 가장 큰 수치 둘만 둔다.
  */
-export function ProjectMetrics({ project, withSource = false }: { project: Project; withSource?: boolean }) {
-  if (!project.metrics?.length) return null;
+export function ProjectMetrics({
+  project,
+  withSource = false,
+  limit,
+}: {
+  project: Project;
+  withSource?: boolean;
+  limit?: number;
+}) {
+  const metrics = project.metrics?.slice(0, limit);
+  if (!metrics?.length) return null;
   return (
     <div className="flex flex-col gap-3">
       <dl className="grid grid-cols-2 gap-x-8 gap-y-4 sm:flex sm:flex-wrap">
-        {project.metrics.map((m) => (
+        {metrics.map((m) => (
           <div key={m.label} className="flex flex-col gap-0.5">
             <dt className="order-2 text-sm text-ink-2">{m.label}</dt>
             <dd className="order-1 font-mono text-2xl font-semibold tracking-tight text-ink tabular-nums md:text-3xl">
@@ -139,9 +144,20 @@ export function ProjectMetrics({ project, withSource = false }: { project: Proje
   );
 }
 
-/** 상세 페이지 링크(있을 때)와 외부 링크 */
-export function ProjectLinks({ project, detail }: { project: Project; detail: boolean }) {
-  const external = Object.entries(project.links ?? {});
+/**
+ * 상세 페이지 링크(있을 때)와 외부 링크.
+ * serviceOnly 면 외부 링크는 실제 서비스만 둔다 — 홈처럼 짧게 보여주는 자리에서 쓴다.
+ */
+export function ProjectLinks({
+  project,
+  detail,
+  serviceOnly = false,
+}: {
+  project: Project;
+  detail: boolean;
+  serviceOnly?: boolean;
+}) {
+  const external = Object.entries(project.links ?? {}).filter(([key]) => !serviceOnly || key === "service");
   if (!detail && external.length === 0) return null;
   return (
     <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
@@ -162,12 +178,16 @@ export function ProjectLinks({ project, detail }: { project: Project; detail: bo
   );
 }
 
-/** 라벨이 붙은 한 줄. 출발한 불편 · 판단 · 결과처럼 같은 형식으로 비교할 문장에 쓴다. */
+/**
+ * 라벨이 붙은 한 줄. 문제 · 판단 · 결과처럼 같은 형식으로 비교할 문장에 쓴다.
+ * 라벨은 왼쪽 칸에 두어 여러 줄이 이어질 때 라벨끼리, 문장끼리 세로로 맞는다.
+ * 라벨은 두 글자 한국어로 맞춘다(문제 · 판단 · 결과 · 적용).
+ */
 export function Labeled({ label, children }: { label: string; children?: string }) {
   if (!children) return null;
   return (
-    <div className="flex flex-col gap-1">
-      <p className="text-xs font-semibold tracking-wide text-hue-deep">{label}</p>
+    <div className="grid grid-cols-[2.25rem_minmax(0,1fr)] items-baseline gap-x-3">
+      <p className="text-sm font-semibold text-hue-deep">{label}</p>
       <p className="max-w-measure">{children}</p>
     </div>
   );

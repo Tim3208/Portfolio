@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { CoordinateLabel } from "@/components/project/CoordinateLabel";
 import { ApprovalResetDemo } from "@/components/project/demos";
 import { FeaturedRow } from "@/components/project/FeaturedRow";
 import { BUTTON, LINK, Labeled, ProjectLinks } from "@/components/project/ProjectParts";
@@ -15,26 +14,29 @@ import {
   FEATURED_PROJECTS,
   OTHER_PROJECTS,
   PROJECTS,
-  categoryOf,
   projectsOfKind,
   type Project,
 } from "@/data/projects";
-import { COMMUNICATION_LEAD, TEACHING_LEAD, TEACHING_METRICS, TRANSLATION } from "@/data/teaching";
+import { TEACHING_LEAD, TEACHING_METRICS } from "@/data/teaching";
 import { HUE_CLASS } from "@/lib/hue";
 import { SECTION } from "@/lib/sections";
 
 const SECTION_TITLE = "text-title font-bold";
 
 /**
- * 홈 — 스토리형.
+ * 홈 — 스토리형 요약.
  *
  *   소개(HERO: 정체성 · 작업 방향 + 대표 프로젝트 목록)
- *   → 대표 프로젝트(첫 항목을 가장 깊게) → 일하는 방식 → Communication → Career
+ *   → 대표 프로젝트(첫 항목을 가장 깊게) → AI와 일하는 방식 → 교육 경험 → 경력
  *   → 그 밖의 프로젝트 → (layout) 연락처
  *
  * HERO 는 개발자와 작업의 다양성을, 대표 프로젝트는 개별 사례의 문제 · 판단 ·
  * 결과를 맡는다. HERO 에서 한 프로젝트를 키우지 않고, 같은 화면을 HERO 와
  * 대표 프로젝트에 연달아 크게 반복하지 않는다(Project.preview).
+ *
+ * 홈은 요약이다. 기간 · 상태 · 기술, 교육 활동과 수업 도구, 전공 배경처럼
+ * /work · /teaching · /career 가 자세히 다루는 내용은 여기서 되풀이하지 않고
+ * 한 문장과 링크로 넘긴다.
  *
  * 모든 섹션이 src/data 에서 목록을 받아 그린다. 프로젝트를 추가·승격해도
  * 이 파일은 바뀌지 않는다. 비어 있는 섹션은 그리지 않는다.
@@ -42,8 +44,7 @@ const SECTION_TITLE = "text-title font-bold";
  */
 export default function HomePage() {
   const methods = projectsOfKind("method");
-  const teachingTools = projectsOfKind("teaching-tool");
-  const shown = new Set([...FEATURED_PROJECTS, ...methods, ...teachingTools].map((p) => p.slug));
+  const shown = new Set([...FEATURED_PROJECTS, ...methods].map((p) => p.slug));
   const remaining = PROJECTS.filter((p) => p.tier === "supporting" && !shown.has(p.slug));
   const otherNames = [...ARCHIVE_PROJECTS, ...OTHER_PROJECTS].map((p) => p.name);
 
@@ -104,7 +105,7 @@ export default function HomePage() {
             </h2>
           </Container>
           {FEATURED_PROJECTS.map((project, i) => (
-            <FeaturedRow key={project.slug} project={project} lead={i === 0} flip={i % 2 === 1} />
+            <FeaturedRow key={project.slug} project={project} lead={i === 0} flip={i % 2 === 1} compact />
           ))}
         </section>
       ) : null}
@@ -113,59 +114,26 @@ export default function HomePage() {
         <MethodSection key={project.slug} project={project} />
       ))}
 
+      {/* 교육 활동 · 수업 도구 · 설명을 맞추는 방법은 /teaching 이 다룬다. 홈은 범위와 수치만 */}
       <section aria-labelledby="teaching" className="hue-sage border-t border-rule">
-        <Container className="flex flex-col gap-12 py-14 md:py-20">
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-            <div className="flex flex-col gap-5 lg:col-span-5">
-              <h2 id="teaching" className={SECTION_TITLE}>
-                Communication
-              </h2>
-              <p className="max-w-measure text-lead">{COMMUNICATION_LEAD}</p>
-              <p className="max-w-measure text-ink-2">{TEACHING_LEAD}</p>
-              <dl className="flex flex-wrap gap-x-10 gap-y-4 pt-2">
-                {TEACHING_METRICS.map((m) => (
-                  <div key={m.label} className="flex flex-col gap-0.5">
-                    <dt className="order-2 text-sm text-ink-2">{m.label}</dt>
-                    <dd className="order-1 font-mono text-3xl font-semibold tracking-tight tabular-nums">{m.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-            <ul className="grid gap-px self-start overflow-hidden rounded-xs border border-rule bg-rule lg:col-span-7">
-              {TRANSLATION.map((item) => (
-                <li key={item.audience} className="grid gap-1 bg-paper p-5 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-6">
-                  <h3 className="font-semibold text-hue-deep">{item.audience}</h3>
-                  <p className="text-ink-2">{item.detail}</p>
-                </li>
-              ))}
-            </ul>
+        <Container className="grid gap-8 py-14 md:py-20 lg:grid-cols-12 lg:gap-12">
+          <div className="flex flex-col gap-4 lg:col-span-5">
+            <h2 id="teaching" className={SECTION_TITLE}>
+              교육 경험
+            </h2>
+            <p className="max-w-measure text-ink-2">{TEACHING_LEAD}</p>
+            <Link href="/teaching" className={`${LINK} w-fit`}>
+              교육 경험 전체 보기
+            </Link>
           </div>
-
-          {teachingTools.map((project) => (
-            <article
-              key={project.slug}
-              aria-labelledby={`tool-${project.slug}`}
-              className="grid gap-8 border-t border-rule pt-10 lg:grid-cols-12 lg:gap-12"
-            >
-              <div className="flex flex-col gap-4 lg:col-span-5">
-                <p className="text-sm text-ink-2">수업 자료를 만들려고 만든 도구</p>
-                <h3 id={`tool-${project.slug}`} className="text-xl font-bold">
-                  {project.name}
-                </h3>
-                <Labeled label="The Problem">{project.problem}</Labeled>
-                <Labeled label="한 가지 판단">{project.decision}</Labeled>
-                <Labeled label="Result">{project.outcome}</Labeled>
-                <ProjectLinks project={project} detail={hasCaseStudy(project.slug)} />
+          <dl className="flex flex-wrap content-start gap-x-12 gap-y-6 lg:col-span-7">
+            {TEACHING_METRICS.map((m) => (
+              <div key={m.label} className="flex flex-col gap-0.5">
+                <dt className="order-2 text-sm text-ink-2">{m.label}</dt>
+                <dd className="order-1 font-mono text-4xl font-semibold tracking-tight tabular-nums">{m.value}</dd>
               </div>
-              <div className="lg:col-span-7">
-                <CoordinateLabel />
-              </div>
-            </article>
-          ))}
-
-          <Link href="/teaching" className={`${LINK} w-fit`}>
-            교육 경험 전체 보기
-          </Link>
+            ))}
+          </dl>
         </Container>
       </section>
 
@@ -173,7 +141,7 @@ export default function HomePage() {
         <Container className="grid gap-8 py-14 md:py-20 lg:grid-cols-12 lg:gap-12">
           <div className="flex flex-col gap-4 lg:col-span-4">
             <h2 id="path" className={SECTION_TITLE}>
-              Career
+              경력
             </h2>
             <Link href="/career" className={`${LINK} w-fit`}>
               경력 · 수상 · 기술 전체 보기
@@ -206,10 +174,9 @@ export default function HomePage() {
                 {remaining.map((p) => (
                   <li
                     key={p.slug}
-                    className="grid gap-x-6 gap-y-1 border-b border-rule py-3 first:border-t md:grid-cols-[9rem_10rem_minmax(0,1fr)]"
+                    className="grid gap-x-6 gap-y-1 border-b border-rule py-3 first:border-t md:grid-cols-[9rem_minmax(0,1fr)]"
                   >
                     <span className="font-semibold">{p.name}</span>
-                    <span className="text-sm leading-7 text-ink-2">{categoryOf(p)}</span>
                     <span className="text-ink-2">{p.headline}</span>
                   </li>
                 ))}
@@ -224,7 +191,7 @@ export default function HomePage() {
 }
 
 /**
- * 일하는 방식 — 서비스 사례와 성격이 다른 블록. 판단·결과 대신 원칙(principles)을
+ * AI와 일하는 방식 — 서비스 사례와 성격이 다른 블록. 문제 · 판단 대신 원칙(principles)을
  * 보여주고, 옆에서 승인 무효화 규칙을 직접 바꿔 볼 수 있다.
  */
 function MethodSection({ project }: { project: Project }) {
@@ -240,27 +207,25 @@ function MethodSection({ project }: { project: Project }) {
       <Container className="grid gap-10 py-14 md:py-20 lg:grid-cols-12 lg:gap-12">
         <div className="flex flex-col gap-5 lg:col-span-5">
           <h2 id={`method-${project.slug}`} className={SECTION_TITLE}>
-            일하는 방식: AI-Driven QA &amp; Workflow
+            AI와 일하는 방식
           </h2>
           <div className="flex flex-col gap-1">
             <h3 className="text-xl font-bold">{project.name}</h3>
             <p className="max-w-measure text-ink-2">{project.subtitle}</p>
-            <p className="text-sm text-ink-2">{project.role}</p>
           </div>
-          {project.principles?.length ? (
-            <dl className="flex max-w-measure flex-col gap-4">
-              {project.principles.map((p) => (
-                <div key={p.label} className="flex flex-col gap-1">
-                  <dt className="text-xs font-semibold tracking-wide text-hue-deep">{p.label}</dt>
-                  <dd>{p.text}</dd>
-                </div>
-              ))}
-            </dl>
-          ) : (
-            <Labeled label="Impressive Issue">{project.decision}</Labeled>
-          )}
-          <Labeled label="적용">{project.outcome}</Labeled>
-          <ProjectLinks project={project} detail={hasCaseStudy(project.slug)} />
+          <div className="flex flex-col gap-3">
+            {project.principles?.length ? (
+              project.principles.map((p) => (
+                <Labeled key={p.label} label={p.label}>
+                  {p.text}
+                </Labeled>
+              ))
+            ) : (
+              <Labeled label="판단">{project.decision}</Labeled>
+            )}
+            <Labeled label="적용">{project.outcome}</Labeled>
+          </div>
+          <ProjectLinks project={project} detail={hasCaseStudy(project.slug)} serviceOnly />
         </div>
 
         <div className="flex min-w-0 flex-col gap-6 lg:col-span-7">

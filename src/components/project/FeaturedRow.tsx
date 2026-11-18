@@ -25,6 +25,9 @@ import { HUE_CLASS } from "@/lib/hue";
  * 버튼으로 둔다. 가장 깊이 설명하는 사례다. firstScreen 이면(페이지 첫 화면에 걸리는 행)
  * 대표 화면을 우선 로딩한다.
  *
+ * compact 는 홈의 요약이다. 수치는 둘까지, 역할 · 팀만 남기고 기간 · 상태 · 기술과
+ * GitHub · Figma 링크는 /work 와 상세 페이지에 맡긴다.
+ *
  * 행마다 배경색이나 카드를 늘리지 않는다. 프로젝트 색은 라벨과 화면 주석에만 쓴다.
  */
 export function FeaturedRow({
@@ -32,14 +35,17 @@ export function FeaturedRow({
   flip = false,
   lead = false,
   firstScreen = false,
+  compact = false,
 }: {
   project: Project;
   flip?: boolean;
   lead?: boolean;
   firstScreen?: boolean;
+  compact?: boolean;
 }) {
   const detail = hasCaseStudy(project.slug);
   const sizes = lead ? "(min-width: 1024px) 64vw, 100vw" : "(min-width: 1024px) 56vw, 100vw";
+  const who = [project.role, project.team].filter(Boolean).join(" · ");
 
   return (
     <article aria-labelledby={`project-${project.slug}`} className={project.hue ? HUE_CLASS[project.hue] : undefined}>
@@ -75,15 +81,23 @@ export function FeaturedRow({
             </h3>
             <p className="text-lead text-ink-2">{project.headline}</p>
           </div>
-          <Labeled label="The Problem">{project.problem}</Labeled>
-          <Labeled label="Impressive Issue">{project.decision}</Labeled>
-          <ProjectMetrics project={project} />
-          <Labeled label="Result">{project.outcome}</Labeled>
+          <div className="flex flex-col gap-3">
+            <Labeled label="문제">{project.problem}</Labeled>
+            <Labeled label="판단">{project.decision}</Labeled>
+            <Labeled label="결과">{project.outcome}</Labeled>
+          </div>
+          <ProjectMetrics project={project} limit={compact ? 2 : undefined} />
           <div className="flex flex-col gap-1 border-t border-rule pt-4">
-            <ProjectMeta project={project} />
-            {project.technologies ? (
-              <p className="font-mono text-xs text-ink-2">{project.technologies.join(" · ")}</p>
-            ) : null}
+            {compact ? (
+              <p className="text-sm text-ink-2">{who}</p>
+            ) : (
+              <>
+                <ProjectMeta project={project} />
+                {project.technologies ? (
+                  <p className="font-mono text-xs text-ink-2">{project.technologies.join(" · ")}</p>
+                ) : null}
+              </>
+            )}
           </div>
           {lead && detail ? (
             <div className="flex flex-col items-start gap-1">
@@ -91,10 +105,10 @@ export function FeaturedRow({
                 {project.name} 작업 과정 읽기
                 <span aria-hidden="true">→</span>
               </Link>
-              <ProjectLinks project={project} detail={false} />
+              <ProjectLinks project={project} detail={false} serviceOnly={compact} />
             </div>
           ) : (
-            <ProjectLinks project={project} detail={detail} />
+            <ProjectLinks project={project} detail={detail} serviceOnly={compact} />
           )}
         </div>
       </Container>

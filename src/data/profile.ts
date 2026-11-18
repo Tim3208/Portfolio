@@ -10,7 +10,7 @@ export const PROFILE = {
    */
   headline: ["불편을 발견하고,", "웹 서비스로 해결합니다."],
   /** 메인 문구 아래 한 문장 — 이 포트폴리오에서 무엇을 보게 되는지 */
-  intro: "사용자의 문제를 정의하고, 화면을 구현하고, 실제 사용 경험을 개선한 작업들을 소개합니다.",
+  intro: "직접 만든 서비스에서 무엇이 불편했고, 어떤 판단으로 화면을 만들었고, 결과가 어땠는지 정리했습니다.",
   github: GITHUB_URL,
   email: "joungou.park@gmail.com",
 } as const;

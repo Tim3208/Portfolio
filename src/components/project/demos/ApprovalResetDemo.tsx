@@ -6,6 +6,7 @@ import { Switcher } from "@/components/ui/Switcher";
  * 근거는 "코드 · 파일이 바뀌면 이전 승인을 무효로 보고, 다시 검수를 통과해야
  * 완료한다", "현재 후보가 승인 당시와 같을 때만 완료"라는 원칙이다.
  * 실제 검수를 실행하지 않는다. 로그나 성공 결과를 꾸미지 않고 규칙만 보여준다.
+ * 방문자에게는 "규칙 설명용 예시" 표시 하나로 알린다.
  */
 
 const STAGES = ["기획 검토", "개발 검토", "독립 QA", "Wiki 검토"] as const;
@@ -24,9 +25,6 @@ export function ApprovalResetDemo({ name = "approval-reset" }: { name?: string }
         aside={<span className="text-xs text-ink-2">규칙 설명용 예시</span>}
         options={STATES.map((state) => ({ label: state.label, panel: <StatePanel changed={state.changed} /> }))}
       />
-      <p className="max-w-measure border-t border-rule pt-4 text-sm text-ink-2">
-        승인은 특정 내용에 대한 판단입니다. 이 예시는 규칙을 설명할 뿐 실제 검수를 실행하지 않습니다.
-      </p>
     </div>
   );
 }

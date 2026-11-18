@@ -56,12 +56,10 @@ function IndexItem({ project }: { project: Project }) {
             style={{ objectPosition: preview.position ?? "center" }}
           />
         ) : (
-          <span className="hero-tile-pending absolute inset-0 flex flex-col justify-between rounded-xs border border-dashed border-rule-strong p-4">
-            <span className="text-xs font-semibold text-ink-2">화면 준비 중</span>
-            <span aria-hidden="true" className="flex flex-col gap-1">
-              <span className="text-2xl font-bold tracking-tight text-ink-2 md:text-3xl">{project.name}</span>
-              {project.status ? <span className="text-sm text-ink-2">{project.status}</span> : null}
-            </span>
+          // 화면이 없는 프로젝트는 화면을 지어내지 않고 이름과 운영 시점만 적는다
+          <span aria-hidden="true" className="hero-tile-pending absolute inset-0 flex flex-col justify-end gap-1 p-4">
+            <span className="text-2xl font-bold tracking-tight text-ink-2 md:text-3xl">{project.name}</span>
+            {project.status ? <span className="text-sm text-ink-2">{project.status}</span> : null}
           </span>
         )}
         <span

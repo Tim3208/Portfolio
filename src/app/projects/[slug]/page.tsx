@@ -108,7 +108,7 @@ export default async function CaseStudyPage({ params }: Params) {
           <div className="flex flex-col gap-6 xl:col-span-5 xl:pt-9">
             {project.problem ? (
               <div className="flex max-w-measure flex-col gap-1 border-l-2 border-hue-deep pl-4">
-                <p className="text-xs font-semibold tracking-wide text-hue-deep">The Problem</p>
+                <p className="text-sm font-semibold text-hue-deep">문제</p>
                 <p className="text-lead">{project.problem}</p>
               </div>
             ) : null}

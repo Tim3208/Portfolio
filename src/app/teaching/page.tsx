@@ -75,9 +75,11 @@ export default function TeachingPage() {
                   <h3 className="text-xl font-bold">{project.name}</h3>
                   <p className="text-ink-2">{project.subtitle}</p>
                 </div>
-                <Labeled label="The Problem">{project.problem}</Labeled>
-                <Labeled label="한 가지 판단">{project.decision}</Labeled>
-                <Labeled label="확인된 결과">{project.outcome}</Labeled>
+                <div className="flex flex-col gap-3">
+                  <Labeled label="문제">{project.problem}</Labeled>
+                  <Labeled label="판단">{project.decision}</Labeled>
+                  <Labeled label="결과">{project.outcome}</Labeled>
+                </div>
                 <ProjectLinks project={project} detail={hasCaseStudy(project.slug)} />
               </div>
               <div className="lg:col-span-7">
