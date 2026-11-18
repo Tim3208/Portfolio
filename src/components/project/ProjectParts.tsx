@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { Fragment } from "react";
 
 import { Placeholder } from "@/components/ui/Placeholder";
 import { Shot } from "@/components/ui/Shot";
 import type { Project } from "@/data/projects";
+import { LIVE_PATH } from "@/lib/pages";
 
 /**
  * 프로젝트를 보여주는 화면들(홈 · /work · 상세)이 공유하는 조각.
@@ -169,11 +171,26 @@ export function ProjectLinks({
           </span>
         </Link>
       ) : null}
-      {external.map(([key, href]) => (
-        <a key={key} href={href} target="_blank" rel="noreferrer noopener" className={`${LINK} text-sm text-ink-2`}>
-          {LINK_LABEL[key as keyof typeof LINK_LABEL]} (새 창)
-        </a>
-      ))}
+      {external.map(([key, href]) => {
+        const outside = (
+          <a key={key} href={href} target="_blank" rel="noreferrer noopener" className={`${LINK} text-sm text-ink-2`}>
+            {LINK_LABEL[key as keyof typeof LINK_LABEL]} (새 창)
+          </a>
+        );
+        if (key !== "service" || !project.live) return outside;
+        // 라이브 탭: 창이 있는 화면(md 이상)에서는 창 안에서 열고, 좁은 화면에서는 실제 새 창으로 연다.
+        // 겉의 span 은 한쪽만 보이게 할 뿐 배치에는 끼어들지 않는다(contents).
+        return (
+          <Fragment key={key}>
+            <span className="hidden md:contents">
+              <Link href={`${LIVE_PATH}/${project.slug}`} className={`${LINK} text-sm text-ink-2`}>
+                서비스 열어 보기
+              </Link>
+            </span>
+            <span className="contents md:hidden">{outside}</span>
+          </Fragment>
+        );
+      })}
     </div>
   );
 }

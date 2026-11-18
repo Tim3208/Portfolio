@@ -54,9 +54,12 @@ npm run dev
 | `/projects/[slug]` | Case Study — 프로젝트별 문제·판단·구현·결과 |
 | `/new` | 새 탭 시작 페이지 — 주소창 입력과 페이지 바로가기 (연출용) |
 | `/external` | 주소창에 사이트 밖 주소나 검색어를 입력했을 때의 안내 (연출용) |
+| `/live/[slug]` | 라이브 탭 — 배포된 실제 서비스를 창 안에서 그대로 연다. 주소창에는 서비스의 실제 주소가 보인다 (연출용) |
 | 그 밖의 경로 | 창 안에서 보여주는 404와 홈으로 돌아가기 |
 
 상세 페이지가 있는 프로젝트 slug는 `syu-likelion`, `make-a-wish`, `eodiya`, `oshi-calendar`, `agentflow`, `cctv-scheduler`입니다. Contact와 Footer는 모든 페이지의 공통 마무리로 유지됩니다.
+
+라이브 탭이 있는 프로젝트 slug는 `syu-likelion`, `eodiya`, `oshi-calendar`, `math-graph`입니다. 데스크톱(768px 이상)에서는 "서비스 열어 보기"가 창 안에서 서비스를 열고, 주소창에 `syu-likelion.org`처럼 서비스 주소를 입력해도 같은 탭이 열립니다. 모바일에서는 같은 링크가 실제 새 창으로 열립니다. 기준은 [디자인 기준의 라이브 탭](docs/design.md#live)입니다.
 
 창 안의 탭은 sessionStorage에 저장되어 새로고침에는 유지되고, 실제 브라우저 탭을 닫으면 사라집니다. 본문 링크를 Ctrl/Cmd·휠 클릭하면 실제 브라우저의 새 탭으로 열립니다.
 
@@ -97,6 +100,7 @@ artifacts/              기존 콘텐츠 점검 기록과 검토용 캡처
 | 홈 HERO 프로젝트 칸(서비스 종류 · 잘라 쓸 화면) | [projects.ts](src/data/projects.ts)의 `preview` |
 | 대표 프로젝트 행에서 고르는 실제 화면 | [projects.ts](src/data/projects.ts)의 `screens` |
 | 창 안 탭·방문 기록·주소창 동작 | [tabStore.ts](src/components/browser/tabStore.ts), [BrowserProvider.tsx](src/components/browser/BrowserProvider.tsx), [address.ts](src/lib/address.ts) |
+| 라이브 탭으로 여는 서비스와 해 볼 것 안내 | [projects.ts](src/data/projects.ts)의 `live`, `src/app/live/[slug]/page.tsx`, [LiveFrame.tsx](src/components/project/LiveFrame.tsx) |
 | 색상·타이포·간격·반응형 토큰 | [globals.css](src/app/globals.css), [hue.ts](src/lib/hue.ts) |
 | 시스템·라이트·다크 테마 | [theme.ts](src/lib/theme.ts), [ThemeToggle.tsx](src/components/layout/ThemeToggle.tsx) |
 | 사이트 URL·검색 및 공유 정보 | [site.ts](src/lib/site.ts), [layout.tsx](src/app/layout.tsx), [sitemap.ts](src/app/sitemap.ts), [og.ts](src/lib/og.ts), [홈 OG 이미지](src/app/opengraph-image.tsx) |

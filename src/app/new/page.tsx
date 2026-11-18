@@ -3,8 +3,10 @@ import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
 import { PROJECTS_WITH_CASE_STUDY } from "@/data/caseStudies";
+import { LIVE_PROJECTS } from "@/data/projects";
+import { bareAddress } from "@/lib/address";
 import { HUE_CLASS } from "@/lib/hue";
-import { PAGES } from "@/lib/pages";
+import { LIVE_PATH, PAGES } from "@/lib/pages";
 
 export const metadata: Metadata = {
   title: "새 탭",
@@ -60,6 +62,25 @@ export default function NewTabPage() {
           ))}
         </ul>
       </section>
+
+      {/* 라이브 탭은 창이 있는 화면에서만 서비스를 연다. 새 탭 버튼도 그 화면에만 있다 */}
+      {LIVE_PROJECTS.length ? (
+        <section aria-labelledby="live" className="hidden flex-col gap-4 md:flex">
+          <h2 id="live" className="text-sm font-semibold text-ink-2">
+            실제 서비스
+          </h2>
+          <ul className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            {LIVE_PROJECTS.map(({ project, service }) => (
+              <li key={project.slug} className={project.hue ? HUE_CLASS[project.hue] : undefined}>
+                <Link href={`${LIVE_PATH}/${project.slug}`} className={TILE}>
+                  <span className="font-bold">{project.name}</span>
+                  <span className="font-mono text-xs break-all text-ink-2">{bareAddress(service)}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
     </Container>
   );
 }

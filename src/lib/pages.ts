@@ -20,3 +20,8 @@ export const PAGES: readonly SitePage[] = [
 /** 주소창에 보이지 않는 연출용 경로. sitemap 과 검색에서 제외한다. */
 export const NEW_TAB_PATH = "/new";
 export const EXTERNAL_PATH = "/external";
+/**
+ * 실제 서비스를 창 안에서 여는 라이브 탭(/live/[slug]). 주소창에는 이 경로 대신
+ * 서비스의 실제 주소를 보여준다(src/lib/address.ts). 마찬가지로 연출용 경로다.
+ */
+export const LIVE_PATH = "/live";

@@ -103,6 +103,12 @@ export type Project = {
     figma?: string;
   };
   /**
+   * 라이브 탭 — links.service 를 창 안 탭에서 그대로 연다(/live/[slug]).
+   * 다른 사이트 안에 넣어도 열리는 것을 확인한 서비스만 켠다(docs/design.md#live).
+   * hint 는 들어가서 해 볼 것 한 가지다. 화면에서 확인한 사실만 적는다.
+   */
+  live?: { hint?: string };
+  /**
    * 대표 화면. src 가 없으면 어떤 화면이 필요한지만 적어 둔 상태다.
    * 화면이 없으면 목업 대신 담당 범위 도식(ownership)이나 확보할 화면 자리로 그린다.
    */
@@ -166,6 +172,7 @@ export const PROJECTS: readonly Project[] = [
       github: "https://github.com/No4hh4oN/Likelion14th-FE",
       figma: "https://www.figma.com/design/ZORVqHx4WTt4ePPM4mIYz4/",
     },
+    live: { hint: "지원자 · 운영진 화면은 로그인이 필요해 작업 과정에 캡처로 담았습니다." },
     cover: {
       src: "/images/projects/syu-likelion-admin2.png",
       aspectRatio: "1205 / 891",
@@ -270,6 +277,7 @@ export const PROJECTS: readonly Project[] = [
       service: "https://tim3208.github.io/eodiya/",
       github: "https://github.com/Tim3208/eodiya",
     },
+    live: { hint: "검색창에 '장근청홀'을 입력해 보세요." },
     // 아래 대표 소개는 검색 패널까지 전체 화면을 쓰므로, 첫 화면에는 지도 부분을 잘라 둔다
     preview: { label: "캠퍼스 지도·검색 서비스", src: "/images/projects/eodiya.png", position: "90% center" },
     cover: {
@@ -301,6 +309,7 @@ export const PROJECTS: readonly Project[] = [
       service: "https://oshi-calendar-cyan.vercel.app/",
       figma: "https://www.figma.com/design/XCVUGdYiwQYnrsAVrTogcR/",
     },
+    live: { hint: "게임 허브에서 게임을 끄고 켜며 일정을 걸러 보세요." },
     // 종료 임박 일정 · 오늘 할 일 부분. 왼쪽 아래 계정 영역(이메일)은 어느 비율에서도 잘려 나간다
     preview: { label: "일정·보상 관리 대시보드", src: "/images/projects/oshi-calendar.png", position: "25% center" },
     cover: {
@@ -377,6 +386,7 @@ export const PROJECTS: readonly Project[] = [
       service: "https://tim3208.github.io/math-graph/",
       github: "https://github.com/Tim3208/math-graph",
     },
+    live: { hint: "도구에서 점과 라벨을 골라 그래프에 더해 보세요." },
   },
   {
     slug: "foodmap",
@@ -432,6 +442,11 @@ export function displayTitle(project: Project) {
 export function projectsOfKind(kind: ProjectKind) {
   return PROJECTS.filter((p) => p.kind === kind);
 }
+
+/** 라이브 탭으로 여는 프로젝트. 실제 서비스 주소가 있는 것만 남긴다. */
+export const LIVE_PROJECTS = PROJECTS.flatMap((p) =>
+  p.live && p.links?.service ? [{ project: p, service: p.links.service, hint: p.live.hint }] : [],
+);
 
 /**
  * Case Study 로 풀지 않는 나머지 작업들. 무엇을 만들었고 무엇이 되는가까지가

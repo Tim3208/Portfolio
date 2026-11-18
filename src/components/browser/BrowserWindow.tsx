@@ -11,7 +11,9 @@ import { SmoothAnchor } from "@/components/ui/SmoothAnchor";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { PROJECTS_WITH_CASE_STUDY } from "@/data/caseStudies";
 import { PROFILE } from "@/data/profile";
-import { EXTERNAL_PATH, NEW_TAB_PATH, PAGES } from "@/lib/pages";
+import { LIVE_PROJECTS } from "@/data/projects";
+import { bareAddress } from "@/lib/address";
+import { EXTERNAL_PATH, LIVE_PATH, NEW_TAB_PATH, PAGES } from "@/lib/pages";
 import { SECTION } from "@/lib/sections";
 import { SITE_URL } from "@/lib/site";
 
@@ -32,7 +34,8 @@ const PAGE_LINK =
  * 창 셸에는 overflow · transform · filter 를 주지 않는다. 둥근 모서리는
  * 크롬(위)과 Viewport(아래)가 각자 맞춘다.
  *
- * 서버 컴포넌트다. 탭 제목에 필요한 경로 → 이름 표만 조립해 내려보낸다.
+ * 서버 컴포넌트다. 탭 제목에 필요한 경로 → 이름 표와, 라이브 탭의
+ * 경로 → 실제 주소 표만 조립해 내려보낸다.
  */
 export function BrowserWindow({ children }: { children: ReactNode }) {
   const host = new URL(SITE_URL).host;
@@ -41,12 +44,18 @@ export function BrowserWindow({ children }: { children: ReactNode }) {
     // 홈 탭은 이 창이 누구의 포트폴리오인지 말한다. 내비 링크의 이름은 그대로 "홈"이다.
     "/": `${PROFILE.name} 포트폴리오`,
     ...Object.fromEntries(PROJECTS_WITH_CASE_STUDY.map((p) => [`/projects/${p.slug}`, p.name])),
+    // 같은 프로젝트의 작업 과정 탭과 구분되도록 "서비스"를 붙인다
+    ...Object.fromEntries(LIVE_PROJECTS.map(({ project }) => [`${LIVE_PATH}/${project.slug}`, `${project.name} · 서비스`])),
     [NEW_TAB_PATH]: "새 탭",
     [EXTERNAL_PATH]: "열 수 없는 주소",
   };
+  // 라이브 탭에서는 주소창이 이 사이트의 경로 대신 서비스의 실제 주소를 보여준다
+  const live = Object.fromEntries(
+    LIVE_PROJECTS.map(({ project, service }) => [`${LIVE_PATH}/${project.slug}`, bareAddress(service)]),
+  );
 
   return (
-    <BrowserProvider host={host} titles={titles}>
+    <BrowserProvider host={host} titles={titles} live={live}>
       <div className="md:flex md:h-dvh md:p-3 lg:p-4 2xl:p-5">
         <div
           data-browser-shell

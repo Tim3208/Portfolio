@@ -112,6 +112,21 @@
   --window-shadow:
     0 0 0 1px rgb(30 28 24 / 0.12), 0 1px 2px rgb(30 28 24 / 0.06),
     0 18px 44px -22px rgb(30 28 24 / 0.32);
+  /* 창 안 본문 영역(Viewport)의 높이 = 화면 − 창 바깥 여백(위아래) − 크롬 2행(탭줄 40 + 도구줄 44).
+     라이브 탭이 본문 영역을 꼭 채우는 데 쓴다. BrowserWindow 의 여백 · 크롬 높이와 함께 바꾼다. */
+  --viewport-height: calc(100dvh - 1.5rem - 5.25rem);
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --viewport-height: calc(100dvh - 2rem - 5.25rem);
+  }
+}
+
+@media (min-width: 96rem) {
+  :root {
+    --viewport-height: calc(100dvh - 2.5rem - 5.25rem);
+  }
 }
 
 :root[data-theme="light"] {

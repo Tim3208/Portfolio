@@ -18,7 +18,7 @@ import {
   tabStore,
   type TabState,
 } from "@/components/browser/tabStore";
-import { externalHref, parseAddress, pathOf } from "@/lib/address";
+import { externalHref, parseAddress, pathOf, type LiveAddresses } from "@/lib/address";
 import { NEW_TAB_PATH } from "@/lib/pages";
 
 type Browser = {
@@ -26,6 +26,8 @@ type Browser = {
   state: TabState | null;
   pathname: string;
   host: string;
+  /** 라이브 탭의 경로 → 서비스의 실제 주소. 주소창 표시와 입력 해석이 함께 쓴다. */
+  live: LiveAddresses;
   titleOf: (url: string) => string;
   viewportRef: RefObject<HTMLDivElement | null>;
   reloadKey: number;
@@ -60,10 +62,12 @@ export function useBrowser() {
 export function BrowserProvider({
   host,
   titles,
+  live,
   children,
 }: {
   host: string;
   titles: Record<string, string>;
+  live: LiveAddresses;
   children: ReactNode;
 }) {
   const pathname = usePathname();
@@ -165,7 +169,7 @@ export function BrowserProvider({
   }
 
   function submitAddress(input: string) {
-    const parsed = parseAddress(input, host);
+    const parsed = parseAddress(input, host, live);
     if (!parsed) return;
     const url =
       parsed.kind === "internal" ? parsed.href : externalHref(parsed.address);
@@ -195,6 +199,7 @@ export function BrowserProvider({
         state,
         pathname,
         host,
+        live,
         titleOf,
         viewportRef,
         reloadKey,

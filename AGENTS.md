@@ -46,15 +46,16 @@
 
 ## 라우트와 렌더링 계약
 
-- 페이지는 실제 라우트다: `/`, `/work`, `/career`, `/teaching`, `/projects/[slug]`. 연출용 경로로 새 탭 시작 페이지 `/new`, 외부 주소 안내 `/external`, 없는 경로를 받는 `[...missing]`(→ `not-found.tsx`)이 있다. 연출용 경로는 sitemap과 검색에서 제외한다.
+- 페이지는 실제 라우트다: `/`, `/work`, `/career`, `/teaching`, `/projects/[slug]`. 연출용 경로로 새 탭 시작 페이지 `/new`, 외부 주소 안내 `/external`, 실제 서비스를 창 안에서 여는 라이브 탭 `/live/[slug]`, 없는 경로를 받는 `[...missing]`(→ `not-found.tsx`)이 있다. 연출용 경로는 sitemap과 검색에서 제외한다.
 - 주요 페이지 목록은 [src/lib/pages.ts](src/lib/pages.ts) 하나에서 관리한다. 도구줄의 주요 페이지 링크·모바일 내비·새 탭 시작 페이지·sitemap이 이 목록을 쓴다.
 - 창 안의 탭은 라우트가 아니라 방문자가 열고 닫는 상태다([tabStore.ts](src/components/browser/tabStore.ts)). 실제 URL은 항상 활성 탭의 현재 주소와 같고, 탭 목록은 sessionStorage에 저장되어 새로고침에는 유지되고 실제 브라우저 탭을 닫으면 사라진다. 뒤로·앞으로는 활성 탭의 방문 기록을 따른다.
 - 주소창은 실제 입력창이다. 입력은 [address.ts](src/lib/address.ts)의 `parseAddress`로만 해석하고 그대로 router에 넘기지 않는다. 사이트 안 경로는 이동하고, 없는 경로는 연출된 404, 사이트 밖 주소와 검색어는 `/external` 안내를 보여준다.
+- 라이브 탭은 [projects.ts](src/data/projects.ts)에서 `live`를 켠 프로젝트의 실제 서비스만 연다([라이브 탭](docs/design.md#live)). 주소창은 실제 URL(`/live/[slug]`) 대신 서비스의 실제 주소를 보여주고, 그 주소를 입력하면 같은 탭으로 보낸다. 등록되지 않은 바깥 주소를 창 안에서 여는 길은 만들지 않는다. 창이 없는 모바일에서는 서비스를 불러오지 않고 실제 새 창으로 연다.
 - 본문 링크의 일반 클릭은 현재 탭에서 이동하고, Ctrl/Cmd·휠 클릭은 브라우저 기본 동작(실제 새 탭)을 유지한다. 창 안 새 탭은 "새 탭" 버튼과 바탕화면 아이콘(그 페이지를 연 탭이 없을 때)으로만 연다.
 - [layout.tsx](src/app/layout.tsx)가 BrowserWindow, 단일 `main#content`, Contact, Footer를 소유한다. 모든 라우트에서 `#contact`와 본문 건너뛰기 링크가 유효해야 한다.
 - 각 페이지는 `h1`을 정확히 하나 가진다.
 - 데스크톱(`md` 이상)은 화면 높이에 고정된 창과 탭줄·도구줄 2행 크롬을 쓰고(주요 페이지 링크는 도구줄 오른쪽), 본문은 창 안에서만 스크롤한다. `lg` 이상은 창 왼쪽에 바탕화면 아이콘과 큐레이터 커서를 두고, 홈 첫 방문에만 창 열기 연출을 재생한다([바탕화면과 큐레이터](docs/design.md#intro)). 모바일은 창 연출을 풀고 간단한 상단 내비와 문서 스크롤을 쓴다. 햄버거 메뉴를 추가하지 않는다.
-- 서버 컴포넌트를 기본으로 유지한다. 현재 클라이언트 경계는 `BrowserProvider`, `TabStrip`, `Toolbar`, `Viewport`, `ThemeToggle`, `DeskIcons`, `Curator`다. 탭 제목에 필요한 경로→이름 표는 서버의 `BrowserWindow`에서 조립해 전달한다.
+- 서버 컴포넌트를 기본으로 유지한다. 현재 클라이언트 경계는 `BrowserProvider`, `TabStrip`, `Toolbar`, `Viewport`, `ThemeToggle`, `DeskIcons`, `Curator`, `LiveFrame`이다. 탭 제목에 필요한 경로→이름 표와 라이브 탭의 경로→실제 주소 표는 서버의 `BrowserWindow`에서 조립해 전달한다.
 - Case Study는 [src/data/caseStudies](src/data/caseStudies)의 정적 TypeScript 데이터다. 표시 정보는 `src/data/projects.ts`, 블록 타입은 `caseStudies/types.ts`에서 관리한다. 문서 정리만을 이유로 MDX나 새 콘텐츠 계층을 도입하지 않는다.
 - 공개 이미지는 루트의 `public/images/projects/`에 둔다. `artifacts/`는 검토 기록이며 앱에서 직접 제공되는 경로가 아니다.
 

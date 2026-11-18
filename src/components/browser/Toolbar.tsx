@@ -23,11 +23,11 @@ const BUTTON =
  * 편집 중이던 글자를 버리고 새 주소를 보여준다.
  */
 export function Toolbar({ children }: { children?: ReactNode }) {
-  const { state, pathname, host, back, forward, reload, submitAddress } = useBrowser();
+  const { state, pathname, host, live, back, forward, reload, submitAddress } = useBrowser();
 
   const tab = activeTab(state);
   const url = tab ? current(tab) : state ? "" : pathname;
-  const shown = url ? displayAddress(url, host) : "";
+  const shown = url ? displayAddress(url, host, live) : "";
   const isNewTab = pathOf(url) === NEW_TAB_PATH;
 
   return (
