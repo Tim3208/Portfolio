@@ -80,9 +80,8 @@ export const makeAWish: CaseStudy = {
       title: "받은 스탬프를 별자리로",
       blocks: [
         {
-          type: "image",
-          alt: "부스 스탬프 별자리 화면. 받은 스탬프가 부스 분류에 따라 별자리에 표시된다. (샘플 계정)",
-          caption: "서버가 지급한 내역만 조회해 보여줍니다. 적립과 지급은 서버가 결정합니다.",
+          type: "demo",
+          name: "stamp-board",
         },
         {
           type: "prose",

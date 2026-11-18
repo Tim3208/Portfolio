@@ -1,5 +1,46 @@
 import type { ReactNode } from "react";
 
+/** Switcher와 실제 코드 데모가 공유하는 라디오 컨트롤 줄. 상태 소유는 호출부가 정한다. */
+export function RadioChoices({
+  name,
+  legend,
+  options,
+  value,
+  onValueChange,
+  compactDesktop = true,
+}: {
+  name: string;
+  legend: string;
+  options: readonly { label: string; value: string }[];
+  value?: string;
+  onValueChange?: (value: string) => void;
+  compactDesktop?: boolean;
+}) {
+  return (
+    <fieldset className="min-w-0">
+      <legend className="sr-only">{legend}</legend>
+      <div className="flex flex-wrap gap-1 rounded-panel bg-paper-sunk p-1">
+        {options.map((option, i) => (
+          <label
+            key={option.value}
+            className={`relative flex min-h-11 cursor-pointer items-center rounded-chip px-3.5 text-sm text-ink-2 select-none hover:text-ink has-checked:bg-paper-raised has-checked:font-semibold has-checked:text-ink has-checked:shadow-[inset_0_-2px_0_var(--hue-deep)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-hue-deep ${compactDesktop ? "transition-colors duration-150 md:min-h-9" : ""}`}
+          >
+            <input
+              type="radio"
+              name={name}
+              value={option.value}
+              {...(value === undefined ? { defaultChecked: i === 0 } : { checked: value === option.value })}
+              onChange={onValueChange ? () => onValueChange(option.value) : undefined}
+              className="sr-only"
+            />
+            {option.label}
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
 /**
  * 한 번에 한 상태만 보여주는 전환 컨트롤. 홈 첫 화면의 화면 전환과
  * 상세의 설명용 데모가 쓴다.
@@ -28,26 +69,11 @@ export function Switcher({
   return (
     <div data-switch={name} className={["flex flex-col gap-4", className].filter(Boolean).join(" ")}>
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-        <fieldset className="min-w-0">
-          <legend className="sr-only">{legend}</legend>
-          <div className="flex flex-wrap gap-1 rounded-panel bg-paper-sunk p-1">
-            {options.map((option, i) => (
-              <label
-                key={option.label}
-                className="relative flex min-h-11 cursor-pointer items-center rounded-chip px-3.5 text-sm text-ink-2 transition-colors duration-150 select-none hover:text-ink has-checked:bg-paper-raised has-checked:font-semibold has-checked:text-ink has-checked:shadow-[inset_0_-2px_0_var(--hue-deep)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-hue-deep md:min-h-9"
-              >
-                <input
-                  type="radio"
-                  name={name}
-                  value={i}
-                  defaultChecked={i === 0}
-                  className="sr-only"
-                />
-                {option.label}
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <RadioChoices
+          name={name}
+          legend={legend}
+          options={options.map((option, i) => ({ label: option.label, value: String(i) }))}
+        />
         {aside}
       </div>
       <div className="switch-panels">

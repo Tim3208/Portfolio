@@ -1,7 +1,7 @@
 /**
  * Case Study 콘텐츠 모델 (AGENTS.md §19 ~ §24)
  *
- * 서술 블록 7종 + 설명용 데모 1종만 둔다. 이보다 늘리면 콘텐츠가 아니라
+ * 서술 블록 7종 + 데모 블록 1종만 둔다. 이보다 늘리면 콘텐츠가 아니라
  * 레이아웃을 편집하게 된다. 각 블록이 읽기 폭(672)에 들어갈지 섹션 폭을 다
  * 쓸지는 렌더러가 정한다 — 콘텐츠 작성자가 폭을 신경 쓰지 않게 한다.
  *
@@ -10,8 +10,8 @@
  * 내용이 성립해야 한다.
  */
 
-/** 등록된 설명용 데모. 구현은 src/components/project/demos 에 있다. */
-export type DemoName = "evaluation-stage" | "approval-reset";
+/** 설명용 재구성(기존 둘)과 실제 코드 실행(stamp-board). 모두 샘플 데이터만 쓴다. */
+export type DemoName = "evaluation-stage" | "approval-reset" | "stamp-board";
 
 export type Block =
   /** 서술. 대부분의 문장이 여기 들어간다. */
@@ -47,7 +47,7 @@ export type Block =
       choice: string;
       reason: string;
     }
-  /** 합성 데이터로 판단 하나를 보여주는 설명용 데모. 실제 기능을 재현하지 않는다. */
+  /** 샘플 데이터로 판단을 보여준다. 설명용 재구성과 원본 서비스 코드 실행을 구분한다. */
   | { type: "demo"; name: DemoName };
 
 export type CaseSection = {

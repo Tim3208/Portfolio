@@ -1,0 +1,24 @@
+/**
+ * 원본: src/index.css
+ * 기준 커밋: 436b5ef832c5b7c03ff65bfd898c90381a45887d
+ * 변경: 전역 테마 대신 서비스 화면 범위에 원본 색·폰트·포커스만 격리.
+ * Hahmlet 폰트는 StampPageContent에서 불러오고 상태 줄은 기존 Pretendard를 공유한다.
+ */
+.service {
+  --maw-white: #ffffff;
+  --maw-black: #080c18;
+  --maw-main-01: #35fff5;
+  --maw-purple: #2a315b;
+  --maw-blue: #2d7dc8;
+  --maw-font-display: "Hahmlet Variable", serif;
+  --maw-font-body: var(--font-sans);
+
+  color: var(--maw-white);
+  color-scheme: dark;
+  font-family: var(--maw-font-display);
+}
+
+.service :focus-visible {
+  outline: 2px solid var(--maw-blue);
+  outline-offset: 3px;
+}
