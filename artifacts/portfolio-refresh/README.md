@@ -13,18 +13,9 @@
 
 ## 변경 전후 비교
 
-변경 전은 시스템 테마가 라이트인 상태, 변경 후 비교본은 라이트 고정 상태다. 캡처는 각각 1440×900, 390×844 뷰포트에서 찍은 전체 페이지다.
+Home · Work · syu-likelion 페이지의 변경 전후 전체 캡처 12장과 모바일 평가 섹션 캡처는 2026-11-19에 지웠다. 당시 대표 화면이던 운영진 평가 스크린샷에 실제 지원자 정보가 있었고, 이 캡처들이 그 화면을 그대로 담고 있었다. 아래 서술은 당시 확인한 내용의 기록으로 남긴다.
 
-| 화면 | 변경 전 | 변경 후 |
-| --- | --- | --- |
-| Home 데스크톱 | [보기](before/home-1440.png) | [보기](after/home-1440-light.png) |
-| Home 모바일 | [보기](before/home-390.png) | [보기](after/home-390-light.png) |
-| Work 데스크톱 | [보기](before/work-1440.png) | [보기](after/work-1440-light.png) |
-| Work 모바일 | [보기](before/work-390.png) | [보기](after/work-390-light.png) |
-| syu-likelion 데스크톱 | [보기](before/projects-syu-likelion-1440.png) | [보기](after/projects-syu-likelion-1440-light.png) |
-| syu-likelion 모바일 | [보기](before/projects-syu-likelion-390.png) | [보기](after/projects-syu-likelion-390-light.png) |
-
-추가 검토본: [Career 다크](after/career-1440-dark.png), [Teaching 모바일](after/teaching-390-light.png), [모바일 평가 섹션 앵커](after/syu-evaluation-390.png), [Oshi 이미지와 샘플 데이터 캡션](after/oshi-image-1440.png), [홈 OG](after/home-og.png), [syu-likelion OG](after/syu-og.png).
+추가 검토본: [Career 다크](after/career-1440-dark.png), [Teaching 모바일](after/teaching-390-light.png), [Oshi 이미지와 샘플 데이터 캡션](after/oshi-image-1440.png), [홈 OG](after/home-og.png), [syu-likelion OG](after/syu-og.png).
 
 1440×900 Home에서는 이름·직무·대표 프로젝트 이미지와 성과가 모두 첫 화면에 보인다. 390×844에서는 소개와 주요 링크 뒤 약 400px 지점부터 대표 이미지가 시작한다. syu 평가 화면과 삼육대 어디야는 원본 비율을 사용하며, 면접 결과·마이페이지·Oshi의 기존 잘림 위치는 보존했다.
 
