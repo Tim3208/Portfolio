@@ -104,22 +104,12 @@ export const syuLikelion: CaseStudy = {
           reason: "서류 마감을 수정 가능 여부의 경계로 정했습니다. 처음에는 1차 결과 발표를 경계로 안내했다가 서류 마감으로 바꿨습니다. 제출 완료 화면에 발표 일정과 수정이 불가능해지는 시점을 함께 적고, 마감 전에는 지원서 수정과 취소를 제공했습니다."
         },
         {
-          type: "image",
-          src: "/images/projects/apply/application-submitted.png",
-          alt: "지원서 제출 완료 화면. 제출이 완료되었다는 안내와 함께 1차 합격 결과 발표일, 2차 면접 기간이 적혀 있고, 지원서 수정과 지원 취소 버튼 아래에 1차 합격 결과 발표 후에는 수정이 불가능하다는 안내 문구가 있다.",
-          caption: "제출 완료 화면에 발표 일정, 지원서 수정·취소, 수정 가능 기간을 함께 표시했습니다. 캡처는 안내 문구를 서류 마감 기준으로 바꾸기 전 화면입니다.",
-          position: "center"
-        },
-        {
           type: "prose",
           text: "서류 합격자는 결과 화면에서 면접 날짜와 시간을 고릅니다. 최종 합격자는 OT 일정과 커뮤니티 채널 안내로 이어집니다."
         },
         {
-          type: "image",
-          src: "/images/projects/apply/first-result-interview.png",
-          alt: "1차 모집 결과 발표 화면. 1차 합격 안내 아래에 면접 시간 영역이 있고, 좌측 달력에서 면접 가능한 날짜를 고르면 우측에 20분 간격의 시간대 목록이 나타나 선택할 수 있다.",
-          caption: "서류 합격 안내와 예약 가능한 날짜·시간대를 같은 화면에서 확인합니다.",
-          position: "center 40%"
+          type: "demo",
+          name: "result-status"
         }
       ]
     },

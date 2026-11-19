@@ -18,6 +18,8 @@
 - 상세 Result는 `148 / 64 / 200` 세 수치를 metrics로 쓰고, `30건`은 모집 이후 운영 문장에 연결했다.
 - Work 카드와 상세 Hero metrics는 공유 `project.metrics`의 카드 최대 2개 규칙에 맞춰 `148 / 200`만 유지했다.
 
+2026-11-19 변경: 상세 본문의 `application-submitted.png`와 `first-result-interview.png`는 원본 코드를 샘플 응답으로 실행하는 `result-status` 데모로 바꿨다. 두 PNG는 대표 행의 화면 전환에서 계속 사용한다. 아래의 12섹션·성과 배치는 점검 당시 기록이며, 현재 일곱 섹션과 공개 수치 기준은 [콘텐츠 기준](../../docs/content.md#syu-likelion)을 따른다.
+
 상위 문서 기준은 다음 분리 문서로 옮긴다: [대표 Case Study](../../docs/content.md#main-case-study), [판단 서술](../../docs/content.md#decisions), [카드 문구](../../docs/content.md#cards), [성과 수치](../../docs/content.md#results), [사실성](../../docs/content.md#accuracy), [스크린샷](../../docs/design.md#screenshots).
 
 ## 채택한 결정
@@ -158,8 +160,8 @@ Staff
 | 이미지 | 상태 | 위치 | 증명하는 것 | 후보 캡션 |
 | --- | --- | --- | --- | --- |
 | [syu-likelion.png](../../public/images/projects/syu-likelion.png) | 사용 | Solution | 공개 랜딩과 지원 전환 | 안내를 읽던 흐름이 지원으로 이어진다. |
-| [application-submitted.png](../../public/images/projects/apply/application-submitted.png) | 사용 | Applicant Flow | 제출 완료, 발표 일정, 수정 가능 상태, 지원 취소 | “제출 완료 여부와 이후 일정을 안내하고, 서류 마감 전까지 수정할 수 있는 상태 경계를 명확히 했습니다.” 캡처는 안내 문구를 바꾸기 전 화면이다([콘텐츠 기준](../../docs/content.md) 참고). |
-| [first-result-interview.png](../../public/images/projects/apply/first-result-interview.png) | 핵심 사용 | Applicant Flow | 1차 합격과 면접 날짜·시간 선택 | “서류 합격자가 별도의 연락 없이 가능한 날짜와 시간을 확인하고 면접 일정을 확정하도록 구현했습니다.” |
+| [application-submitted.png](../../public/images/projects/apply/application-submitted.png) | 대표 행 사용 · 상세는 데모로 교체 | 대표 프로젝트 행의 화면 전환 | 제출 완료, 발표 일정, 수정 가능 상태, 지원 취소 | “제출 완료 여부와 이후 일정을 안내하고, 서류 마감 전까지 수정할 수 있는 상태 경계를 명확히 했습니다.” 캡처는 안내 문구를 바꾸기 전 화면이다([콘텐츠 기준](../../docs/content.md) 참고). |
+| [first-result-interview.png](../../public/images/projects/apply/first-result-interview.png) | 대표 행 사용 · 상세는 데모로 교체 | 대표 프로젝트 행의 화면 전환 | 1차 합격과 면접 날짜·시간 선택 | “서류 합격자가 별도의 연락 없이 가능한 날짜와 시간을 확인하고 면접 일정을 확정하도록 구현했습니다.” |
 | [syu-likelion-admin.png](../../public/images/projects/syu-likelion-admin.png) | 사용 | Recruitment Admin Flow | 64명의 지원자와 단계별 목록·필터 | 운영진이 모집 단계와 남은 평가 업무를 한 화면에서 본다. |
 | [syu-likelion-mypage.png](../../public/images/projects/syu-likelion-mypage.png) | 사용 | After Recruitment | 활동, 일정, 세션, 과제 마감 | “동아리원은 자신의 활동과 세션 일정, 과제 마감일을 마이페이지에서 한 번에 확인합니다.” |
 | [syu-likelion-admin2.png](../../public/images/projects/syu-likelion-admin2.png) | 사용 | Problems & Improvements | 지원서 상세, 점수, 코멘트 대조 | 같은 지원자 안에서 서류 보기·점수 매기기·점수 현황을 전환한다. |

@@ -15,7 +15,7 @@ export function DemoPanel({
   response: ReactNode;
 }) {
   return (
-    <aside aria-label={label} className={styles.panel}>
+    <aside data-demo-panel aria-label={label} className={styles.panel}>
       <div className={styles.panelIntro}>{intro}</div>
       <div className={styles.controls}>{controls}</div>
       <details className={`${styles.response} min-w-0 border-t border-rule`}>

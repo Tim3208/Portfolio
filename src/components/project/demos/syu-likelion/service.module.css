@@ -1,0 +1,58 @@
+/*
+ * 원본: styles/globals.css · feat/#36 · 763061c
+ * 변경: 이 화면에서 사용하는 토큰만 --syu-* 범위로 이식. 원본 기본 white와 red-400도
+ * 범위 변수로 옮기며 테마를 고정. 원본 화면에는 별도 커스텀 애니메이션이 없어 옮기지 않음.
+ * 원본 Tailwind 기본 행간·줄바꿈을 복원하고 키보드 포커스를 보완.
+ * 서비스 화면의 버튼 크기와 달력 열 너비는 원본을 유지한다.
+ */
+.screen {
+  --syu-background: #262529;
+  --syu-foreground: #fafafa;
+  --syu-surface: #303136;
+  --syu-overlay: rgba(0, 0, 0, 0.2);
+  --syu-white: #fff;
+  --syu-white-1: #fafafa;
+  --syu-gray-1: #f6f8fb;
+  --syu-gray-2: #e1e4ee;
+  --syu-gray-3: #cccfd8;
+  --syu-gray-4: #a8adbe;
+  --syu-gray-5: #828797;
+  --syu-gray-6: #484d5a;
+  --syu-gray-7: #303136;
+  --syu-main-1: #0b7de2;
+  --syu-main-2: #334ebe;
+  --syu-main-3: #ff9b43;
+  --syu-red-1: #fb1d1d;
+  --syu-green-1: #19c524;
+  --syu-red-400: oklch(70.4% 0.191 22.216);
+  color-scheme: dark;
+  container: syu-result-screen / inline-size;
+  min-width: 0;
+  background: var(--syu-background);
+  color: var(--syu-foreground);
+  line-height: 1.5;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.screen button:focus-visible,
+.screen [tabindex]:focus-visible {
+  outline: 2px solid var(--syu-main-3);
+  outline-offset: 2px;
+}
+
+/* 7개의 40px 날짜와 원본 여백(48px), 섹션 여백(32px)이 들어갈 때는 그대로 둔다. */
+@container syu-result-screen (width < 360px) {
+  .calendar {
+    padding-inline: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen,
+  .screen * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

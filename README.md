@@ -43,7 +43,7 @@ npm run dev
 
 넓은 화면(1024px 이상)에서는 창 왼쪽에 바탕화면 아이콘이 있고, 홈에 처음 들어오면 연출 커서가 인사한 뒤 포트폴리오 아이콘을 더블클릭해 창을 엽니다. 다시 보려면 브라우저 개발자 도구에서 `localStorage`의 `intro-seen`을 지웁니다. 기준은 [바탕화면과 큐레이터](docs/design.md#intro)입니다.
 
-이 브랜치(`design/3-claude`)는 디자인 **도색 시안 3안**입니다. 실제 서비스 화면에 번호 주석을 달아 판단을 화면 위에서 짚고, 평가 단계·승인 무효화 같은 판단은 합성 데이터로 만든 설명용 재구성 데모로 바꿔 볼 수 있습니다. Make A Wish 스탬프는 원본 서비스 코드를 샘플 응답으로 실행하는 데모입니다. 기준은 [디자인 기준의 3안](docs/design.md#option-3)입니다.
+이 브랜치(`design/3-claude`)는 디자인 **도색 시안 3안**입니다. 실제 서비스 화면에 번호 주석을 달아 판단을 화면 위에서 짚고, 평가 단계·승인 무효화 같은 판단은 합성 데이터로 만든 설명용 재구성 데모로 바꿔 볼 수 있습니다. Make A Wish 스탬프와 syu-likelion 결과 확인·면접 예약은 원본 서비스 코드를 샘플 응답으로 실행하는 데모입니다. 기준은 [디자인 기준의 3안](docs/design.md#option-3)입니다.
 
 | 경로 | 콘텐츠 |
 | --- | --- |
@@ -76,7 +76,10 @@ src/
 │  ├─ browser/          창, 탭 상태, 탭줄, 도구줄·주소창, 본문 영역
 │  ├─ layout/           Contact, Footer, ThemeToggle
 │  ├─ project/          대표 프로젝트 행, Case Study 블록 렌더링, 재구성·실제 코드 실행 데모
-│  │  └─ demos/shell/   실제 코드 실행 데모의 표면·배치·패널·지연 마운트 공통 틀
+│  │  └─ demos/         데모별 서버 표면과 클라이언트 조작
+│  │     ├─ shell/      표면·배치·패널·지연 마운트 공통 틀
+│  │     ├─ make-a-wish/ 원본에서 옮긴 스탬프 화면·순수 로직
+│  │     └─ syu-likelion/ 원본에서 옮긴 제출·결과·예약 화면·순수 로직
 │  └─ ui/               공통 요소 (Container, Shot 화면 주석, Switcher 전환, Placeholder)
 ├─ data/                프로필, 프로젝트, 경력, 수상, 기술, 교육, 홈 스토리 요약
 │  └─ caseStudies/      프로젝트별 상세 본문과 블록 타입
@@ -96,6 +99,7 @@ artifacts/              기존 콘텐츠 점검 기록과 검토용 캡처
 | Case Study 본문·등록·블록 모델·기존 앵커 호환 | [caseStudies](src/data/caseStudies), [index.ts](src/data/caseStudies/index.ts), [types.ts](src/data/caseStudies/types.ts) |
 | 실제 코드 실행 데모 공통 틀(표면·배치·패널·지연 마운트) | [shell](src/components/project/demos/shell) |
 | Make A Wish 스탬프 데모·응답 조작·옮긴 서비스 코드·그림 | [StampBoardDemo.tsx](src/components/project/demos/StampBoardDemo.tsx), [StampBoardControls.tsx](src/components/project/demos/StampBoardControls.tsx), [make-a-wish](src/components/project/demos/make-a-wish), [stamps](public/images/projects/make-a-wish/stamps) |
+| syu-likelion 제출 완료·결과 확인·면접 예약 데모와 그림 | [ResultStatusDemo.tsx](src/components/project/demos/ResultStatusDemo.tsx), [ResultStatusControls.tsx](src/components/project/demos/ResultStatusControls.tsx), [syu-likelion](src/components/project/demos/syu-likelion), [result](public/images/projects/syu-likelion/result) |
 | 경력, 수상, 기술, 교육 | [experiences.ts](src/data/experiences.ts), [awards.ts](src/data/awards.ts), [skills.ts](src/data/skills.ts), [teaching.ts](src/data/teaching.ts) |
 | 프로젝트 층·성격·판단·결과·담당 구분 | [projects.ts](src/data/projects.ts)의 `tier`·`kind`·`decision`·`outcome`·`ownership` |
 | 주요 페이지 목록(도구줄·모바일 내비·sitemap) | [pages.ts](src/lib/pages.ts) |

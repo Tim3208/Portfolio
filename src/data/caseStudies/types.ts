@@ -10,8 +10,8 @@
  * 내용이 성립해야 한다.
  */
 
-/** 설명용 재구성(기존 둘)과 실제 코드 실행(stamp-board). 모두 샘플 데이터만 쓴다. */
-export type DemoName = "evaluation-stage" | "approval-reset" | "stamp-board";
+/** 설명용 재구성(기존 둘)과 실제 코드 실행(stamp-board, result-status). 모두 샘플 데이터만 쓴다. */
+export type DemoName = "evaluation-stage" | "approval-reset" | "stamp-board" | "result-status";
 
 export type Block =
   /** 서술. 대부분의 문장이 여기 들어간다. */
