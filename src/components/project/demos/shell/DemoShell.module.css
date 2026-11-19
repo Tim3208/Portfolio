@@ -195,3 +195,45 @@
   visibility: hidden;
   pointer-events: none;
 }
+
+/* --------------------------------------------------------------------------
+   안에서 스크롤되는 프레임과 창 안 본문 스크롤이 겹치는 자리 (DeferredDemoFrame)
+
+   data-guard: 페이지를 내리다가 프레임이 커서 밑으로 들어온 상태. 휠은 본문으로
+   넘기고 프레임 안은 아직 포인터를 받지 않는다. 키보드 초점이 안에 있으면 풀린다.
+   data-engaged: 커서를 프레임 안에서 실제로 움직이거나 누른 상태. 프레임이 휠을
+   받고, 표면 바깥을 어둡게 해 데모 안을 조작 중임을 알린다. 그림자는 창 안 본문
+   영역(Viewport)에서 잘리므로 크롬과 바탕화면은 어두워지지 않는다.
+   잠깐 스쳐 지나갈 때 깜빡이지 않도록 어두워지는 쪽에만 짧은 지연을 둔다.
+   -------------------------------------------------------------------------- */
+.surface {
+  position: relative;
+  box-shadow: 0 0 0 100vmax transparent;
+  transition:
+    box-shadow 160ms ease,
+    z-index 0s linear 160ms;
+}
+
+.surface:has(.wideFrame[data-engaged]) {
+  z-index: 30;
+  box-shadow: 0 0 0 100vmax rgb(21 22 26 / 0.45);
+  transition:
+    box-shadow 200ms ease 120ms,
+    z-index 0s;
+}
+
+.wideFrame {
+  transition: border-color 160ms ease;
+}
+
+.wideFrame[data-engaged] {
+  border-color: var(--hue-deep);
+}
+
+.wideFrame[data-guard]:not(:focus-visible, :has(:focus-visible)) {
+  overflow-y: hidden;
+}
+
+.wideFrame[data-guard]:not(:focus-visible, :has(:focus-visible)) .wideContent {
+  pointer-events: none;
+}

@@ -23,6 +23,7 @@ const LINK_LABEL = { service: "서비스", github: "GitHub", figma: "Figma" } as
 /**
  * 대표 화면. 실제 캡처가 있으면 주석과 함께, 공개할 수 없으면 비공개 사유,
  * 캡처를 확보하기 전이면 담당 범위 도식이나 확보할 화면 자리를 그린다.
+ * 휴대폰 폭의 세로 화면(phones)은 한 장을 크게 늘리지 않고 나란히 놓는다.
  * 어떤 경우에도 실제 화면처럼 보이는 목업은 만들지 않는다.
  */
 export function ProjectCover({
@@ -48,6 +49,24 @@ export function ProjectCover({
         preload={preload}
         notesClassName={notesClassName}
       />
+    );
+  }
+  if (project.phones?.length) {
+    return (
+      <div className="grid grid-cols-2 items-start gap-4 md:gap-6">
+        {project.phones.map((screen, i) => (
+          <Shot
+            key={screen.src}
+            src={screen.src}
+            alt={screen.alt}
+            aspectRatio={screen.aspectRatio}
+            position={screen.position}
+            sizes="(min-width: 1024px) 26vw, 46vw"
+            preload={preload && i === 0}
+            notesClassName="grid gap-y-2"
+          />
+        ))}
+      </div>
     );
   }
   if (project.ownership) return <OwnershipMap project={project} />;

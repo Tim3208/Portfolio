@@ -47,7 +47,15 @@ function revealFrameTop(frame: HTMLElement) {
   if (offset < 0) window.scrollTo({ top: window.scrollY + offset, behavior: "instant" });
 }
 
-/** wide의 기본은 모바일 원본, 선택적으로 모든 폭에서 고정 캔버스 전체를 축소한다. */
+/**
+ * wide의 기본은 모바일 원본, 선택적으로 모든 폭에서 고정 캔버스 전체를 축소한다.
+ *
+ * 안에서 스크롤되는 wide 프레임은 창 안 본문 스크롤과 겹친다. 마우스로 페이지를
+ * 내리다가 프레임이 커서 밑으로 들어온 것만으로는 휠을 가로채지 않고(data-guard),
+ * 커서를 프레임 안에서 실제로 움직이거나 누르면 프레임이 휠과 클릭을 받는다
+ * (data-engaged). 그동안 표면 바깥을 어둡게 해 지금 데모 안을 조작 중임을 알린다
+ * (DemoShell.module.css). 터치와 키보드에는 적용하지 않는다.
+ */
 export function DeferredDemoFrame({
   className,
   placeholder,
@@ -123,6 +131,44 @@ export function DeferredDemoFrame({
       desktop.removeEventListener("change", measure);
     };
   }, [variant, designWidth, scaleAtAllWidths, designHeight, scaleFrom]);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame || variant !== "wide") return;
+    const desktop = window.matchMedia(scaleFrom === "xl" ? "(min-width: 80rem)" : "(min-width: 64rem)");
+    const release = () => {
+      delete frame.dataset.guard;
+      delete frame.dataset.engaged;
+    };
+    const engage = () => {
+      delete frame.dataset.guard;
+      frame.dataset.engaged = "";
+    };
+    const usesMouse = (event: PointerEvent) => event.pointerType === "mouse" && desktop.matches;
+    const onEnter = (event: PointerEvent) => {
+      if (usesMouse(event) && !("engaged" in frame.dataset)) frame.dataset.guard = "";
+    };
+    const onMove = (event: PointerEvent) => {
+      // 스크롤로 화면이 커서 밑에 들어왔을 때 브라우저가 만드는 이동에는 움직인 거리가 없다.
+      if (usesMouse(event) && (event.movementX !== 0 || event.movementY !== 0)) engage();
+    };
+    const onDown = (event: PointerEvent) => {
+      if (usesMouse(event)) engage();
+    };
+    frame.addEventListener("pointerenter", onEnter);
+    frame.addEventListener("pointermove", onMove);
+    frame.addEventListener("pointerdown", onDown);
+    frame.addEventListener("pointerleave", release);
+    desktop.addEventListener("change", release);
+    return () => {
+      frame.removeEventListener("pointerenter", onEnter);
+      frame.removeEventListener("pointermove", onMove);
+      frame.removeEventListener("pointerdown", onDown);
+      frame.removeEventListener("pointerleave", release);
+      desktop.removeEventListener("change", release);
+      release();
+    };
+  }, [variant, scaleFrom]);
 
   useEffect(() => {
     if (variant !== "wide" || previousReset.current === resetKey) return;

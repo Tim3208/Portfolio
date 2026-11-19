@@ -33,8 +33,8 @@ export const SHOTS: Record<string, ShotInfo> = {
     height: 933,
     notes: [
       { x: 29.4, y: 13.4, text: "지원자 목록을 서류 지원자부터 최종 합격자까지 모집 단계별로 나눴습니다." },
-      { x: 34.6, y: 44.5, text: "지원자 한 명 안에서 서류 보기 · 점수 매기기 · 점수 현황만 바꿔 봅니다." },
-      { x: 35.1, y: 67.2, text: "총점이 같아도 어느 문항에서 갈렸는지 보이도록 문항별 점수를 함께 둡니다." },
+      { x: 32.6, y: 44.5, text: "지원자 한 명 안에서 서류 보기 · 점수 매기기 · 점수 현황만 바꿔 봅니다." },
+      { x: 32.6, y: 67.2, text: "총점이 같아도 어느 문항에서 갈렸는지 보이도록 문항별 점수를 함께 둡니다." },
     ],
   },
   "/images/projects/apply/application-submitted.png": {
@@ -56,6 +56,23 @@ export const SHOTS: Record<string, ShotInfo> = {
   },
   "/images/projects/syu-likelion-mypage.png": { width: 1920, height: 2110 },
   "/images/projects/syu-likelion.png": { width: 1600, height: 1079 },
+  // 상세 04 스탬프 데모 · 08 입력 검증 데모의 서비스 화면을 샘플 데이터로 캡처했다 (782 × 1596, 표시 기준 391 × 798)
+  "/images/projects/make-a-wish.png": {
+    width: 391,
+    height: 798,
+    notes: [
+      { x: 21.5, y: 26.5, text: "받은 스탬프는 지급 시각과 부스 분류를 기준으로 별자리에 놓습니다." },
+      { x: 11, y: 58, text: "응답이 누락되거나 꼬이면 빈 스탬프판으로 그리지 않고 오류로 구분합니다." },
+    ],
+  },
+  "/images/projects/make-a-wish-welcome.png": {
+    width: 391,
+    height: 798,
+    notes: [
+      { x: 38, y: 43.6, text: "이름에 HTML 마크업을 넣어도 실행하지 않고 글자 그대로 보여줍니다." },
+      { x: 90, y: 37.5, text: "납부자 표시인 별은 학생회비 납부 값이 boolean true일 때만 그립니다." },
+    ],
+  },
   "/images/projects/eodiya.png": {
     width: 1090,
     height: 720,

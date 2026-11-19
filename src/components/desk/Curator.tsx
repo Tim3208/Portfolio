@@ -45,7 +45,7 @@ function centerOf(el: Element): Point {
  * 연출 커서 — 이 사이트를 찾은 방문자를 안내하는 큐레이터 (lg 이상).
  *
  * 첫 방문(src/lib/intro.ts)에는 빈 바탕화면에 나타나 Figma 의 커서 채팅처럼 인사를
- * 타이핑하고, 포트폴리오 아이콘을 더블클릭해 창을 연다. 그 뒤에는 아이콘 아래에서
+ * 타이핑하고, 포트폴리오 아이콘을 눌러 창을 연다. 그 뒤에는 아이콘 아래에서
  * 쉬다가 `curator.say` 요청이 오면 그 자리로 다가가 말하고 돌아온다.
  * 방문자의 커서가 와서 부딪히면 Figma 의 하이파이브처럼 손뼉을 맞춘다.
  *
@@ -190,7 +190,6 @@ export function Curator() {
         if (icon) {
           await moveTo(centerOf(icon), 900, run.signal);
           await sleep(160, run.signal);
-          await click(icon, run.signal);
           await click(icon, run.signal);
         }
         openWindow(icon);

@@ -124,13 +124,20 @@ export type Project = {
    * 전환 패널은 최대 4개다(globals.css "전환 패널").
    */
   screens?: readonly (Screen & { label: string })[];
+  /**
+   * 휴대폰 폭으로 캡처한 세로 화면들. 가로 대표 화면(cover.src) 대신 대표 행에
+   * 나란히 놓는다. 화면마다 주석이 붙는다(annotations.ts).
+   */
+  phones?: readonly Screen[];
   /** 상세 첫 화면에 둘 공개 화면. 없으면 cover 를 쓴다 */
   landing?: Screen & { caption: string };
   /**
    * 홈 첫 화면(HERO) 프로젝트 목록의 한 칸. 대표(featured) 프로젝트만 쓴다.
    * label 은 어떤 웹 서비스인지 알려주는 짧은 이름이다.
-   * 화면은 바로 아래 대표 프로젝트 소개와 겹치지 않도록 다른 화면이나 다른 부분을
-   * 잘라 쓰고(position), 칸의 비율이 화면 폭마다 달라도 같은 부분이 남게 고른다.
+   * 화면은 칸에 맞춰 따로 잘라 둔 전용 컷(public/images/projects/thumbs, 약 4 : 5)이다.
+   * 바로 아래 대표 프로젝트 소개와 겹치지 않도록 다른 화면이나 다른 부분을 고르고,
+   * 화면의 다른 영역 가장자리나 잘린 글자가 걸리지 않게 자른다. 칸의 비율은 화면
+   * 폭마다 달라지므로, 어느 쪽이 잘려도 되는지를 position 으로 정한다.
    * src 가 없으면 화면을 지어내지 않고 이름 · 운영 시점만 적은 칸을 그린다.
    */
   preview?: { label: string; src?: string; position?: string };
@@ -209,11 +216,12 @@ export const PROJECTS: readonly Project[] = [
         alt: "1차 모집 결과 발표 화면. 1차 합격 안내 아래 면접 시간 영역에서 달력으로 날짜를 고르고 20분 간격의 시간대를 선택한다.",
       },
     ],
-    // 아래 대표 소개는 운영진 화면을 쓰므로, 첫 화면에는 공개 모집 안내 화면을 둔다
+    // 아래 대표 소개는 운영진 화면을 쓰므로, 첫 화면에는 공개 모집 안내 화면을 둔다.
+    // 좁은 폭의 배치(제목 · 마스코트 · 지원 버튼이 세로로 놓인다)를 헤더 아래부터 잘랐다
     preview: {
       label: "동아리 모집·운영 플랫폼",
-      src: "/images/projects/syu-likelion.png",
-      position: "15% center",
+      src: "/images/projects/thumbs/syu-likelion.png",
+      position: "center top",
     },
     landing: {
       src: "/images/projects/syu-likelion.png",
@@ -236,8 +244,9 @@ export const PROJECTS: readonly Project[] = [
       "단 하루 열리는 학교 축제 서비스라, 현장에서 가입·스탬프·부스 지도 흐름이 한 번 막히면 즉각 대응하기 어려운 환경이었습니다.",
     decision:
       "오픈 전 비정상 입력과 중복 요청을 가정한 독립 QA로 인증 흐름을 검증하고, 잘못된 스탬프 응답이나 지도 시트 가림 같은 현장 예외를 화면 단에서 차단했습니다.",
+    // 팀 집계 수치는 바로 아래 metrics 가 보여주므로 여기서는 본인 담당 범위만 적는다
     outcome:
-      "축제 당일 1,889명이 이용한 팀 서비스로, 로그인·가입과 스탬프·지도 선택 영역을 담당해 운영했습니다.",
+      "오픈 전 독립 QA 8건과 자동 검사 258건을 통과했고, 축제 당일 로그인·가입과 스탬프·지도 선택 영역을 담당해 운영했습니다.",
     role: "Frontend Developer",
     status: "2026-10-06 축제 운영",
     ownership: {
@@ -282,14 +291,25 @@ export const PROJECTS: readonly Project[] = [
     // 집계 기준과 읽는 범위는 상세 "축제 당일의 팀 운영 결과" 섹션이 설명한다
     metricsNote: "팀 전체의 운영 결과입니다.",
     cover: {
-      alt: "부스 스탬프 별자리 화면. 받은 스탬프가 부스 분류에 따라 별자리에 표시된다. (샘플 계정)",
+      alt: "부스 지도 화면. 하단 목록 시트가 올라와 있어도 선택한 부스가 지도에 보이는 영역 가운데에 강조되어 있다.",
     },
-    // TODO: 대표 행 · 상세 첫 화면에 쓸 화면(부스 지도 등)을 확보하면 cover.src 를 채운다.
-    // preview 는 상세 04 스탬프 데모(원본 코드 · 샘플 데이터)의 서비스 화면을 캡처한 것이다.
+    // TODO: 부스 지도 화면을 확보하면 cover.src 를 채운다(상세 첫 화면 · 상세 05).
+    // phones · preview 는 상세의 실제 코드 실행 데모(샘플 데이터)를 캡처한 것이다.
+    // 대표 행은 받는 중인 스탬프 판과 환영창, 첫 화면은 여섯 개를 모두 받은 판을 쓴다.
+    phones: [
+      {
+        src: "/images/projects/make-a-wish.png",
+        alt: "부스 스탬프 화면. 받은 스탬프 세 개가 색이 채워진 별로, 아직 받지 않은 자리는 점선 별로 별자리에 놓여 있다. 샘플 데이터로 실행한 화면이다.",
+      },
+      {
+        src: "/images/projects/make-a-wish-welcome.png",
+        alt: "로그인 후 환영창. 이름 자리에 넣은 img 태그 문자열이 실행되지 않고 글자 그대로 편지에 적혀 있고, 편지 모서리에 납부자 표시인 별이 있다. 샘플 데이터로 실행한 화면이다.",
+      },
+    ],
     preview: {
       label: "축제 웹 서비스",
-      src: "/images/projects/make-a-wish.png",
-      position: "center 35%",
+      src: "/images/projects/thumbs/make-a-wish.png",
+      position: "center top",
     },
   },
   {
@@ -317,11 +337,11 @@ export const PROJECTS: readonly Project[] = [
       github: "https://github.com/Tim3208/eodiya",
     },
     live: { hint: "검색창에 '장근청홀'을 입력해 보세요." },
-    // 아래 대표 소개는 검색 패널까지 전체 화면을 쓰므로, 첫 화면에는 지도 부분을 잘라 둔다
+    // 아래 대표 소개는 검색 패널까지 전체 화면을 쓰므로, 첫 화면에는 지도에서 캠퍼스 부분만 잘라 둔다
     preview: {
       label: "캠퍼스 지도·검색 서비스",
-      src: "/images/projects/eodiya.png",
-      position: "90% center",
+      src: "/images/projects/thumbs/eodiya.png",
+      position: "center",
     },
     cover: {
       src: "/images/projects/eodiya.png",
@@ -355,11 +375,11 @@ export const PROJECTS: readonly Project[] = [
       figma: "https://www.figma.com/design/XCVUGdYiwQYnrsAVrTogcR/",
     },
     live: { hint: "게임 허브에서 게임을 끄고 켜며 일정을 걸러 보세요." },
-    // 종료 임박 일정 · 오늘 할 일 부분. 왼쪽 아래 계정 영역(이메일)은 어느 비율에서도 잘려 나간다
+    // 임박 일정 열 하나. 글자가 읽히는 크기로 보이도록 열의 폭에 맞춰 잘랐다(비로그인 화면)
     preview: {
       label: "일정·보상 관리 대시보드",
-      src: "/images/projects/oshi-calendar.png",
-      position: "25% center",
+      src: "/images/projects/thumbs/oshi-calendar.png",
+      position: "center top",
     },
     cover: {
       src: "/images/projects/oshi-calendar.png",

@@ -19,7 +19,6 @@ import {
 } from "@/data/projects";
 import { TEACHING_LEAD, TEACHING_METRICS } from "@/data/teaching";
 import { HUE_CLASS } from "@/lib/hue";
-import { SECTION } from "@/lib/sections";
 
 const SECTION_TITLE = "text-title font-bold";
 
@@ -70,22 +69,11 @@ export default function HomePage() {
           </div>
           <div className="flex flex-col gap-5 lg:col-span-4 lg:pb-1.5 xl:col-span-5">
             <p className="max-w-[30rem] text-lead text-ink-2">{PROFILE.intro}</p>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-              <SmoothAnchor href="#featured" className={BUTTON}>
-                프로젝트 둘러보기
-                <span aria-hidden="true">↓</span>
-              </SmoothAnchor>
-              <a href={PROFILE.github} target="_blank" rel="noreferrer noopener" className={LINK}>
-                GitHub
-                <span aria-hidden="true" className="ml-1">
-                  ↗
-                </span>
-                <span className="sr-only"> (새 창)</span>
-              </a>
-              <SmoothAnchor href={`#${SECTION.contact}`} className={LINK}>
-                Contact
-              </SmoothAnchor>
-            </div>
+            {/* GitHub · 연락처는 도구줄과 바탕화면에 늘 있으므로, 여기서는 다음 행동 하나만 둔다 */}
+            <SmoothAnchor href="#featured" className={`${BUTTON} w-fit`}>
+              프로젝트 둘러보기
+              <span aria-hidden="true">↓</span>
+            </SmoothAnchor>
           </div>
         </div>
 

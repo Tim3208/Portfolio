@@ -105,7 +105,7 @@ export function Shot({
 }
 
 /** "1205 / 891" → 1.352… */
-function parseRatio(value: string) {
+export function parseRatio(value: string) {
   const [w, h] = value.split("/").map((n) => Number.parseFloat(n));
   return w && h ? w / h : 16 / 10;
 }
