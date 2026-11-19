@@ -10,8 +10,19 @@
  * 내용이 성립해야 한다.
  */
 
-/** approval-reset만 설명용 재구성이다. 나머지는 원본 서비스 코드를 샘플 데이터로 실행한다. */
-export type DemoName = "evaluation-screen" | "approval-reset" | "stamp-board" | "result-status" | "place-search" | "calendar-first" | "input-qa";
+/**
+ * approval-reset · map-focus 는 설명용 재구성이다(map-focus 는 화면만 다시 그리고 계산은 원본 코드가 한다).
+ * 나머지는 원본 서비스 코드를 샘플 데이터로 실행한다.
+ */
+export type DemoName =
+  | "evaluation-screen"
+  | "approval-reset"
+  | "stamp-board"
+  | "result-status"
+  | "place-search"
+  | "calendar-first"
+  | "input-qa"
+  | "map-focus";
 
 export type Block =
   /** 서술. 대부분의 문장이 여기 들어간다. */

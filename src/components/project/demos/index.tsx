@@ -4,6 +4,7 @@ import { ApprovalResetDemo } from "./ApprovalResetDemo";
 import { CalendarFirstDemo } from "./CalendarFirstDemo";
 import { EvaluationScreenDemo } from "./EvaluationScreenDemo";
 import { InputQaDemo } from "./InputQaDemo";
+import { MapFocusDemo } from "./MapFocusDemo";
 import { PlaceSearchDemo } from "./PlaceSearchDemo";
 import { ResultStatusDemo } from "./ResultStatusDemo";
 import { StampBoardDemo } from "./StampBoardDemo";
@@ -25,7 +26,9 @@ export function Demo({ name }: { name: DemoName }) {
       return <CalendarFirstDemo />;
     case "input-qa":
       return <InputQaDemo />;
+    case "map-focus":
+      return <MapFocusDemo />;
   }
 }
 
-export { ApprovalResetDemo, CalendarFirstDemo, EvaluationScreenDemo, InputQaDemo, PlaceSearchDemo, ResultStatusDemo, StampBoardDemo };
+export { ApprovalResetDemo, CalendarFirstDemo, EvaluationScreenDemo, InputQaDemo, MapFocusDemo, PlaceSearchDemo, ResultStatusDemo, StampBoardDemo };

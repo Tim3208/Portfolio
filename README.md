@@ -80,7 +80,8 @@ src/
 │  │     ├─ shell/      표면·배치·패널·지연 마운트 공통 틀
 │  │     ├─ eodiya/     원본에서 옮긴 검색 패널·장소 데이터·순위 로직
 │  │     ├─ make-a-wish/ 원본에서 옮긴 스탬프 화면·순수 로직, 서비스 색·폰트 범위
-│  │     │  └─ input-qa/ 환영창·입력란 네 개와 이름·납부 판정·검증·전화번호 서식
+│  │     │  ├─ input-qa/ 환영창·입력란 네 개와 이름·납부 판정·검증·전화번호 서식
+│  │     │  └─ map-focus/ 다시 그린 부스 지도 도식과 원본 이동 계산·선택 reducer
 │  │     ├─ oshi-calendar/ 바꾸기 전 게임 허브·임박 일정·캘린더와 날짜 로직
 │  │     └─ syu-likelion/ 원본에서 옮긴 제출·결과·예약 화면·순수 로직, 서비스 색 범위
 │  │        └─ evaluation/ 공동 작성한 단계별 지원자 표·평가 상세·권한 판정과 가상 지원자
@@ -104,6 +105,7 @@ artifacts/              기존 콘텐츠 점검 기록과 검토용 캡처
 | 실제 코드 실행 데모 공통 틀(표면·배치·패널·지연 마운트) | [shell](src/components/project/demos/shell) |
 | Make A Wish 스탬프 데모·응답 조작·옮긴 서비스 코드·그림 | [StampBoardDemo.tsx](src/components/project/demos/StampBoardDemo.tsx), [StampBoardControls.tsx](src/components/project/demos/StampBoardControls.tsx), [make-a-wish](src/components/project/demos/make-a-wish), [stamps](public/images/projects/make-a-wish/stamps) |
 | Make A Wish 이상한 값 입력 데모·환영창·입력 검증·그림 | [InputQaDemo.tsx](src/components/project/demos/InputQaDemo.tsx), [InputQaControls.tsx](src/components/project/demos/InputQaControls.tsx), [input-qa](src/components/project/demos/make-a-wish/input-qa), [welcome](public/images/projects/make-a-wish/welcome) |
+| Make A Wish 부스 지도 이동 재구성 데모·이동 기준·시트 높이·원본 이동 계산 | [MapFocusDemo.tsx](src/components/project/demos/MapFocusDemo.tsx), [MapFocusControls.tsx](src/components/project/demos/MapFocusControls.tsx), [map-focus](src/components/project/demos/make-a-wish/map-focus) |
 | syu-likelion 제출 완료·결과 확인·면접 예약 데모와 그림 | [ResultStatusDemo.tsx](src/components/project/demos/ResultStatusDemo.tsx), [ResultStatusControls.tsx](src/components/project/demos/ResultStatusControls.tsx), [syu-likelion](src/components/project/demos/syu-likelion), [result](public/images/projects/syu-likelion/result) |
 | syu-likelion 평가 화면 데모·공개 범위 조작·옮긴 공동 작성 코드 | [EvaluationScreenDemo.tsx](src/components/project/demos/EvaluationScreenDemo.tsx), [EvaluationScreenControls.tsx](src/components/project/demos/EvaluationScreenControls.tsx), [evaluation](src/components/project/demos/syu-likelion/evaluation) |
 | 삼육대 어디야 검색 데모·순서 설명·옮긴 서비스 코드와 장소 데이터 | [PlaceSearchDemo.tsx](src/components/project/demos/PlaceSearchDemo.tsx), [PlaceSearchControls.tsx](src/components/project/demos/PlaceSearchControls.tsx), [eodiya](src/components/project/demos/eodiya) |

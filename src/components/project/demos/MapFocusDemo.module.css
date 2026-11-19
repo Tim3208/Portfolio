@@ -1,0 +1,59 @@
+.frame {
+  max-width: 393px;
+}
+
+/* 도식의 화면 틀과 같은 비율(시안 393 × 852)로 자리를 지킨다. */
+.placeholder {
+  aspect-ratio: 393 / 852;
+  background: var(--color-paper-sunk);
+}
+
+.choice {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* 공유 RadioChoices의 선택·포커스 표현은 유지하고 모바일 밀도만 조절한다. */
+.choice fieldset > div {
+  gap: 0.125rem;
+  padding: 0.125rem;
+}
+
+.choice label {
+  min-width: 44px;
+  padding-inline: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.readout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.25rem 0.75rem;
+}
+
+.readout dt {
+  color: var(--color-ink-2);
+}
+
+.readout dd {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 48rem) {
+  .frame {
+    /* 화면 틀 전체가 창 안 본문 높이에 들어오게 한다. */
+    max-width: min(393px, calc((var(--viewport-height) - 6rem) * 393 / 852));
+  }
+
+  .choice fieldset > div {
+    gap: 0.25rem;
+    padding: 0.25rem;
+  }
+
+  .choice label {
+    padding-inline: 0.875rem;
+    font-size: 0.875rem;
+  }
+}
