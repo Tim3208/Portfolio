@@ -148,10 +148,11 @@ export const PROJECTS: readonly Project[] = [
     headline: "분산된 동아리 운영을 하나의 플랫폼으로",
     subtitle: "멋쟁이사자처럼 삼육대학교 모집 · 평가 · 부원 운영 플랫폼",
     problem:
-      "모집, 지원서, 평가, 공지, 과제가 Google Forms · Excel · Discord · KakaoTalk에 흩어져 있었습니다. 지원자도 부원도 필요한 정보를 찾는 데 시간을 썼습니다.",
+      "모집·평가·공지·과제가 Google Forms, Excel, Discord, KakaoTalk에 흩어져 있어 지원자와 운영진 모두 정보 확인과 취합에 많은 시간을 썼습니다.",
     decision:
-      "서류 평가는 블라인드, 면접 평가는 신원 확인이 필요하다는 피드백을 받고, 단계마다 보여주는 정보를 나눴습니다.",
-    outcome: "14기 모집부터 부원 운영까지 이 서비스로 진행했고, 지금도 부원들이 쓰고 있습니다.",
+      "지원자 한 명의 서류·채점·점수 현황을 한 화면에 모으고, 블라인드 서류 평가와 신원 확인이 필요한 면접 평가에 맞춰 단계별 노출 정보를 분리했습니다.",
+    outcome:
+      "14기 지원서 접수와 서류·면접 평가를 이 플랫폼으로 진행했고, 현재도 30건 이상의 공지·세션 자료와 과제 운영에 실사용 중입니다.",
     period: "2026.01 — 현재",
     role: "Frontend Developer",
     status: "운영 · 유지보수 중",
@@ -163,7 +164,11 @@ export const PROJECTS: readonly Project[] = [
         "공지 · 세션 자료 · 과제 · 일정 등 부원 공통 공간",
         "운영 중 후속 수정",
       ],
-      others: ["초기 인증 · 헤더 · 관리자 구조", "서류 지원자 표 · 지원서 상세의 초기 구현", "출결 관리"],
+      others: [
+        "초기 인증 · 헤더 · 관리자 구조",
+        "서류 지원자 표 · 지원서 상세의 초기 구현",
+        "출결 관리",
+      ],
     },
     hue: "mocha",
     technologies: ["Next.js", "TypeScript", "React", "Axios"],
@@ -172,7 +177,9 @@ export const PROJECTS: readonly Project[] = [
       github: "https://github.com/No4hh4oN/Likelion14th-FE",
       figma: "https://www.figma.com/design/ZORVqHx4WTt4ePPM4mIYz4/",
     },
-    live: { hint: "지원자 · 운영진 화면은 로그인이 필요해 작업 과정에 캡처로 담았습니다." },
+    live: {
+      hint: "지원자 · 운영진 화면은 로그인이 필요해 작업 과정에 캡처로 담았습니다.",
+    },
     cover: {
       src: "/images/projects/syu-likelion-evaluation.png",
       aspectRatio: "1262 / 933",
@@ -203,12 +210,17 @@ export const PROJECTS: readonly Project[] = [
       },
     ],
     // 아래 대표 소개는 운영진 화면을 쓰므로, 첫 화면에는 공개 모집 안내 화면을 둔다
-    preview: { label: "동아리 모집·운영 플랫폼", src: "/images/projects/syu-likelion.png", position: "15% center" },
+    preview: {
+      label: "동아리 모집·운영 플랫폼",
+      src: "/images/projects/syu-likelion.png",
+      position: "15% center",
+    },
     landing: {
       src: "/images/projects/syu-likelion.png",
       aspectRatio: "1600 / 1079",
       alt: "syu-likelion 14기 모집 안내 첫 화면. LIKELION at SYU 14th 문구와 마스코트, 14기 지원하기 버튼이 보인다.",
-      caption: "모집 안내에서 지원서를 작성하고, 합격 후에는 같은 계정으로 동아리 활동을 이어갑니다.",
+      caption:
+        "모집 안내에서 지원서를 작성하고, 합격 후에는 같은 계정으로 동아리 활동을 이어갑니다.",
     },
   },
   {
@@ -218,11 +230,14 @@ export const PROJECTS: readonly Project[] = [
     tier: "featured",
     kind: "product",
     headline: "축제 당일, 가입부터 부스 찾기와 스탬프 완주까지 막힘 없이",
-    subtitle: "학교 축제 기간에 로그인·가입, 부스 스탬프, 부스 지도를 제공한 웹 서비스",
+    subtitle:
+      "학교 축제 기간에 로그인·가입, 부스 스탬프, 부스 지도를 제공한 웹 서비스",
     problem:
-      "축제 정보 공유부터 부스 관리, 학생 · 외부인 구분, 학생회비 납부 확인까지 한 서비스에서 처리해야 했습니다. 축제 기간에만 열려서, 막히면 고칠 시간이 거의 없었습니다.",
+      "단 하루 열리는 학교 축제 서비스라, 현장에서 가입·스탬프·부스 지도 흐름이 한 번 막히면 즉각 대응하기 어려운 환경이었습니다.",
     decision:
-      "축제 전에 특수문자, 코드 조각, 공격용 명령어 같은 입력을 일부러 넣어 보는 QA를 여러 차례 진행하고, 입력 단계에서 걸러냈습니다.",
+      "오픈 전 비정상 입력과 중복 요청을 가정한 독립 QA로 인증 흐름을 검증하고, 잘못된 스탬프 응답이나 지도 시트 가림 같은 현장 예외를 화면 단에서 차단했습니다.",
+    outcome:
+      "축제 당일 1,889명이 이용한 팀 서비스로, 로그인·가입과 스탬프·지도 선택 영역을 담당해 운영했습니다.",
     role: "Frontend Developer",
     status: "2026-10-06 축제 운영",
     ownership: {
@@ -241,10 +256,28 @@ export const PROJECTS: readonly Project[] = [
     hue: "blush",
     technologies: ["React", "TypeScript", "TanStack Query", "Zustand"],
     metrics: [
-      { value: "1,889", label: "축제 당일 활동 이용자(식별)", source: "팀 성과 보고서", asOf: "2026-10-06" },
-      { value: "48,347", label: "축제 당일 페이지 조회", source: "팀 성과 보고서", asOf: "2026-10-06" },
-      { value: "278", label: "스탬프 참여", source: "팀 성과 보고서 · 보존된 도장 상태" },
-      { value: "106", label: "스탬프 완주", source: "팀 성과 보고서 · 보존된 도장 상태" },
+      {
+        value: "1,889",
+        label: "축제 당일 활동 이용자(식별)",
+        source: "팀 성과 보고서",
+        asOf: "2026-10-06",
+      },
+      {
+        value: "48,347",
+        label: "축제 당일 페이지 조회",
+        source: "팀 성과 보고서",
+        asOf: "2026-10-06",
+      },
+      {
+        value: "278",
+        label: "스탬프 참여",
+        source: "팀 성과 보고서 · 보존된 도장 상태",
+      },
+      {
+        value: "106",
+        label: "스탬프 완주",
+        source: "팀 성과 보고서 · 보존된 도장 상태",
+      },
     ],
     // 집계 기준과 읽는 범위는 상세 "축제 당일의 팀 운영 결과" 섹션이 설명한다
     metricsNote: "팀 전체의 운영 결과입니다.",
@@ -253,7 +286,11 @@ export const PROJECTS: readonly Project[] = [
     },
     // TODO: 대표 행 · 상세 첫 화면에 쓸 화면(부스 지도 등)을 확보하면 cover.src 를 채운다.
     // preview 는 상세 04 스탬프 데모(원본 코드 · 샘플 데이터)의 서비스 화면을 캡처한 것이다.
-    preview: { label: "축제 웹 서비스", src: "/images/projects/make-a-wish.png", position: "center 35%" },
+    preview: {
+      label: "축제 웹 서비스",
+      src: "/images/projects/make-a-wish.png",
+      position: "center 35%",
+    },
   },
   {
     slug: "eodiya",
@@ -264,10 +301,11 @@ export const PROJECTS: readonly Project[] = [
     headline: "'장근청홀..?이 대체 어디야?'",
     subtitle: "교내 건물과 건물 안 시설의 위치를 검색하는 캠퍼스 지도",
     problem:
-      "지도 앱에는 건물 이름만 나와서, 고유명사로 된 강의실이 어느 건물 안에 있는지 알기 어려웠습니다.",
+      "일반 지도 앱에는 건물 이름만 나와, '장근청홀' 같은 교내 홀이나 강의실이 어느 건물 몇 층에 있는지 찾기 어려웠습니다.",
     decision:
-      "공식 명칭을 정확히 몰라도 찾을 수 있게 장소명 · 건물과 층 · 층별 시설 설명을 모두 검색 대상으로 두고, 일치 정도와 필드에 따라 결과 순서를 정했습니다.",
-    outcome: "GitHub Pages에 배포하고 학교 커뮤니티에 소개했습니다.",
+      "공식 명칭을 몰라도 찾을 수 있게 장소명·건물·층별 시설 설명까지 검색 대상으로 넓히고, 일치 필드와 정확도에 따라 결과 순위를 매겼습니다.",
+    outcome:
+      "공식 캠퍼스맵을 정제해 123개 건물·층별 시설 데이터를 구축하고, 재학생이 바로 검색해 쓸 수 있도록 배포했습니다.",
     period: "2026.02",
     role: "기획 · 개발 · 배포 전 과정",
     team: "1인 프로젝트",
@@ -280,7 +318,11 @@ export const PROJECTS: readonly Project[] = [
     },
     live: { hint: "검색창에 '장근청홀'을 입력해 보세요." },
     // 아래 대표 소개는 검색 패널까지 전체 화면을 쓰므로, 첫 화면에는 지도 부분을 잘라 둔다
-    preview: { label: "캠퍼스 지도·검색 서비스", src: "/images/projects/eodiya.png", position: "90% center" },
+    preview: {
+      label: "캠퍼스 지도·검색 서비스",
+      src: "/images/projects/eodiya.png",
+      position: "90% center",
+    },
     cover: {
       src: "/images/projects/eodiya.png",
       aspectRatio: "1090 / 720",
@@ -295,14 +337,16 @@ export const PROJECTS: readonly Project[] = [
     tier: "featured",
     kind: "product",
     headline: "여러 게임에서 놓칠 일정과 보상을 한눈에",
-    subtitle: "여러 서브컬처 게임의 마감 일정과 보상을 모아 오늘 할 일을 보여주는 대시보드",
+    subtitle:
+      "여러 서브컬처 게임의 마감 일정과 보상을 모아 오늘 할 일을 보여주는 대시보드",
     problem:
-      "여러 게임의 이벤트와 소식을 웹과 게임 안에서 각각 확인해야 해서 피곤했습니다.",
+      "여러 서브컬처 게임의 이벤트 마감과 보상을 게임별 공지와 인게임에서 따로 확인하다 보면 피곤할 뿐더러 놓치기도 쉬웠습니다.",
     decision:
-      "실제 데이터를 넣어 보니 캘린더 화면이 난잡했습니다. 첫 화면 가운데의 캘린더를 보상과 오늘 할 일로 바꿨습니다.",
-    outcome: "배포해 두어 누구나 써 볼 수 있습니다.",
+      "실제 일정을 채워 보니 날짜 격자에서는 당장 끝나는 일정이 묻혔습니다. 첫 화면 중심을 캘린더에서 '종료 임박·보상·오늘 할 일' 대시보드로 전환했습니다.",
+    outcome:
+      "비로그인(LocalStorage)과 로그인(서버) 설정 동기화 및 5단계 데이터 상태 UI를 구현해 Preview 배포까지 마쳤습니다.",
     period: "2026.06 — 현재",
-    role: "Developer",
+    role: "공동 기획 · Frontend 전 영역",
     status: "이용 가능 · 홍보 전",
     hue: "plum",
     technologies: ["React", "TypeScript", "TanStack Query", "Supabase"],
@@ -312,7 +356,11 @@ export const PROJECTS: readonly Project[] = [
     },
     live: { hint: "게임 허브에서 게임을 끄고 켜며 일정을 걸러 보세요." },
     // 종료 임박 일정 · 오늘 할 일 부분. 왼쪽 아래 계정 영역(이메일)은 어느 비율에서도 잘려 나간다
-    preview: { label: "일정·보상 관리 대시보드", src: "/images/projects/oshi-calendar.png", position: "25% center" },
+    preview: {
+      label: "일정·보상 관리 대시보드",
+      src: "/images/projects/oshi-calendar.png",
+      position: "25% center",
+    },
     cover: {
       src: "/images/projects/oshi-calendar.png",
       alt: "Oshi Calendar 대시보드 화면. 종료 임박 일정과 오늘 할 일, 게임별 보상 현황이 한 화면에 모여 있다. 표시된 수치는 목업 데이터다.",
@@ -330,24 +378,26 @@ export const PROJECTS: readonly Project[] = [
     headline: "승인 · 독립 QA · Wiki 보존을 코드로 관리하는 개발 도구",
     subtitle:
       "AI 작업자에게 역할을 나누고, 검토·독립 QA·문서화가 끝나야 완료되도록 관리하는 설치형 개발 도구",
-    decision: "작업과 검수 역할을 분리하고, 각 단계(기획·개발·QA·Wiki)마다 독립된 검수 승인을 거쳐야만 다음 단계로 이동합니다.",
+    decision:
+      "작업과 검수 역할을 분리하고, 각 단계(기획·개발·QA·Wiki)마다 독립된 검수 승인을 거쳐야만 다음 단계로 이동합니다.",
     // 홈 "AI와 일하는 방식" 전용. 라벨은 두 글자로 맞춘다(Labeled 의 라벨 칸 폭)
     principles: [
       {
         label: "이유",
-        text: "AI에게 일을 맡기면 환각과 검증 누락이 생길 수 있어, 작업하는 세션과 검수하는 세션을 나눴습니다.",
+        text: "AI에게 일을 맡기면 환각과 검증 누락이 생길 수 있어, 작업 세션과 검수 세션을 분리했습니다.",
       },
       {
         label: "규칙",
-        text: "기획 · 개발 · QA · Wiki 단계마다 독립된 승인을 받아야 다음 단계로 넘어가고, 파일이 바뀌면 이전 승인은 무효가 됩니다.",
+        text: "기획·개발·QA·문서화 단계마다 독립 승인을 거쳐야 넘어가며, 승인 후 코드가 바뀌면 기존 승인은 자동 무효 처리됩니다.",
       },
       {
         label: "역할",
-        text: "구조와 규칙은 제가 설계하고 코드는 AI가 작성했습니다. 판단이 필요한 지점에서는 저에게 질문이 오고, 최종 결과는 직접 확인합니다.",
+        text: "전체 구조와 검수 기준을 직접 설계하고, 판단이 필요한 분기점의 승인과 최종 결과 검증을 맡습니다.",
       },
     ],
-    outcome: "Make A Wish에 적용해 공격적인 입력 QA와 디자인 교차 검토를 맡겼습니다.",
-    role: "구조·규칙 설계 (코드는 AI 작성)",
+    outcome:
+      "Make A Wish 개발에 적용해 인증 엣지 케이스 QA와 디자인 오차 검수 자동화에 활용했습니다.",
+    role: "워크플로우 설계 · 검수 기준 정의",
     hue: "wheat",
     technologies: ["Node.js", "node:test"],
   },
@@ -358,13 +408,14 @@ export const PROJECTS: readonly Project[] = [
     kind: "in-progress",
     category: "프로젝트 아카이브",
     headline: "흩어진 학생 프로젝트를 모아 포트폴리오로",
-    subtitle: "삼육대학교 학생의 프로젝트를 올리고 묶어서 포트폴리오로 구성하는 웹 서비스",
+    subtitle:
+      "삼육대학교 학생의 프로젝트를 올리고 묶어서 포트폴리오로 구성하는 웹 서비스",
     problem:
       "학생 프로젝트가 Figma · GitHub · Google Drive 등 각자 고른 곳에 흩어져 있었습니다.",
     decision:
       "UI 개선 1차 범위를 홈 → 탐색 → 상세로 정하고, 저장·권한 계약이 바뀌는 작성·포트폴리오 개편은 뒤로 미뤘습니다.",
-    outcome: "개발 중이며 아직 공개하지 않았습니다. UI 전면 개선을 진행하고 있습니다.",
-    role: "Frontend 대부분 · 디자인 전반 (멘토링 지원)",
+    outcome: "홈·탐색·상세 1차 UI 개편을 진행 중인 비공개 프로젝트입니다.",
+    role: "Frontend · UI/UX 디자인",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     links: { github: "https://github.com/Tim3208/CampusPolio_FE" },
   },
@@ -375,13 +426,14 @@ export const PROJECTS: readonly Project[] = [
     tier: "supporting",
     kind: "teaching-tool",
     headline: "과외 문제에 넣을 그래프를 직접 그리는 도구",
-    subtitle: "수식을 입력해 교재와 비슷한 그래프를 만들고 SVG·PNG로 내보내는 그래프 제작 도구",
+    subtitle:
+      "수식을 입력해 교재와 비슷한 그래프를 만들고 SVG·PNG로 내보내는 그래프 제작 도구",
     problem:
-      "수학 과외 문제를 직접 만들 때, 원하는 그래프를 교재와 비슷하게 그리는 방법이 없었습니다.",
+      "수학 과외 문제를 직접 만들 때, 교재 수준의 함수 그래프를 원하는 라벨로 빠르게 그릴 도구가 없었습니다.",
     decision:
       "보조점의 실제 좌표와 표시 글자를 분리해, 숫자 위치에 3a 같은 라벨을 붙일 수 있게 했습니다.",
     outcome: "만든 그래프를 실제 과외 문제와 수업 자료에 썼습니다.",
-    role: "1인 개발 (AI 코드 작성 · 직접 검증)",
+    role: "1인 기획 · 개발",
     technologies: ["React", "TypeScript", "mathjs", "SVG"],
     links: {
       service: "https://tim3208.github.io/math-graph/",
@@ -396,11 +448,14 @@ export const PROJECTS: readonly Project[] = [
     kind: "brief",
     category: "길거리 푸드트럭 정보",
     headline: "날마다 자리를 옮기는 푸드트럭 정보를 모으는 지도",
-    subtitle: "길거리 푸드트럭 정보를 모으고, 사용자 제보를 관리자가 승인해 보여주는 사이트",
-    problem: "푸드트럭은 날마다 위치를 옮기는 경우가 있었습니다.",
+    subtitle:
+      "길거리 푸드트럭 정보를 모으고, 사용자 제보를 관리자가 승인해 보여주는 사이트",
+    problem:
+      "요일마다 위치가 바뀌는 푸드트럭 특성상, 기존 지도에서는 당일 영업 장소를 확인하기 어려웠습니다.",
     decision:
       "무분별한 제보를 사람이 걸러내도록 관리자 승인을 두고, 위치는 요일별로 지도 주소와 안내 주소를 나눠 받았습니다.",
-    outcome: "삼육대학교 SW 프로젝트 경진대회 최우수상(2025). 시연용으로 배포했고 지금은 종료했습니다.",
+    outcome:
+      "2025 삼육대학교 SW 프로젝트 경진대회 최우수상을 수상했습니다. (시연 배포 후 종료)",
     role: "Frontend · UI 디자인",
     technologies: ["React", "Axios", "Styled Components", "Tailwind CSS"],
     links: { github: "https://github.com/iyeonggyu0/FoodMap" },
@@ -416,7 +471,8 @@ export const PROJECTS: readonly Project[] = [
       "매일 반복되는 CCTV 근무 편성을 인원별 역할, 휴가, 근무 규칙, 이전 근무 기록을 손으로 확인하며 짜야 했습니다.",
     decision:
       "인터넷·데이터베이스·라이브러리·IDE가 없는 폐쇄망이라 브라우저와 Vanilla JavaScript, LocalStorage만으로 만들었습니다.",
-    outcome: "전역 전에 부대 담당자에게 인계했고, 이후 장기 운영 여부는 확인하지 못했습니다.",
+    outcome:
+      "별도 설치 없이 브라우저만으로 동작하게 구현해 전역 전 부대 담당자에게 인계했습니다.",
     period: "2023.09 — 2024.06",
     role: "기획 · 개발",
     team: "1인 프로젝트",
@@ -427,7 +483,9 @@ export const PROJECTS: readonly Project[] = [
 ];
 
 export const FEATURED_PROJECTS = PROJECTS.filter((p) => p.tier === "featured");
-export const SUPPORTING_PROJECTS = PROJECTS.filter((p) => p.tier === "supporting");
+export const SUPPORTING_PROJECTS = PROJECTS.filter(
+  (p) => p.tier === "supporting",
+);
 export const ARCHIVE_PROJECTS = PROJECTS.filter((p) => p.tier === "archive");
 
 /** 목록에 보일 분류 라벨 */
@@ -437,7 +495,9 @@ export function categoryOf(project: Project) {
 
 /** 카드 제목: [무슨 서비스인지] - [서비스명]. category 가 없으면 이름만. */
 export function displayTitle(project: Project) {
-  return project.category ? `${project.category} - ${project.name}` : project.name;
+  return project.category
+    ? `${project.category} - ${project.name}`
+    : project.name;
 }
 
 export function projectsOfKind(kind: ProjectKind) {
@@ -446,7 +506,9 @@ export function projectsOfKind(kind: ProjectKind) {
 
 /** 라이브 탭으로 여는 프로젝트. 실제 서비스 주소가 있는 것만 남긴다. */
 export const LIVE_PROJECTS = PROJECTS.flatMap((p) =>
-  p.live && p.links?.service ? [{ project: p, service: p.links.service, hint: p.live.hint }] : [],
+  p.live && p.links?.service
+    ? [{ project: p, service: p.links.service, hint: p.live.hint }]
+    : [],
 );
 
 /**

@@ -43,7 +43,9 @@ export default function WorkPage() {
       summary: p.subtitle,
       detail: p.headline,
       role: p.role,
-      link: hasCaseStudy(p.slug) ? { href: `/projects/${p.slug}`, internal: true, text: "" } : undefined,
+      link: hasCaseStudy(p.slug)
+        ? { href: `/projects/${p.slug}`, internal: true, text: "" }
+        : undefined,
     })),
     ...OTHER_PROJECTS.map((p) => ({
       key: p.name,
@@ -69,11 +71,16 @@ export default function WorkPage() {
       <section aria-labelledby="featured">
         <Container className="pb-2">
           <h2 id="featured" className="text-title font-bold">
-            Featured Projects
+            대표 프로젝트
           </h2>
         </Container>
         {FEATURED_PROJECTS.map((project, i) => (
-          <FeaturedRow key={project.slug} project={project} flip={i % 2 === 1} firstScreen={i === 0} />
+          <FeaturedRow
+            key={project.slug}
+            project={project}
+            flip={i % 2 === 1}
+            firstScreen={i === 0}
+          />
         ))}
       </section>
 
@@ -82,9 +89,12 @@ export default function WorkPage() {
           <Container className="flex flex-col gap-6 py-14 md:py-20">
             <div className="flex flex-col gap-2">
               <h2 id="supporting" className="text-title font-bold">
-                Additional Projects
+                추가 프로젝트
               </h2>
-              <p className="max-w-measure text-ink-2">개발 방식, 개발 중인 서비스, 교육 도구처럼 성격이 다른 작업입니다.</p>
+              <p className="max-w-measure text-ink-2">
+                개발 방식, 개발 중인 서비스, 교육 도구처럼 성격이 다른
+                작업입니다.
+              </p>
             </div>
             {/* 넓은 화면에서는 같은 칸끼리 세로로 맞춰 비교하고, 좁은 화면에서는 칸 이름을 붙여 쌓는다. */}
             <div
@@ -103,7 +113,9 @@ export default function WorkPage() {
                   className="grid gap-3 border-b border-rule py-6 lg:grid-cols-[13rem_1fr_1fr_1fr] lg:gap-8"
                 >
                   <div className="flex flex-col gap-1">
-                    <span className="text-sm text-ink-2">{categoryOf(project)}</span>
+                    <span className="text-sm text-ink-2">
+                      {categoryOf(project)}
+                    </span>
                     <h3 className="text-lg font-bold">{project.name}</h3>
                     <p className="text-sm text-ink-2">{project.headline}</p>
                   </div>
@@ -111,7 +123,10 @@ export default function WorkPage() {
                   <Cell label="프로젝트 소개">{project.subtitle}</Cell>
                   <Cell label="확인된 결과">{project.outcome}</Cell>
                   <div className="lg:col-span-4 lg:col-start-2">
-                    <ProjectLinks project={project} detail={hasCaseStudy(project.slug)} />
+                    <ProjectLinks
+                      project={project}
+                      detail={hasCaseStudy(project.slug)}
+                    />
                   </div>
                 </li>
               ))}
@@ -136,26 +151,43 @@ export default function WorkPage() {
                 <span className="hidden underline decoration-rule-strong underline-offset-4 group-open:inline">
                   기타 프로젝트 접기
                 </span>
-                <span className="rounded-chip bg-paper-sunk px-1.5 font-mono text-xs text-ink-2">{otherItems.length}</span>
+                <span className="rounded-chip bg-paper-sunk px-1.5 font-mono text-xs text-ink-2">
+                  {otherItems.length}
+                </span>
               </summary>
               <ul className="mt-4 grid gap-x-10 sm:grid-cols-2 xl:grid-cols-3">
                 {otherItems.map((item) => (
-                  <li key={item.key} className="flex flex-col gap-2 border-t border-rule py-5">
+                  <li
+                    key={item.key}
+                    className="flex flex-col gap-2 border-t border-rule py-5"
+                  >
                     <h3 className="text-lg font-bold">
                       {item.name}
                       {item.fullName ? (
-                        <span className="ml-2 text-sm font-normal text-ink-2">{item.fullName}</span>
+                        <span className="ml-2 text-sm font-normal text-ink-2">
+                          {item.fullName}
+                        </span>
                       ) : null}
                     </h3>
                     <p>{item.summary}</p>
                     <p className="text-sm text-ink-2">{item.detail}</p>
-                    {item.role ? <p className="text-sm text-ink-2">{item.role}</p> : null}
+                    {item.role ? (
+                      <p className="text-sm text-ink-2">{item.role}</p>
+                    ) : null}
                     {item.link?.internal ? (
-                      <Link href={item.link.href} className={`${LINK} w-fit text-sm`}>
+                      <Link
+                        href={item.link.href}
+                        className={`${LINK} w-fit text-sm`}
+                      >
                         작업 과정 읽기
                       </Link>
                     ) : item.link ? (
-                      <a href={item.link.href} target="_blank" rel="noreferrer noopener" className={`${LINK} w-fit text-sm`}>
+                      <a
+                        href={item.link.href}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className={`${LINK} w-fit text-sm`}
+                      >
                         {item.link.text} (새 창)
                       </a>
                     ) : null}
@@ -174,7 +206,9 @@ export default function WorkPage() {
 function Cell({ label, children }: { label: string; children?: string }) {
   return (
     <div className="flex flex-col gap-0.5">
-      <span className="text-xs font-semibold text-ink-2 lg:sr-only">{label}</span>
+      <span className="text-xs font-semibold text-ink-2 lg:sr-only">
+        {label}
+      </span>
       <p>{children ?? "—"}</p>
     </div>
   );

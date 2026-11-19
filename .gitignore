@@ -12,6 +12,7 @@
 /coverage
 .claude/launch.json
 .impeccable/
+repomix-output.xml
 
 # next.js
 /.next/

@@ -10,14 +10,15 @@ export const PROFILE = {
    */
   headline: ["불편을 발견하고,", "웹 서비스로 해결합니다."],
   /** 메인 문구 아래 한 문장 — 이 포트폴리오에서 무엇을 보게 되는지 */
-  intro: "직접 만든 서비스에서 무엇이 불편했고, 어떤 판단으로 화면을 만들었고, 결과가 어땠는지 정리했습니다.",
+  intro:
+    "디자인과 컴퓨터공학을 함께 전공했습니다. React·Next.js로 동아리 운영 플랫폼과 축제 서비스처럼 실제 사용자가 쓰는 웹을 만들고 개선해 왔습니다.",
   github: GITHUB_URL,
   email: "joungou.park@gmail.com",
 } as const;
 
 /** /career 맨 위의 전공 배경. 근거: docs/content.md#profile, #education */
 export const BACKGROUND = {
-  lead: "디자인과 컴퓨터공학을 모두 전공했습니다. 화면의 의도를 이해하고, 그것을 실제로 동작하는 UI로 옮깁니다.",
+  lead: "디자인과 컴퓨터공학을 모두 전공했습니다. 기획과 디자인의 의도를 파악해 예외 상황까지 고려한 UI와 상태로 구현합니다.",
   items: [
     {
       field: "디자인",
@@ -34,4 +35,5 @@ export const BACKGROUND = {
   ],
 } as const;
 
-export const CONTACT_STATEMENT = "프로젝트나 협업에 관한 이야기를 기다립니다.";
+export const CONTACT_STATEMENT =
+  "채용, 프로젝트, 협업 관련 이야기는 언제든 편하게 연락해 주세요.";
