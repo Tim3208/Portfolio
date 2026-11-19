@@ -1,12 +1,5 @@
-.layout {
-  min-width: 0;
-}
-
 .frame {
-  width: 100%;
   max-width: 393px;
-  margin-inline: auto;
-  border: 1px solid var(--color-rule-strong);
 }
 
 .placeholder {
@@ -19,33 +12,6 @@
   content: "";
   display: block;
   aspect-ratio: 393 / 739;
-}
-
-.panel {
-  /* 모바일 막대의 sticky 범위가 서비스 화면까지 이어지도록 상자를 만들지 않는다. */
-  display: contents;
-}
-
-.panelIntro {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin-block: 1rem 0.5rem;
-}
-
-.controls {
-  position: sticky;
-  bottom: 0.5rem;
-  z-index: 40;
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 0.25rem;
-  /* 320px에서도 여섯 토글의 44px 터치 영역이 한 줄에 들어간다. */
-  margin-inline: -1rem;
-  border: 1px solid var(--color-rule);
-  background: var(--color-paper-raised);
-  padding: 0.25rem;
 }
 
 .grants {
@@ -84,48 +50,10 @@
   gap: 0.5rem;
 }
 
-.response {
-  margin-top: 0.5rem;
-}
-
 @media (min-width: 48rem) {
-  .layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: start;
-    gap: 1.5rem;
-  }
-
   .frame {
     /* 63px 헤더와 두 줄씩 접히는 오류·직전 판 안내, 재시도 영역의 높이를 남긴다. */
     max-width: min(393px, calc((var(--viewport-height) - 15rem) * 393 / 739));
-  }
-
-  .panel {
-    position: sticky;
-    top: 1rem;
-    display: flex;
-    min-width: 0;
-    max-height: calc(var(--viewport-height) - 2rem);
-    flex-direction: column;
-    gap: 0.75rem;
-    overflow-y: auto;
-    border: 1px solid var(--color-rule);
-    background: var(--color-paper-raised);
-    padding: 1rem;
-  }
-
-  .panelIntro,
-  .response {
-    margin: 0;
-  }
-
-  .controls {
-    position: static;
-    gap: 0.75rem;
-    margin: 0;
-    border: 0;
-    padding: 0;
   }
 
   .grants {

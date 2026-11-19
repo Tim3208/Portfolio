@@ -37,14 +37,44 @@ Case Study의 `demo` 블록은 정해진 위젯을 이름으로만 고른다([ty
 - 기존 두 재구성 데모의 패널은 한 칸에 겹쳐 높이가 흔들리지 않고, 숨긴 패널은 `visibility`로 접근성 트리와 Tab 순서에서 빠진다. 전환은 180ms 투명도이고, `prefers-reduced-motion: reduce`에서는 즉시 바뀐다. `:has()`를 모르는 브라우저에서는 첫 상태만 보인다.
 - 평가 단계 데모에서 면접 단계의 목록을 "서류 합격자 목록"으로 둔 것은 설명용 재구성이다. 실제 명세의 필드 · 목록과 일치하는지는 확인이 필요하다.
 
+<a id="demo-rules"></a>
+
+#### 실제 코드 실행 데모의 공통 기준
+
+스크린샷 자리를 실제 코드 실행 데모로 바꿀 때 따르는 기준이다(2026-11-19 결정).
+
+- **고르는 기준**: 실제 서비스에서는 방문자가 만들 수 없는 장면이 있는 자리만 데모로 바꾼다. 로그인 뒤 화면, 잘못된 응답, 시간이 지난 뒤의 상태, 결과가 그렇게 나온 이유가 여기에 든다. [라이브 탭](#live)으로 그대로 열리는 화면을 다시 만들지 않는다.
+- **옮기는 방식**: 화면 컴포넌트와 순수 로직은 원본을 최소 수정으로 옮기고, 파일마다 원본 경로 · 기준 커밋 · 변경점을 적는다. 서버 조회 · 라우터 · 인증만 샘플 데이터로 바꾼다. 원본에 없는 조작은 서비스 화면 밖 패널에만 둔다. 비슷하게 다시 그린 것은 이 종류가 아니라 설명용 재구성이다.
+- **기본 상태**: 조작하지 않아도 기본 상태만으로 무슨 화면인지 읽혀야 한다. 날짜에 기대는 화면은 "오늘"을 고정값으로 넣어 언제 열어도 같은 장면이 나오게 한다.
+- **색 · 폰트**: 옮긴 화면은 스크린샷처럼 서비스의 색 · 폰트를 유지한다. 서비스 토큰은 화면 루트의 범위 변수(`--maw-*`처럼 서비스마다 다른 접두어)에 두고 전역 `@theme`에 넣지 않는다.
+- **에셋**: 필요한 것만 `public/images/projects/<slug>/` 아래에 두고, 데모 하나의 에셋 합계는 500KB 이하를 목표로 한다. 넘으면 줄이거나 이유를 적는다. Oshi Calendar의 게임사 로고처럼 제3자 그림은 저장소 주인의 결정(2026-11-19)으로 서비스 화면 안에서만 쓰고, 출처는 [콘텐츠 기준](content.md)에 적는다.
+- **공동 작성 코드**: 팀원이 쓴 코드가 섞인 화면은 본문과 `ownership`에 공동 작성임을 밝히고 옮긴다. syu-likelion 평가 화면이 해당한다(2026-11-19 결정). 본인 기여가 아닌 기능 자체를 데모로 만들지는 않는다.
+- **실행 경계**: 공통 틀에서 클라이언트 경계는 훅이 필요한 [DeferredDemoFrame](../src/components/project/demos/shell/DeferredDemoFrame.tsx)뿐이다. 표면 · 배치 · 패널은 클라이언트 선언 없이 두고, 상태와 이벤트는 데모별 클라이언트 컴포넌트가 소유한다.
+- **불러오기**: 서비스 화면은 `DeferredDemoFrame`으로 화면 가까이 왔을 때 한 번 마운트하고, 그 전에는 같은 크기의 빈 프레임으로 자리를 지킨다. 프레임의 폭과 빈 자리 마크업은 각 데모가 넘긴다. `IntersectionObserver`는 `root: null`, `rootMargin: "240px 0px"`로 문서와 중간 스크롤 조상인 데스크톱 `Viewport`의 교차 영역을 함께 확인하고, 지원하지 않으면 바로 마운트한다.
+- **틀**: 표면 · 표시 문구 · 캡션, 지연 마운트, 패널과 모바일 조작 막대는 [shell](../src/components/project/demos/shell)의 공통 틀을 쓴다. 틀은 자리만 제공하고 데모별 내용을 설정값으로 흡수하지 않는다. `DemoSurface`는 색 계열 · 표시 문구(기본값 "실제 서비스 코드 · 샘플 데이터") · 캡션 · 본문, `DemoLayout`은 자식, `DemoPanel`은 접근 이름 · 안내 · 조작 묶음 · 응답 내용을 받는다. 응답의 `details`는 틀이 두고 `summary`와 JSON 본문은 데모가 넘긴다.
+- **표면과 배치**: 표면은 `figure`와 `figcaption`, `rounded-xs border border-rule bg-paper-raised`, 안쪽 여백 16·24px을 쓴다. 서비스 프레임에는 얇은 테두리만 두며 기기 목업 · 그림자 · 새 모션을 더하지 않는다. `md` 이상은 화면 · 패널 2열이고 화면의 폭 제한은 각 데모가 정한다. 패널은 위쪽에 sticky로 두며, 제목과 안내는 일반 흐름에 놓는다.
+- **모바일 조작 막대**: `md` 미만은 같은 조작 묶음을 데모 범위 안 아래쪽의 sticky 막대로 줄인다. 제목 · 안내와 응답 보기는 막대 밖 일반 흐름에 둔다. 모바일 패널은 `display: contents`로 두어 조작 막대의 sticky 범위가 서비스 화면까지 이어지게 한다.
+
+바꿀 자리와 그대로 두는 자리는 다음과 같다. 순서는 위에서 아래다.
+
+| 자리 | 판단 | 이유 |
+| --- | --- | --- |
+| syu-likelion 결과 확인 · 면접 예약(지원 완료 포함) | 데모로 교체 | 결과 공개 전후, 합격 · 불합격, 예약 가능 기간, 마감된 시간은 로그인과 모집 일정 없이는 볼 수 없다 |
+| 삼육대 어디야 검색 | 데모로 교체 | 어느 필드에서 일치해 그 순서가 됐는지는 실제 서비스가 보여주지 않는다 |
+| Oshi Calendar 캘린더 ↔ 대시보드, 종료 임박 | 데모로 교체 | 초기 캘린더 화면과 날짜가 지난 뒤의 목록은 지금 서비스에서 볼 수 없다 |
+| Make A Wish 입력 검증 | 데모 추가 | 가입 · 복구 화면은 종료된 서비스의 로그인 흐름 안에 있다 |
+| syu-likelion 평가 화면(`evaluation-stage` 대체) | 데모로 교체, 공동 작성 표기 | 운영진 전용 화면이고 지금 캡처에는 실제 지원자 정보가 있다 |
+| Make A Wish 가입 결과, mathGraph 그래프 | 선택 | 위 다섯 자리를 마친 뒤 정한다 |
+| syu-likelion 마이페이지 · 랜딩, Make A Wish 지도 · 세션, AgentFlow | 그대로 | 운영진 폼이 섞인 큰 화면, 라이브 탭으로 열리는 화면, 팀원 코드와 지도 SDK에 묶인 화면, 옮길 실제 화면이 없는 규칙 설명이다 |
+
 스탬프 데모의 기준은 다음과 같다. 원본과 에셋 사용 근거는 [콘텐츠 기준](content.md#make-a-wish)에 둔다.
 
-- **실행 경계**: [StampBoardDemo](../src/components/project/demos/StampBoardDemo.tsx)만 클라이언트 경계로 늘린다. 옮긴 서비스 코드는 [make-a-wish](../src/components/project/demos/make-a-wish)에 두고 각 파일에 원본 경로·기준 커밋·변경점을 적는다. 가짜 응답은 원본 `readBoard` → `buildStampBoard` → 화면을 통과하며 검증·배정 로직은 원본 그대로 유지한다. Query·Router·상태 관리 패키지는 옮기지 않는다.
+- **실행 경계**: [StampBoardDemo](../src/components/project/demos/StampBoardDemo.tsx)는 서버에서 표면을 조립하고, [StampBoardControls](../src/components/project/demos/StampBoardControls.tsx)가 상태 · 응답 조작 · 서비스 화면을 맡는다. 옮긴 서비스 코드는 [make-a-wish](../src/components/project/demos/make-a-wish)에 둔다. 가짜 응답은 원본 `readBoard` → `buildStampBoard` → 화면을 통과하며 검증·배정 로직은 원본 그대로 유지한다. Query·Router·상태 관리 패키지는 옮기지 않는다.
 - **조회와 판 유지**: 기본은 정상 응답·일반 부스 3개다. 지급 조작은 화면 밖 "서버 응답" 패널에서만 한다. 상황 라벨은 "정상" · "총개수 불일치" · "분류 누락" · "조회 실패"다. 총개수 불일치·조회 실패는 직전 판을 유지하고 자동 갱신을 멈춘다. 멈춘 뒤 응답을 바꿔도 직접 "다시 시도"나 "화면 새로 열기"를 눌러야 조회한다. 분류 누락은 직전 판을 유지하되 스탬프 조회가 성공했으므로 자동 갱신을 계속한다. 직전 판 없는 오류에는 별자리판을 그리지 않고, 정상 0개에는 빈 별 6개를 그린다.
-- **표면과 배치**: 바깥은 기존 데모와 같은 `hue-blush`, `rounded-xs border border-rule bg-paper-raised`, 안쪽 여백 16·24px이다. 표시는 "실제 서비스 코드 · 샘플 데이터" 하나만 둔다. 서비스 화면은 최대 폭 393px에 얇은 테두리만 두며 기기 목업·그림자·새 모션을 더하지 않는다. `md` 이상은 화면·패널 2열이고 `--viewport-height`에 헤더와 별자리가 함께 들어오게 화면 폭을 제한한다. 오른쪽 패널은 위쪽에 sticky로 두고 지급 토글은 전체 이름이 보이는 2열을 유지한다.
-- **모바일 조작 막대**: `md` 미만은 같은 컨트롤을 데모 범위 안 아래쪽의 sticky 막대로 줄인다. 지급 토글 6개는 A–F 한 줄로 표시하되 F의 외부 부스를 구분하고 접근 이름은 전체 이름을 유지한다. 상황 라디오는 한 줄(아주 좁으면 두 줄), 자동 갱신 상태와 "화면 새로 열기"는 한 줄로 둔다. 375×812에서 막대 높이는 약 170px 이하로 제한하고 320px에서도 가로 넘침 없이 44px 터치 영역을 지킨다. "서버 응답" 제목과 그 아래 "부스에서 QR을 찍으면 서버가 스탬프를 지급합니다. 그 응답을 여기서 바꿔 봅니다." 안내, "응답 보기"는 sticky 밖 일반 흐름에 둔다.
+- **표면과 배치**: 색 계열은 `hue-blush`다. 서비스 화면은 최대 폭 393px이고, 빈 자리는 고정 높이 63px 헤더와 `393 / 739` 비율의 별자리로 구성한다. `md` 이상 화면 폭은 `min(393px, calc((var(--viewport-height) - 15rem) * 393 / 739))`로 제한해 헤더 · 별자리와 오류 · 재시도 안내가 함께 들어오게 한다. 지급 토글은 전체 이름이 보이는 2열을 유지한다.
+- **모바일 조작 막대**: 지급 토글 6개는 A–F 한 줄로 표시하되 F의 외부 부스를 구분하고 접근 이름은 전체 이름을 유지한다. 상황 라디오는 한 줄(아주 좁으면 두 줄), 자동 갱신 상태와 "화면 새로 열기"는 한 줄로 둔다. 375×812에서 막대 높이는 약 170px 이하로 제한하고 320px에서도 가로 넘침 없이 44px 터치 영역을 지킨다.
 - **서비스 색·폰트 예외**: 옮긴 화면은 스크린샷처럼 원본의 색과 폰트를 유지하며 포트폴리오 테마에 따라 바뀌지 않는다. 원본 색 토큰은 화면 루트의 `--maw-*` CSS 변수로 격리하고 전역 `@theme`에는 넣지 않는다. JSX에 원래 있던 임의값은 보존한다. 유일한 추가 의존성 `@fontsource-variable/hahmlet`의 Hahmlet은 서비스 화면에만 적용하고 패널·캡션은 기존 폰트를 쓴다. 화면 안 포커스는 원본의 `#2d7dc8` 2px 표시를 쓴다. 뒤로 아이콘은 인라인 SVG 장식(`aria-hidden`)이고 화면 제목은 `h1`을 늘리지 않는다.
-- **에셋과 불러오기**: 필요한 그림만 [stamps](../public/images/projects/make-a-wish/stamps)에 둔다. sky는 품질 95 손실 WebP(43KB), shooting-star는 폭 1200px·품질 90 손실 WebP(95KB)로 제공한다. 데모가 화면 가까이 왔을 때 서비스 화면을 마운트하며, 그 전에는 같은 비율의 빈 프레임으로 자리를 유지한다. 데스크톱의 스크롤 루트는 문서가 아닌 `Viewport`다. `IntersectionObserver`가 없으면 바로 마운트한다.
+- **에셋**: 그림은 [stamps](../public/images/projects/make-a-wish/stamps)에 둔다. sky는 품질 95 손실 WebP(43KB), shooting-star는 폭 1200px·품질 90 손실 WebP(95KB)로 제공한다.
 
 <a id="intro"></a>
 
@@ -460,7 +490,8 @@ Accent는 장식면 전용이다. 라이트 값은 `#C8683A`, 다크 값은 `#D9
 | [FeaturedRow.tsx](../src/components/project/FeaturedRow.tsx) | 홈 · /work 대표 프로젝트 행 |
 | [ProjectParts.tsx](../src/components/project/ProjectParts.tsx) | 대표 화면(실제 화면 · 담당 범위 도식 · 비공개 사유), 메타, 수치, 링크 |
 | [demos](../src/components/project/demos) | 설명용 재구성(평가 단계, 승인 무효화), 실제 코드 실행(스탬프 별자리) |
-| [StampBoardDemo.tsx](../src/components/project/demos/StampBoardDemo.tsx), [make-a-wish](../src/components/project/demos/make-a-wish) | 샘플 응답 조작·조회 상태, 원본에서 옮긴 검증·배정·스탬프 화면 |
+| [shell](../src/components/project/demos/shell) | 실제 코드 실행 데모의 표면 · 2열 배치 · 패널과 모바일 조작 막대, 지연 마운트 프레임 |
+| [StampBoardDemo.tsx](../src/components/project/demos/StampBoardDemo.tsx), [StampBoardControls.tsx](../src/components/project/demos/StampBoardControls.tsx), [make-a-wish](../src/components/project/demos/make-a-wish) | 서버 표면 조립, 샘플 응답 조작·조회 상태, 원본에서 옮긴 검증·배정·스탬프 화면 |
 | [CoordinateLabel.tsx](../src/components/project/CoordinateLabel.tsx) | mathGraph 판단 샘플 도식 |
 | [CaseSection.tsx](../src/components/project/CaseSection.tsx) | Case Study 블록별 editorial layout |
 | [og.ts](../src/lib/og.ts) | OG 라이트 팔레트와 색표본 |
