@@ -1,6 +1,7 @@
 import type { DemoName } from "@/data/caseStudies";
 
 import { ApprovalResetDemo } from "./ApprovalResetDemo";
+import { CalendarFirstDemo } from "./CalendarFirstDemo";
 import { EvaluationStageDemo } from "./EvaluationStageDemo";
 import { PlaceSearchDemo } from "./PlaceSearchDemo";
 import { ResultStatusDemo } from "./ResultStatusDemo";
@@ -19,7 +20,9 @@ export function Demo({ name }: { name: DemoName }) {
       return <ResultStatusDemo />;
     case "place-search":
       return <PlaceSearchDemo />;
+    case "calendar-first":
+      return <CalendarFirstDemo />;
   }
 }
 
-export { ApprovalResetDemo, EvaluationStageDemo, PlaceSearchDemo, ResultStatusDemo, StampBoardDemo };
+export { ApprovalResetDemo, CalendarFirstDemo, EvaluationStageDemo, PlaceSearchDemo, ResultStatusDemo, StampBoardDemo };

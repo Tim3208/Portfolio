@@ -1,0 +1,92 @@
+/* 원본: src/app/styles/global.css · 기준 커밋: 40c516b.
+   변경: 문서 전역 규칙을 서비스 루트로 제한하고 포트폴리오의 white/black 팔레트
+   제거와 무관하게 --oshi-* 변수를 쓴다. 1280×800에서 clamp 여백은 40px이다.
+   스크롤바의 모양은 원본 그대로이며 관리자 콘솔 전용 규칙은 옮기지 않았다. */
+.screen {
+  --oshi-white: #ffffff;
+  --oshi-black: #000000;
+  position: relative;
+  box-sizing: border-box;
+  width: 1280px;
+  height: 800px;
+  padding: 40px;
+  color-scheme: dark;
+  color: #e7e7e7;
+  background: #111111;
+  font-family: "Pretendard Variable", Pretendard, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.screen *, .screen *::before, .screen *::after {
+  box-sizing: border-box;
+}
+
+.screen :is(button, input, select, textarea) {
+  font-family: inherit;
+}
+
+.screen :is(h3, h4, h5) {
+  text-wrap: wrap;
+}
+
+.screen button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen :focus-visible {
+  outline-color: #24e6b0;
+}
+
+.screen label:has(input:focus-visible) {
+  outline: 2px solid #24e6b0;
+  outline-offset: 2px;
+}
+
+@supports selector(::-moz-range-thumb) {
+  .screen :global(.dashboard-scrollbar) {
+    scrollbar-color: #4e4e4e #302f2f;
+    scrollbar-width: thin;
+  }
+}
+
+.screen :global(.dashboard-scrollbar)::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.screen :global(.dashboard-scrollbar)::-webkit-scrollbar-track,
+.screen :global(.dashboard-scrollbar)::-webkit-scrollbar-track-piece,
+.screen :global(.dashboard-scrollbar)::-webkit-scrollbar-corner {
+  background: #302f2f;
+  border-radius: 0 !important;
+  box-shadow: none;
+}
+
+.screen :global(.dashboard-scrollbar)::-webkit-scrollbar-thumb {
+  border: 1px solid transparent;
+  border-radius: 0 !important;
+  background: #4e4e4e;
+  background-clip: content-box;
+  box-shadow: none;
+}
+
+.screen :global(.dashboard-scrollbar)::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+  appearance: none;
+  -webkit-appearance: none;
+}

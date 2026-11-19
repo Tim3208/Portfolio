@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 import styles from "./DemoShell.module.css";
 
@@ -13,12 +13,20 @@ type FrameProps = {
   designWidth?: never;
   resetKey?: never;
   label?: never;
+  scaleAtAllWidths?: never;
+  designHeight?: never;
 } | {
   variant: "wide";
   designWidth: number;
   resetKey: string | number;
   label: string;
-});
+} & ({
+  scaleAtAllWidths?: false;
+  designHeight?: never;
+} | {
+  scaleAtAllWidths: true;
+  designHeight: number;
+}));
 
 /** 모바일 문서와 md의 창 안 스크롤 모두에서, 가려진 프레임 위쪽만 다시 보여 준다. */
 function revealFrameTop(frame: HTMLElement) {
@@ -36,7 +44,7 @@ function revealFrameTop(frame: HTMLElement) {
   if (offset < 0) window.scrollTo({ top: window.scrollY + offset, behavior: "instant" });
 }
 
-/** 빈 자리는 데모가 넘긴다. wide는 설계 폭·실측 패널 높이로 크기만 조절한다. */
+/** wide의 기본은 모바일 원본, 선택적으로 모든 폭에서 고정 캔버스 전체를 축소한다. */
 export function DeferredDemoFrame({
   className,
   placeholder,
@@ -45,9 +53,13 @@ export function DeferredDemoFrame({
   designWidth,
   resetKey,
   label,
+  scaleAtAllWidths,
+  designHeight,
 }: FrameProps) {
   const [nearby, setNearby] = useState(false);
   const frameRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const heightBudgetRef = useRef<HTMLDivElement>(null);
   const previousReset = useRef(resetKey);
 
   useEffect(() => {
@@ -78,22 +90,35 @@ export function DeferredDemoFrame({
     frame.style.setProperty("--demo-design-width", `${designWidth}px`);
 
     const measure = () => {
-      const scale = desktop.matches ? Math.min(1, frame.clientWidth / designWidth) : 1;
-      // zoom은 축소된 높이까지 레이아웃에 반영하며 원본 lg 분기는 브라우저 폭을 따른다.
+      const panelHeight = panel?.getBoundingClientRect().height ?? 0;
+      frame.style.setProperty("--demo-panel-height", `${panelHeight}px`);
+      const widthScale = Math.min(1, frame.clientWidth / designWidth);
+      const heightScale = scaleAtAllWidths && desktop.matches && designHeight
+        ? (heightBudgetRef.current?.getBoundingClientRect().height ?? designHeight) / designHeight
+        : 1;
+      const scale = scaleAtAllWidths ? Math.min(widthScale, heightScale) : desktop.matches ? widthScale : 1;
+      // zoom은 축소된 높이까지 레이아웃에 반영한다. 기본 wide의 lg 분기는 유지한다.
       frame.style.setProperty("--demo-scale", String(scale));
-      frame.style.setProperty("--demo-panel-height", `${panel?.getBoundingClientRect().height ?? 0}px`);
-      frame.tabIndex = desktop.matches ? 0 : -1;
+      frame.tabIndex = !scaleAtAllWidths && desktop.matches ? 0 : -1;
+      if (contentRef.current && scaleAtAllWidths) contentRef.current.inert = !desktop.matches;
     };
     measure();
-    const observer = new ResizeObserver(measure);
+    // 측정으로 zoom과 프레임 높이가 바뀌어도 같은 ResizeObserver 회차에서 되먹임하지 않는다.
+    let resizeFrame = 0;
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(measure);
+    });
     observer.observe(frame);
     if (panel) observer.observe(panel);
+    if (heightBudgetRef.current) observer.observe(heightBudgetRef.current);
     desktop.addEventListener("change", measure);
     return () => {
+      cancelAnimationFrame(resizeFrame);
       observer.disconnect();
       desktop.removeEventListener("change", measure);
     };
-  }, [variant, designWidth]);
+  }, [variant, designWidth, scaleAtAllWidths, designHeight]);
 
   useEffect(() => {
     if (variant !== "wide" || previousReset.current === resetKey) return;
@@ -101,22 +126,25 @@ export function DeferredDemoFrame({
     const frame = frameRef.current;
     if (!frame) return;
     if (window.matchMedia("(min-width: 64rem)").matches) {
+      if (scaleAtAllWidths) return;
       frame.scrollTo({ top: 0, behavior: "instant" });
     } else {
       revealFrameTop(frame);
     }
-  }, [variant, resetKey]);
+  }, [variant, resetKey, scaleAtAllWidths]);
 
   return (
     <div
       ref={frameRef}
-      className={`${styles.frame} ${className}${variant === "wide" ? ` ${styles.wideFrame}` : ""}`}
+      className={`${styles.frame} ${className}${variant === "wide" ? ` ${styles.wideFrame}` : ""}${scaleAtAllWidths ? ` ${styles.allWidthsFrame}` : ""}`}
+      style={variant === "wide" ? { "--demo-design-width": `${designWidth}px` } as CSSProperties : undefined}
       role={variant === "wide" ? "region" : undefined}
       aria-label={label}
       tabIndex={variant === "wide" ? -1 : undefined}
     >
+      {scaleAtAllWidths ? <div ref={heightBudgetRef} className={styles.heightBudget} aria-hidden="true" /> : null}
       {variant === "wide" ? (
-        <div className={styles.wideContent}>{nearby ? children : placeholder}</div>
+        <div ref={contentRef} className={styles.wideContent} inert={scaleAtAllWidths || undefined}>{nearby ? children : placeholder}</div>
       ) : nearby ? children : placeholder}
     </div>
   );

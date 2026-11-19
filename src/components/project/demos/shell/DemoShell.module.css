@@ -146,3 +146,28 @@
     zoom: var(--demo-scale, 1);
   }
 }
+
+/* 모바일 배치가 없는 원본을 위한 선택지. 기존 wide 프레임에는 적용하지 않는다. */
+.allWidthsFrame {
+  position: relative;
+  display: flex;
+  max-width: var(--demo-design-width);
+  max-height: none;
+  justify-content: center;
+  overflow: hidden;
+  scrollbar-gutter: auto;
+}
+
+.allWidthsFrame .wideContent {
+  width: var(--demo-design-width);
+  flex: none;
+  zoom: var(--demo-scale, 1);
+}
+
+.heightBudget {
+  position: absolute;
+  width: 0;
+  height: max(0px, calc(var(--viewport-height, 100dvh) - var(--demo-panel-height, 0px) - 0.75rem));
+  visibility: hidden;
+  pointer-events: none;
+}
