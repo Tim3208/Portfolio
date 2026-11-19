@@ -183,7 +183,7 @@ Staff
 | [03-staff-operations-overview.png](./03-staff-operations-overview.png) | 공지·일정·사용자 관리 범위 | `02-admin-product-domains.png`와 메시지가 겹쳐 보조 후보로 둔다. |
 | [04-notice-session-operations.png](./04-notice-session-operations.png) | 공지·세션 자료 운영과 30건 콘텐츠 근거 | 30건 수치와 운영 콘텐츠 근거로 보관한다. 대형 이미지는 마이페이지와 메시지가 겹치면 생략한다. |
 | [05-calendar-management.png](./05-calendar-management.png) | 운영진 일정 입력과 마이페이지 캘린더 연결 | 빈 상태라 단독 사용은 약하다. 일정이 있는 마이페이지와 함께 설명할 때만 쓴다. |
-| [06-frontend-team.png](./06-frontend-team.png) | 프론트엔드 운영진 구성 | 제품 판단 화면이 아니므로 우선순위가 낮다. 팀원 사진 사용 전 공개 범위와 동의를 확인한다. |
+| `06-frontend-team.png` (2026-11-19 삭제) | 프론트엔드 운영진 구성 | 운영진의 사진 · 이름 · 학과가 보여 저장소에서 지웠다. 팀원 사진은 공개 범위와 동의를 확인하기 전에는 넣지 않는다. |
 | [07-common-space.png](./07-common-space.png) | 공지·세션 자료·과제·질의응답과 트랙 필터 | 후보 캡션: “전체 콘텐츠와 트랙별 콘텐츠를 구분하고, 과제 제출 파일과 평가 상태까지 공통 공간에서 이어서 확인합니다.” 공개용 샘플 계정 화면으로 재촬영해야 한다. |
 
 ## 파일명 정리
