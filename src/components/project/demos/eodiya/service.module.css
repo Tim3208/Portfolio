@@ -1,0 +1,66 @@
+/**
+ * 원본: eodiya/tailwind.config.cjs, src/styles/index.css, src/layout/AppLayout.tsx
+ * 기준 커밋: origin/main 20f029a
+ * 변경: Tailwind 3 기본 회색·sans·행간과 brand 색을 서비스 화면에 격리.
+ * 웹 폰트 추가 없이 기본 sans를 유지하고, 포트폴리오의 테마·줄바꿈·포커스 색만 분리.
+ * frame은 지도와 헤더를 뺀 데모에 추가한 최대 420px·최소 48rem 자리다.
+ */
+.screen {
+  --eodiya-black: #000000;
+  --eodiya-white: #ffffff;
+  --eodiya-gray-50: #f9fafb;
+  --eodiya-gray-100: #f3f4f6;
+  --eodiya-gray-200: #e5e7eb;
+  --eodiya-gray-300: #d1d5db;
+  --eodiya-gray-400: #9ca3af;
+  --eodiya-gray-500: #6b7280;
+  --eodiya-gray-600: #4b5563;
+  --eodiya-gray-700: #374151;
+  --eodiya-gray-800: #1f2937;
+  --eodiya-gray-900: #111827;
+  --eodiya-brand-primary: #002855;
+  --eodiya-brand-primary-hover: #003566;
+  --eodiya-brand-on-primary: #ffffff;
+  --eodiya-brand-bg: #f7f9fc;
+
+  background-color: var(--eodiya-brand-bg);
+  color: var(--eodiya-black);
+  color-scheme: light;
+  font-family:
+    ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+/* Tailwind 3 preflight의 버튼 커서 기본값. 서비스 화면의 컨트롤 크기는 유지한다. */
+.screen button {
+  cursor: pointer;
+}
+
+.screen button:disabled {
+  cursor: default;
+}
+
+/* 포트폴리오 hue 대신 서비스 주색으로 키보드 초점을 식별한다. */
+.screen :focus-visible {
+  outline: 2px solid var(--eodiya-brand-primary);
+  outline-offset: 2px;
+}
+
+.frame {
+  --eodiya-brand-bg: #f7f9fc;
+
+  width: 100%;
+  max-width: 420px;
+  min-width: 0;
+  min-height: 48rem;
+  margin-inline: auto;
+  border: 1px solid var(--color-rule);
+  background-color: var(--eodiya-brand-bg);
+}

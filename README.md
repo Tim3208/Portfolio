@@ -43,7 +43,7 @@ npm run dev
 
 넓은 화면(1024px 이상)에서는 창 왼쪽에 바탕화면 아이콘이 있고, 홈에 처음 들어오면 연출 커서가 인사한 뒤 포트폴리오 아이콘을 더블클릭해 창을 엽니다. 다시 보려면 브라우저 개발자 도구에서 `localStorage`의 `intro-seen`을 지웁니다. 기준은 [바탕화면과 큐레이터](docs/design.md#intro)입니다.
 
-이 브랜치(`design/3-claude`)는 디자인 **도색 시안 3안**입니다. 실제 서비스 화면에 번호 주석을 달아 판단을 화면 위에서 짚고, 평가 단계·승인 무효화 같은 판단은 합성 데이터로 만든 설명용 재구성 데모로 바꿔 볼 수 있습니다. Make A Wish 스탬프와 syu-likelion 결과 확인·면접 예약은 원본 서비스 코드를 샘플 응답으로 실행하는 데모입니다. 기준은 [디자인 기준의 3안](docs/design.md#option-3)입니다.
+이 브랜치(`design/3-claude`)는 디자인 **도색 시안 3안**입니다. 실제 서비스 화면에 번호 주석을 달아 판단을 화면 위에서 짚고, 평가 단계·승인 무효화 같은 판단은 합성 데이터로 만든 설명용 재구성 데모로 바꿔 볼 수 있습니다. Make A Wish 스탬프와 syu-likelion 결과 확인·면접 예약은 원본 서비스 코드를 샘플 응답으로 실행하는 데모입니다. 삼육대 어디야 검색은 원본 장소 데이터와 검색 패널을 실행하고, 화면 밖에서 결과 순서의 이유를 보여줍니다. 기준은 [디자인 기준의 3안](docs/design.md#option-3)입니다.
 
 | 경로 | 콘텐츠 |
 | --- | --- |
@@ -67,7 +67,7 @@ syu-likelion 상세는 일곱 섹션으로 구성하며, 통합 전 `#section-01
 
 ## 기술과 구조
 
-[package.json](package.json) 기준으로 Next.js 16.3.0 App Router, React 19.2.8, TypeScript 6, Tailwind CSS 4를 사용합니다. Pretendard와 JetBrains Mono는 패키지에서 자체 호스팅합니다. Make A Wish 데모의 서비스 화면 안에서만 `@fontsource-variable/hahmlet`의 Hahmlet을 사용합니다. 콘텐츠는 정적 TypeScript 데이터로 관리합니다.
+[package.json](package.json) 기준으로 Next.js 16.3.0 App Router, React 19.2.8, TypeScript 6, Tailwind CSS 4를 사용합니다. Pretendard와 JetBrains Mono는 패키지에서 자체 호스팅합니다. Make A Wish 데모의 서비스 화면 안에서만 `@fontsource-variable/hahmlet`의 Hahmlet을 사용하고, 삼육대 어디야 데모의 서비스 화면은 원본의 시스템 sans-serif를 유지합니다. 콘텐츠는 정적 TypeScript 데이터로 관리합니다.
 
 ```text
 src/
@@ -78,6 +78,7 @@ src/
 │  ├─ project/          대표 프로젝트 행, Case Study 블록 렌더링, 재구성·실제 코드 실행 데모
 │  │  └─ demos/         데모별 서버 표면과 클라이언트 조작
 │  │     ├─ shell/      표면·배치·패널·지연 마운트 공통 틀
+│  │     ├─ eodiya/     원본에서 옮긴 검색 패널·장소 데이터·순위 로직
 │  │     ├─ make-a-wish/ 원본에서 옮긴 스탬프 화면·순수 로직
 │  │     └─ syu-likelion/ 원본에서 옮긴 제출·결과·예약 화면·순수 로직
 │  └─ ui/               공통 요소 (Container, Shot 화면 주석, Switcher 전환, Placeholder)
@@ -100,6 +101,7 @@ artifacts/              기존 콘텐츠 점검 기록과 검토용 캡처
 | 실제 코드 실행 데모 공통 틀(표면·배치·패널·지연 마운트) | [shell](src/components/project/demos/shell) |
 | Make A Wish 스탬프 데모·응답 조작·옮긴 서비스 코드·그림 | [StampBoardDemo.tsx](src/components/project/demos/StampBoardDemo.tsx), [StampBoardControls.tsx](src/components/project/demos/StampBoardControls.tsx), [make-a-wish](src/components/project/demos/make-a-wish), [stamps](public/images/projects/make-a-wish/stamps) |
 | syu-likelion 제출 완료·결과 확인·면접 예약 데모와 그림 | [ResultStatusDemo.tsx](src/components/project/demos/ResultStatusDemo.tsx), [ResultStatusControls.tsx](src/components/project/demos/ResultStatusControls.tsx), [syu-likelion](src/components/project/demos/syu-likelion), [result](public/images/projects/syu-likelion/result) |
+| 삼육대 어디야 검색 데모·순서 설명·옮긴 서비스 코드와 장소 데이터 | [PlaceSearchDemo.tsx](src/components/project/demos/PlaceSearchDemo.tsx), [PlaceSearchControls.tsx](src/components/project/demos/PlaceSearchControls.tsx), [eodiya](src/components/project/demos/eodiya) |
 | 경력, 수상, 기술, 교육 | [experiences.ts](src/data/experiences.ts), [awards.ts](src/data/awards.ts), [skills.ts](src/data/skills.ts), [teaching.ts](src/data/teaching.ts) |
 | 프로젝트 층·성격·판단·결과·담당 구분 | [projects.ts](src/data/projects.ts)의 `tier`·`kind`·`decision`·`outcome`·`ownership` |
 | 주요 페이지 목록(도구줄·모바일 내비·sitemap) | [pages.ts](src/lib/pages.ts) |

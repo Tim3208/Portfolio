@@ -2,6 +2,7 @@ import type { DemoName } from "@/data/caseStudies";
 
 import { ApprovalResetDemo } from "./ApprovalResetDemo";
 import { EvaluationStageDemo } from "./EvaluationStageDemo";
+import { PlaceSearchDemo } from "./PlaceSearchDemo";
 import { ResultStatusDemo } from "./ResultStatusDemo";
 import { StampBoardDemo } from "./StampBoardDemo";
 
@@ -16,7 +17,9 @@ export function Demo({ name }: { name: DemoName }) {
       return <StampBoardDemo />;
     case "result-status":
       return <ResultStatusDemo />;
+    case "place-search":
+      return <PlaceSearchDemo />;
   }
 }
 
-export { ApprovalResetDemo, EvaluationStageDemo, ResultStatusDemo, StampBoardDemo };
+export { ApprovalResetDemo, EvaluationStageDemo, PlaceSearchDemo, ResultStatusDemo, StampBoardDemo };
