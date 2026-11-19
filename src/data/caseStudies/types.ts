@@ -10,8 +10,8 @@
  * 내용이 성립해야 한다.
  */
 
-/** 설명용 재구성과 실제 서비스 코드 실행. place-search는 원본 장소 데이터를 쓴다. */
-export type DemoName = "evaluation-stage" | "approval-reset" | "stamp-board" | "result-status" | "place-search" | "calendar-first" | "input-qa";
+/** approval-reset만 설명용 재구성이다. 나머지는 원본 서비스 코드를 샘플 데이터로 실행한다. */
+export type DemoName = "evaluation-screen" | "approval-reset" | "stamp-board" | "result-status" | "place-search" | "calendar-first" | "input-qa";
 
 export type Block =
   /** 서술. 대부분의 문장이 여기 들어간다. */

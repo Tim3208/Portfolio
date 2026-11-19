@@ -133,7 +133,7 @@
 }
 
 @media (min-width: 64rem) {
-  .wideFrame {
+  .wideFrame:where(:not(.xlFrame)) {
     max-width: var(--demo-design-width, 1488px);
     max-height: max(0px, calc(var(--viewport-height, 100dvh) - var(--demo-panel-height, 0px) - 0.75rem));
     overflow-y: auto;
@@ -141,8 +141,32 @@
     scrollbar-gutter: stable;
   }
 
-  .wideContent {
+  .wideFrame:where(:not(.xlFrame)) .wideContent {
     width: var(--demo-design-width, 1488px);
+    zoom: var(--demo-scale, 1);
+  }
+}
+
+/* xl에서 줄이기 시작하는 화면은 그 아래 넓은 창에서도 원본의 좁은 배치를 쓴다.
+   휴대폰 폭으로 가두면 표가 눌리므로 md부터 xl 전까지는 프레임 폭을 다 쓴다. */
+@media (min-width: 48rem) {
+  .xlFrame {
+    max-width: none;
+  }
+}
+
+/* 평가 화면의 원본 2열은 xl에서 시작한다. 다른 데모의 lg 분기는 유지한다. */
+@media (min-width: 80rem) {
+  .xlFrame {
+    max-width: var(--demo-design-width);
+    max-height: max(0px, calc(var(--viewport-height, 100dvh) - var(--demo-panel-height, 0px) - 0.75rem));
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
+  }
+
+  .xlFrame .wideContent {
+    width: var(--demo-design-width);
     zoom: var(--demo-scale, 1);
   }
 }

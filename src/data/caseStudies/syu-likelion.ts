@@ -161,7 +161,7 @@ export const syuLikelion: CaseStudy = {
         },
         {
           type: "demo",
-          name: "evaluation-stage"
+          name: "evaluation-screen"
         },
         {
           type: "prose",
