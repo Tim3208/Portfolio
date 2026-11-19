@@ -1,0 +1,93 @@
+/**
+ * 원본: Tim3208/Make-A-Wish_FE src/features/auth/components/recovery.module.css
+ * 기준 커밋: 436b5ef
+ * 변경: 새 비밀번호·인증번호·아이디 입력란의 규칙만 옮기고 색을 --maw-*로 격리.
+ * 입력란 네 개를 모으기 위해 rows의 위쪽 여백만 추가했다.
+ */
+.card {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  border-radius: 8px;
+  padding: 19px 18px 20px;
+  background: var(--maw-white);
+  color: var(--maw-purple);
+  font-size: 14px;
+  line-height: 22px;
+}
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 29px;
+}
+.row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+.row > label {
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+.input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 50px;
+  border: 1px solid var(--maw-gray-01);
+  border-radius: 4px;
+  background: var(--maw-white);
+  padding-inline: 16px;
+  color: var(--maw-purple);
+  font-size: 14px;
+  line-height: 22px;
+}
+.input::placeholder {
+  color: var(--maw-gray-02);
+}
+.input[aria-invalid='true'] {
+  border-color: var(--maw-red);
+  color: var(--maw-red);
+}
+.passwordForm {
+  margin: 29px 19px 0;
+}
+.passwordLabel {
+  display: block;
+  margin: 0 4px 5px;
+  color: var(--maw-blue);
+  font-size: 14px;
+  font-weight: 600;
+}
+.passwordForm .input {
+  padding-inline: 11px;
+}
+.hint {
+  margin-top: 6px;
+  color: var(--maw-gray-04);
+  font-size: 12px;
+  line-height: 18px;
+}
+@media (max-width: 350px) {
+  .card {
+    padding-inline: 14px;
+  }
+  .row {
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 7px;
+  }
+  .row > label {
+    font-size: 13px;
+  }
+  .input {
+    padding-inline: 8px;
+    font-size: 13px;
+  }
+  .passwordForm {
+    margin-inline: 6px;
+  }
+}

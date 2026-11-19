@@ -55,7 +55,7 @@
 - [layout.tsx](src/app/layout.tsx)가 BrowserWindow, 단일 `main#content`, Contact, Footer를 소유한다. 모든 라우트에서 `#contact`와 본문 건너뛰기 링크가 유효해야 한다.
 - 각 페이지는 `h1`을 정확히 하나 가진다.
 - 데스크톱(`md` 이상)은 화면 높이에 고정된 창과 탭줄·도구줄 2행 크롬을 쓰고(주요 페이지 링크는 도구줄 오른쪽), 본문은 창 안에서만 스크롤한다. `lg` 이상은 창 왼쪽에 바탕화면 아이콘과 큐레이터 커서를 두고, 홈 첫 방문에만 창 열기 연출을 재생한다([바탕화면과 큐레이터](docs/design.md#intro)). 모바일은 창 연출을 풀고 간단한 상단 내비와 문서 스크롤을 쓴다. 햄버거 메뉴를 추가하지 않는다.
-- 서버 컴포넌트를 기본으로 유지한다. 현재 클라이언트 경계는 `BrowserProvider`, `TabStrip`, `Toolbar`, `Viewport`, `ThemeToggle`, `DeskIcons`, `Curator`, `LiveFrame`, `StampBoardControls`, `ResultStatusControls`, `PlaceSearchControls`, `CalendarFirstControls`, `DeferredDemoFrame`이다. 탭 제목에 필요한 경로→이름 표와 라이브 탭의 경로→실제 주소 표는 서버의 `BrowserWindow`에서 조립해 전달한다.
+- 서버 컴포넌트를 기본으로 유지한다. 현재 클라이언트 경계는 `BrowserProvider`, `TabStrip`, `Toolbar`, `Viewport`, `ThemeToggle`, `DeskIcons`, `Curator`, `LiveFrame`, `StampBoardControls`, `InputQaControls`, `ResultStatusControls`, `PlaceSearchControls`, `CalendarFirstControls`, `DeferredDemoFrame`이다. 탭 제목에 필요한 경로→이름 표와 라이브 탭의 경로→실제 주소 표는 서버의 `BrowserWindow`에서 조립해 전달한다.
 - Case Study는 [src/data/caseStudies](src/data/caseStudies)의 정적 TypeScript 데이터다. 표시 정보는 `src/data/projects.ts`, 블록 타입은 `caseStudies/types.ts`에서 관리한다. 문서 정리만을 이유로 MDX나 새 콘텐츠 계층을 도입하지 않는다.
 - 공개 이미지는 루트의 `public/images/projects/`에 둔다. `artifacts/`는 검토 기록이며 앱에서 직접 제공되는 경로가 아니다.
 

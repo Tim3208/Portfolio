@@ -1,0 +1,88 @@
+.frame {
+  max-width: 393px;
+  container-type: inline-size;
+}
+
+.screen,
+.placeholder {
+  /* 스탬프의 63px 헤더 + 393/739 판과 같은 자리. 보기 전환에도 높이를 유지한다. */
+  --input-qa-height: calc(63px + 100cqw * 739 / 393);
+  position: relative;
+  height: var(--input-qa-height);
+  overflow: hidden;
+  background: var(--maw-black, var(--color-paper-sunk));
+}
+
+.fields {
+  height: 100%;
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+}
+
+.closed {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  padding: 1rem;
+  color: var(--maw-white);
+  font-family: var(--maw-font-body);
+  font-size: 0.875rem;
+}
+
+.examples {
+  display: flex;
+  min-width: 0;
+  gap: 0.25rem;
+  overflow-x: auto;
+  padding: 0.25rem;
+}
+
+.example {
+  min-height: 44px;
+  flex: none;
+  border: 1px solid var(--color-rule-strong);
+  border-radius: 2px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.example:hover {
+  border-color: var(--hue-deep);
+  color: var(--hue-deep);
+}
+
+.profile {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.name {
+  min-width: 0;
+  min-height: 44px;
+  width: 100%;
+  border: 1px solid var(--color-rule-strong);
+  border-radius: 2px;
+  background: var(--color-paper);
+  padding: 0.5rem;
+  color: var(--color-ink);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 48rem) {
+  .frame {
+    /* 스탬프 데모와 동일한 폭·가용 높이 기준. 서비스 글자·입력란 크기는 줄이지 않는다. */
+    max-width: min(393px, calc((var(--viewport-height) - 15rem) * 393 / 739));
+  }
+
+  .examples {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  .profile {
+    margin: 0;
+  }
+}

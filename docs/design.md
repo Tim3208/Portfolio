@@ -25,13 +25,14 @@ AGENTS 원문은 `--paper`, `--ink`처럼 짧은 토큰 이름을 쓴다. 실제
 
 ### 설명용 데모
 
-Case Study의 `demo` 블록은 정해진 위젯을 이름으로만 고른다([types.ts](../src/data/caseStudies/types.ts)). 데모가 없어도 앞뒤 서술만으로 내용이 성립해야 한다. 종류는 둘이다. `evaluation-stage`와 `approval-reset`은 판단을 합성 데이터로 설명하는 **설명용 재구성**이고, `stamp-board`·`result-status`·`place-search`·`calendar-first`는 원본의 순수 로직과 화면을 실행하는 **실제 코드 실행**이다. 스탬프·결과 확인은 샘플 JSON, 검색은 원본 장소 데이터, 캘린더는 공식 공지에서 추린 샘플 일정을 쓴다.
+Case Study의 `demo` 블록은 정해진 위젯을 이름으로만 고른다([types.ts](../src/data/caseStudies/types.ts)). 데모가 없어도 앞뒤 서술만으로 내용이 성립해야 한다. 종류는 둘이다. `evaluation-stage`와 `approval-reset`은 판단을 합성 데이터로 설명하는 **설명용 재구성**이고, `stamp-board`·`input-qa`·`result-status`·`place-search`·`calendar-first`는 원본의 순수 로직과 화면을 실행하는 **실제 코드 실행**이다. 스탬프·결과 확인은 샘플 JSON, 입력 검증은 샘플 프로필과 방문자 입력, 검색은 원본 장소 데이터, 캘린더는 공식 공지에서 추린 샘플 일정을 쓴다.
 
 | 이름 | 자리 | 보여주는 판단 | 바뀌는 것 | 하지 않는 것 |
 | --- | --- | --- | --- | --- |
 | `evaluation-stage` | syu-likelion 상세 "지원자 한 명을 평가하는 화면" | 블라인드 서류 평가와 신원을 확인하는 면접 평가에 필요한 정보가 다르다 | 지원자 이름 표시, 지원자를 고르는 목록 | 실제 지원자 정보, 평가 저장, 권한 판별, 서버 보안 증명 |
 | `approval-reset` | AgentFlow 상세 "승인한 뒤에 파일이 바뀌면", 홈 AI와 일하는 방식 | 현재 후보가 승인 당시와 같을 때만 완료 | 현재 후보(A → B), 승인의 유효 여부, 완료 가능 여부 | 실제 검수 실행, 로그 · 성공 결과 연출 |
 | `stamp-board` | Make A Wish 상세 04 "받은 스탬프를 별자리로" | 잘못된 응답과 빈 판을 구분하고, 지급 시각·분류로 별을 배정하며, 조회 실패 뒤 자동 갱신을 멈춘다 | 부스별 지급·회수, 응답 상황, 직전 판과 자동 갱신 상태 | 실제 서버 조회, 실제 적립, 실제 부스 데이터, QR |
+| `input-qa` | Make A Wish 상세 08 "일부러 이상한 값을 넣어 본 QA"의 목록 뒤 | 이름을 글자 그대로 표시하고 납부 값은 정확히 true만 인정하며, 입력 형식과 길이 경계를 검증한다 | 환영창·입력란 보기, 이름·납부 값·프로필 JSON, 전화번호·새 비밀번호·인증번호·아이디 | 실제 가입·복구 요청, 재발송 대기, 세션, 가입·복구 화면 전체 |
 | `result-status` | syu-likelion 상세 06 "지원서 작성부터 결과 확인·면접 예약까지" | 서류 마감을 수정의 경계로 알리고, 공개 여부·지원 상태에 따라 결과와 면접 예약을 연결한다 | 제출 완료·발표 전·서류 불합격·서류 합격, 수정·예약 기간, 슬롯 마감, 예약 결과 | 서버 통신, 지원 수정·취소·화면 이동, 실제 지원자 정보, 최종 합격·불합격 화면 |
 | `place-search` | 삼육대 어디야 상세 03 "공식 이름을 몰라도 찾을 수 있도록" | 장소명·건물과 층·시설 설명의 일치 정도와 필드, 반복 빈도로 검색 순서를 정한다 | 검색어, 분류 필터, 선택한 장소, 상위 결과의 일치 필드·점수 설명 | 지도, Kakao Maps SDK, 지도 이동, 오타 보정 |
 | `calendar-first` | Oshi Calendar 상세 02의 비교 블록 뒤 | 같은 일정을 날짜 칸에 놓은 캘린더와 종료일까지 남은 일수로 묶은 임박 일정의 차이를 보여준다 | 고정 "오늘" 전후 7일 이동, 월·주·일 보기와 날짜 이동, 게임·분류 필터, 임박 일정 접기 | 서버 통신, 인증, 설정 저장, 바꾼 뒤 작업 공간·할 일·보상 통계, 로딩·오류 연출 |
@@ -67,7 +68,7 @@ Case Study의 `demo` 블록은 정해진 위젯을 이름으로만 고른다([ty
 | syu-likelion 결과 확인 · 면접 예약(지원 완료 포함) | 데모로 교체 | 결과 공개 전후, 합격 · 불합격, 예약 가능 기간, 마감된 시간은 로그인과 모집 일정 없이는 볼 수 없다 |
 | 삼육대 어디야 검색 | 데모 추가(스크린샷 유지) | 어느 필드에서 일치해 그 순서가 됐는지는 실제 서비스가 보여주지 않는다. 검색·지도의 연결은 기존 스크린샷으로 보여준다 |
 | Oshi Calendar 바꾸기 전 첫 화면 | 데모 추가(바꾼 뒤 스크린샷·라이브 탭 유지) | 초기 캘린더 화면은 지금 서비스에서 볼 수 없다. 샘플 일정과 고정 "오늘"로 날짜 칸과 남은 일수 목록을 견주고, 바꾼 뒤 화면은 기존 스크린샷과 라이브 탭으로 보여준다 |
-| Make A Wish 입력 검증 | 데모 추가 | 가입 · 복구 화면은 종료된 서비스의 로그인 흐름 안에 있다 |
+| Make A Wish 입력 검증 | 상세 08에 `input-qa` 추가(본문 유지) | 종료된 서비스의 로그인 뒤 환영창과 가입·복구 입력란에 샘플 값을 넣는다. 환영창은 프레임 안에 그리고 입력란 네 개만 한 화면에 모으며, 실제 가입·복구·세션 흐름은 옮기지 않는다 |
 | syu-likelion 평가 화면(`evaluation-stage` 대체) | 데모로 교체, 공동 작성 표기 | 운영진 전용 화면이고 지금 캡처에는 실제 지원자 정보가 있다 |
 | Make A Wish 가입 결과, mathGraph 그래프 | 선택 | 위 다섯 자리를 마친 뒤 정한다 |
 | syu-likelion 마이페이지 · 랜딩, Make A Wish 지도 · 세션, AgentFlow | 그대로 | 운영진 폼이 섞인 큰 화면, 라이브 탭으로 열리는 화면, 팀원 코드와 지도 SDK에 묶인 화면, 옮길 실제 화면이 없는 규칙 설명이다 |
@@ -80,6 +81,15 @@ Case Study의 `demo` 블록은 정해진 위젯을 이름으로만 고른다([ty
 - **모바일 조작 막대**: 지급 토글 6개는 A–F 한 줄로 표시하되 F의 외부 부스를 구분하고 접근 이름은 전체 이름을 유지한다. 상황 라디오는 한 줄(아주 좁으면 두 줄), 자동 갱신 상태와 "화면 새로 열기"는 한 줄로 둔다. 375×812에서 막대 높이는 약 170px 이하로 제한하고 320px에서도 가로 넘침 없이 44px 터치 영역을 지킨다.
 - **서비스 색·폰트 예외**: 옮긴 화면은 스크린샷처럼 원본의 색과 폰트를 유지하며 포트폴리오 테마에 따라 바뀌지 않는다. 원본 색 토큰은 화면 루트의 `--maw-*` CSS 변수로 격리하고 전역 `@theme`에는 넣지 않는다. JSX에 원래 있던 임의값은 보존한다. 유일한 추가 의존성 `@fontsource-variable/hahmlet`의 Hahmlet은 서비스 화면에만 적용하고 패널·캡션은 기존 폰트를 쓴다. 화면 안 포커스는 원본의 `#2d7dc8` 2px 표시를 쓴다. 뒤로 아이콘은 인라인 SVG 장식(`aria-hidden`)이고 화면 제목은 `h1`을 늘리지 않는다.
 - **에셋**: 그림은 [stamps](../public/images/projects/make-a-wish/stamps)에 둔다. sky는 품질 95 손실 WebP(43KB), shooting-star는 폭 1200px·품질 90 손실 WebP(95KB)로 제공한다.
+
+Make A Wish 이상한 값 입력 데모의 기준은 다음과 같다. 원본 근거와 차이는 [콘텐츠 기준](content.md#make-a-wish)에 둔다.
+
+- **실행 경계**: [InputQaDemo](../src/components/project/demos/InputQaDemo.tsx)는 서버에서 표면을 조립하고, [InputQaControls](../src/components/project/demos/InputQaControls.tsx)가 두 보기와 샘플 값·서비스 화면을 맡는다. 옮긴 코드는 스탬프 파일과 구분해 [make-a-wish/input-qa](../src/components/project/demos/make-a-wish/input-qa)에 둔다. 기준 커밋은 `436b5ef`다. `resolveLoginWelcome`, 검증·서식 함수의 본문은 원본 그대로 유지하고, 프로필 판정에 필요한 세션 인자는 인증된 현재 세션에 해당하는 고정값을 넘긴다. 가입·복구 컨트롤러, API, 라우터와 세션 관리는 옮기지 않는다.
+- **환영창 보기**: 기본 이름은 `<img src=x onerror=alert(1)>`, 납부 값은 boolean `true`다. 이름을 React 텍스트로 표시하며 공백만 있는 이름은 "회원님"이 된다. 이름 예시는 마크업 두 가지·공백만·긴 한글 이름이고, 납부 값은 `true`·문자열 `"true"`·`null`·없음 중 고른다. 정확히 `true`일 때만 납부자 표시인 별을 그린다. 현재 프로필 JSON은 "응답 보기"에서 확인한다. 원본 `dialog`와 접근 이름을 유지하되 `showModal()` 대신 열린 비모달 대화상자로 프레임 안에만 그려 초점을 가져가거나 바깥 스크롤을 막지 않는다. 원본 `h2`는 상세 제목 계층에 맞춰 `h3`로 낮춘다. 아주 긴 이름은 원본 환영창 안에서 세로로 스크롤해 버튼까지 닿는다. "생일파티 입장하기"로 닫고 패널의 "환영창 다시 열기"로 열며, 이름·납부 값이 바뀌면 다시 연다.
+- **입력란 보기**: 가입 화면의 전화번호와 복구 화면의 새 비밀번호·인증번호·아이디 입력란을 한 화면에 모은 것이다. 원본 입력 마크업·클래스·오류 표시 방식을 유지하고 필요한 CSS 규칙만 옮긴다. `SignupNumericInput`과 `formatSignupPhoneInput`의 숫자 정리·하이픈·커서·조합 입력 처리를 유지하며 전화번호 형식 오류는 원본처럼 입력란을 벗어날 때 검사한다. 비밀번호는 `validateSignupPassword`, 인증번호는 `validateRecoveryCode`, 아이디는 `validateRecoveryId`를 통과시킨다. 복구 입력란은 원본처럼 입력을 바꾸면 오류를 지우고 입력란을 벗어나는 것만으로는 검증하지 않는다. 원본의 확인·다음 동작 대신 서비스 밖 패널의 "입력값 확인"으로 검사하며, 예시 버튼도 해당 값 주입과 검사를 함께 실행한다. 새 비밀번호는 입력한 값을 읽도록 일반 글자로 보이고 자동완성·비밀번호 저장 제안은 끈다. 원본에 없는 예시 주입과 확인 조작은 패널에서만 하며 초점을 옮기지 않는다. 실제 가입·복구 요청과 재발송 대기는 실행하지 않는다.
+- **패널과 표면**: 제목은 "넣어 볼 값", 안내는 "축제 전에 일부러 넣어 본 값들입니다. 직접 바꿔 보세요."다. `RadioChoices`로 "환영창"·"입력란" 보기를 고른다. 예시는 전화번호 `010-12-34`·`abc0101234`, 비밀번호 `password1!`·`Passw0rd!`, 인증번호 `１２３４５６`·`12345`·`123456`, 아이디 공백만·100자·101자다. 색 계열은 프로젝트의 `blush`, 표시 문구는 기본값 "실제 서비스 코드 · 샘플 데이터"다. 캡션은 "환영창은 받은 이름을 글자 그대로 보여주고, 납부 값이 정확히 true일 때만 납부자 화면을 엽니다. 입력란 보기는 원본 입력란 네 개와 검증 함수를 한 화면에 모은 것입니다."다.
+- **배치와 모바일**: 스탬프 데모와 같은 휴대폰 폭 프레임·패널의 2열이며 프레임 폭과 `md` 이상 높이 제한도 스탬프 값을 따른다. 두 보기에 같은 프레임 높이를 둬 전환 때 아래 본문이 움직이지 않게 한다. `md` 미만의 sticky 조작 막대에는 보기 라디오와 한 줄 예시 버튼을 두고, 넘치는 예시는 가로로 스크롤한다. 이름 입력·납부 값·응답 보기와 다시 열기는 막대 밖 일반 흐름에 둔다. 375×812에서 막대는 뷰포트 높이의 1/4 이하이며 320px에서도 페이지 가로 넘침을 만들지 않는다. 패널 컨트롤은 44px 터치 영역, 실제 input·button과 legend·연결된 라벨을 쓰며 서비스 입력 오류의 role·aria 연결은 원본을 따른다.
+- **서비스 색·폰트와 에셋**: 기존 [service.module.css](../src/components/project/demos/make-a-wish/service.module.css)의 `--maw-*` 범위와 Hahmlet 설정을 공유하고 필요한 토큰만 더한다. 원본 CSS 모듈은 모듈로 유지하며 전역 토큰 참조만 범위 변수로 바꾼다. 서비스 화면 크기는 원본을 유지하고 Tabler 아이콘은 인라인 SVG로 옮긴다. 그림은 환영창 에셋만 [welcome](../public/images/projects/make-a-wish/welcome)에 두며 의존성은 추가하지 않는다.
 
 syu-likelion 결과 확인·면접 예약 데모의 기준은 다음과 같다. 원본과 에셋 사용 근거는 [콘텐츠 기준](content.md#syu-likelion)에 둔다.
 
@@ -214,7 +224,7 @@ Work는 대표 프로젝트 행, 보조 프로젝트 비교 목록(넓은 화면
 
 타이포그래피는 전달을 우선한다. 우선순위는 강한 Heading, 읽기 쉬운 Body, 명확한 Metadata, 작은 Label 순서다.
 
-[layout.tsx](../src/app/layout.tsx)는 Pretendard와 JetBrains Mono를 self-host한다. 본문·설명·제목·역할·라벨은 Pretendard를 사용하고, 모노 폰트는 코드·날짜·수치에 한정한다. [실제 코드 실행 데모](#option-3-demos)의 옮긴 서비스 화면은 원본을 따라 스탬프는 Hahmlet, 삼육대 어디야는 시스템 sans-serif를 사용한다.
+[layout.tsx](../src/app/layout.tsx)는 Pretendard와 JetBrains Mono를 self-host한다. 본문·설명·제목·역할·라벨은 Pretendard를 사용하고, 모노 폰트는 코드·날짜·수치에 한정한다. [실제 코드 실행 데모](#option-3-demos)의 옮긴 서비스 화면은 원본을 따라 Make A Wish는 Hahmlet, 삼육대 어디야는 시스템 sans-serif를 사용한다.
 
 | 토큰 | 값 | 역할 |
 | --- | ---: | --- |
@@ -523,9 +533,10 @@ Accent는 장식면 전용이다. 라이트 값은 `#C8683A`, 다크 값은 `#D9
 | [Placeholder.tsx](../src/components/ui/Placeholder.tsx) | 확보할 화면 자리 |
 | [FeaturedRow.tsx](../src/components/project/FeaturedRow.tsx) | 홈 · /work 대표 프로젝트 행 |
 | [ProjectParts.tsx](../src/components/project/ProjectParts.tsx) | 대표 화면(실제 화면 · 담당 범위 도식 · 비공개 사유), 메타, 수치, 링크 |
-| [demos](../src/components/project/demos) | 설명용 재구성(평가 단계, 승인 무효화), 실제 코드 실행(스탬프 별자리, 제출 완료·결과 확인·면접 예약, 장소 검색과 순서 설명, 바꾸기 전 캘린더 첫 화면) |
+| [demos](../src/components/project/demos) | 설명용 재구성(평가 단계, 승인 무효화), 실제 코드 실행(스탬프 별자리, 이상한 값 입력, 제출 완료·결과 확인·면접 예약, 장소 검색과 순서 설명, 바꾸기 전 캘린더 첫 화면) |
 | [shell](../src/components/project/demos/shell) | 실제 코드 실행 데모의 표면 · 기본 2열/넓은 화면 배치 · 패널과 모바일 조작 막대, 지연 마운트·축소·스크롤 프레임 |
 | [StampBoardDemo.tsx](../src/components/project/demos/StampBoardDemo.tsx), [StampBoardControls.tsx](../src/components/project/demos/StampBoardControls.tsx), [make-a-wish](../src/components/project/demos/make-a-wish) | 서버 표면 조립, 샘플 응답 조작·조회 상태, 원본에서 옮긴 검증·배정·스탬프 화면 |
+| [InputQaDemo.tsx](../src/components/project/demos/InputQaDemo.tsx), [InputQaControls.tsx](../src/components/project/demos/InputQaControls.tsx), [input-qa](../src/components/project/demos/make-a-wish/input-qa) | 서버 표면 조립, 환영창·입력란 전환과 샘플 값 주입, 원본에서 옮긴 이름·납부 판정과 입력 검증·서식 |
 | [ResultStatusDemo.tsx](../src/components/project/demos/ResultStatusDemo.tsx), [ResultStatusControls.tsx](../src/components/project/demos/ResultStatusControls.tsx), [syu-likelion](../src/components/project/demos/syu-likelion) | 서버 표면 조립, 샘플 대시보드·슬롯 조작, 원본에서 옮긴 상태 판정·제출 완료·결과·예약 화면 |
 | [PlaceSearchDemo.tsx](../src/components/project/demos/PlaceSearchDemo.tsx), [PlaceSearchControls.tsx](../src/components/project/demos/PlaceSearchControls.tsx), [eodiya](../src/components/project/demos/eodiya) | 서버 표면 조립, 검색·분류·선택 상태와 순서 설명, 원본 검색 패널·순위 로직·장소 데이터 |
 | [CalendarFirstDemo.tsx](../src/components/project/demos/CalendarFirstDemo.tsx), [CalendarFirstControls.tsx](../src/components/project/demos/CalendarFirstControls.tsx), [oshi-calendar](../src/components/project/demos/oshi-calendar) | 서버 표면 조립, 고정 "오늘" 이동, 바꾸기 전 게임 허브·임박 일정·캘린더와 날짜 로직·샘플 일정 |

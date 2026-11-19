@@ -1,0 +1,172 @@
+/**
+ * 원본: src/features/home/components/welcome.module.css
+ * 기준 커밋: 436b5ef832c5b7c03ff65bfd898c90381a45887d
+ * 변경: 비모달 dialog를 프레임 안 absolute로 배치하고 뷰포트 높이를 프레임 높이로 대체.
+ * backdrop은 제외하고 서비스 색·폰트는 --maw-* 범위 변수로 참조한다. 나머지 원본 규칙 유지.
+ */
+.dialog {
+  --maw-welcome-accent: var(--maw-blue);
+
+  position: absolute;
+  inset: 0;
+  width: min(100%, 480px);
+  max-width: 100%;
+  height: var(--input-qa-height);
+  max-height: var(--input-qa-height);
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+  border: 0;
+  background: transparent;
+  color: var(--maw-purple);
+  font-family: var(--maw-font-display);
+}
+
+.paid {
+  --maw-welcome-accent: var(--maw-welcome-purple);
+}
+
+.scene {
+  width: min(100%, 393px);
+  margin: 0 auto;
+  padding-top: max(16px, calc((var(--input-qa-height) - 852px) / 2 + 179.2px));
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+  container-type: inline-size;
+}
+
+.letter {
+  position: relative;
+  min-height: 433.033px;
+  padding: 46.06cqw 8.65% 42px 33.08%;
+}
+
+.envelope {
+  position: absolute;
+  top: 5px;
+  left: -5.79%;
+  width: 110.186%;
+  max-width: none;
+  height: 100%;
+  pointer-events: none;
+  transform: rotate(-1.347deg);
+  /* 원본 PNG의 투명 실루엣에만 Figma의 파란 광채를 적용한다. */
+  filter: drop-shadow(0 0 13.1px var(--maw-welcome-glow));
+}
+
+.logo {
+  position: absolute;
+  top: 21.45cqw;
+  left: 50.76%;
+  width: 31.05%;
+  height: 22.14cqw;
+  transform: rotate(4deg);
+  /* 글로우는 SVG 필터에서 뺐다. 내부 필터는 비트맵으로 구워져 iOS에서 깨진다. */
+  filter: drop-shadow(0 0 1.018cqw var(--maw-welcome-logo-glow));
+}
+
+.copy {
+  position: relative;
+  top: 4px;
+  left: 5px;
+  transform: rotate(4deg);
+  transform-origin: center top;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.salutation {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.salutation:focus {
+  outline: none;
+}
+
+.accent {
+  color: var(--maw-welcome-accent);
+}
+
+.introduction,
+.message {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.introduction {
+  margin: 21px 0 0;
+}
+
+.introduction strong {
+  font-weight: 600;
+}
+
+.message {
+  margin: 13px 0 0;
+}
+
+.wish {
+  margin: 18px 0 0;
+  color: var(--maw-welcome-accent);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.paid .wish {
+  background: linear-gradient(90deg, var(--maw-welcome-glow), var(--maw-welcome-purple));
+  background-clip: text;
+  color: transparent;
+}
+
+.starTop,
+.starBottom {
+  position: absolute;
+  pointer-events: none;
+}
+
+.starTop {
+  top: 11.8cqw;
+  right: -3.6%;
+  width: 17.8%;
+  height: 17.3cqw;
+  transform: rotate(-12.58deg);
+}
+
+.starBottom {
+  bottom: 39px;
+  left: 18.57%;
+  width: 20.3%;
+  height: 19.6cqw;
+  transform: rotate(-15deg);
+}
+
+.enter {
+  position: relative;
+  display: block;
+  width: 203px;
+  min-height: 47px;
+  margin: 0 auto;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 56px;
+  background: var(--maw-blue);
+  color: var(--maw-white);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+  cursor: pointer;
+}
+
+.paid .enter {
+  background: linear-gradient(90deg, var(--maw-welcome-button-start), var(--maw-blue));
+}
+
+.enter:focus-visible {
+  outline: 2px solid var(--maw-white);
+  outline-offset: 4px;
+}

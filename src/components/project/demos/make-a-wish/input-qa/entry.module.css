@@ -1,0 +1,101 @@
+/**
+ * 원본: Tim3208/Make-A-Wish_FE src/features/auth/components/entry.module.css
+ * 기준 커밋: 436b5ef
+ * 변경: 전화번호 입력란·오류 표시에서 사용하는 규칙만 옮기고 색을 --maw-*로 격리.
+ * fieldsScreen은 네 입력란을 모은 화면의 바깥 배치다. 원본 입력 크기는 유지한다.
+ */
+.fieldsScreen {
+  min-width: 0;
+  padding: 24px max(16px, 7.25%);
+}
+
+.signupField {
+  min-width: 0;
+}
+.signupFieldRow {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: start;
+  gap: 11px;
+}
+.signupFieldRow > label {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  text-align: center;
+}
+.signupFieldControl {
+  position: relative;
+  min-width: 0;
+}
+.signupInput {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 50px;
+  border: 1px solid var(--maw-gray-01);
+  border-radius: 4px;
+  background: var(--maw-white);
+  padding-inline: 16px;
+  color: var(--maw-purple);
+  font-size: 14px;
+  line-height: 22px;
+}
+.signupInput::placeholder {
+  color: var(--maw-gray-02);
+}
+.signupInput[aria-invalid='true'],
+.signupInput[aria-invalid='true']::placeholder {
+  border-color: var(--maw-red);
+  color: var(--maw-red);
+}
+.authFeedback {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+  color: var(--maw-white);
+  text-align: center;
+}
+.feedbackEntry {
+  min-width: 0;
+}
+.feedbackMessage {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  color: var(--maw-white);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+}
+.feedbackMessage > svg {
+  flex: 0 0 19px;
+  margin-top: 3px;
+}
+.feedbackMessage > span {
+  min-width: 0;
+}
+.feedbackEntry[data-feedback-tone='error'] .feedbackMessage {
+  filter: drop-shadow(0 0 3px var(--maw-red));
+  text-shadow: 0 0 5px var(--maw-red);
+}
+@media (max-width: 380px) {
+  .signupFieldRow {
+    grid-template-columns: 60px minmax(0, 1fr);
+    gap: 8px;
+  }
+  .signupFieldRow > label {
+    font-size: 14px;
+  }
+  .signupInput {
+    padding-inline: 10px;
+    font-size: 13px;
+  }
+}

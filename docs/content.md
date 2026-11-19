@@ -297,6 +297,8 @@ NO IDE
 
 공격적 입력 QA 사례의 근거는 AgentFlow 중앙 Wiki의 Make A Wish `auth-login-signup` 문서(2026-09-23 실행)다. 마크업 이름의 텍스트 표시, 납부 값의 엄격한 true 판정, 계정 복구의 인증번호(숫자 6자리)·새 비밀번호 형식과 로그인·복구 아이디의 100/101자 경계(가입은 인증번호 4–12자, 아이디 4–50자로 규칙이 다르다. 원본 436b5ef에서 2026-11-19 확인), 지연 중 중복 조작과 재발송 대기 우회 방지, 연결 단절 QA에서 발견한 요청 7개 도착과 그 기록, 독립 QA 8개 PASS·자동 검사 258/260 통과(2 건너뜀)를 쓴다. 모두 로컬 합성 데이터 검증이다. 같은 Wiki의 무대 투표 문서는 본인 담당으로 확인되지 않아 쓰지 않는다.
 
+상세 08의 `input-qa` 데모는 `Tim3208/Make-A-Wish_FE`(비공개 저장소)의 기준 커밋 `436b5ef`에서 `loginWelcome.ts`·`LoginWelcome.tsx`·`welcome.module.css`와 환영창 에셋, `SignupNumericInput.tsx`·`signupInputFormatting.ts`, `signupValidation.ts`의 비밀번호·선택 정보 검증(전화번호 외 선택 값은 비움)과 `recoveryValidation.ts`의 인증번호·아이디 검증, `RecoveryCard.tsx`·`SignupScreen.tsx`의 입력란 마크업과 필요한 CSS 규칙을 옮긴 것이다(2026-11-19). `welcome.module.css`의 팀원 작성 두 줄을 제외하면 위 원본 파일은 `Tim3208`이 작성했다. 기본은 마크업 이름 `<img src=x onerror=alert(1)>`과 boolean `true`인 샘플 프로필이고, 마크업·공백·긴 이름과 납부 값의 문자열·null·누락, 전화번호·비밀번호·ASCII 인증번호·아이디 100/101자 경계를 방문자가 바꿔 본다. 검증·서식·이름과 납부 판정 함수 본문은 원본을 유지한다. 서비스 화면은 `--maw-*` 토큰과 Hahmlet을 공유하며 환영창 에셋만 `public/images/projects/make-a-wish/welcome/`에 둔다. 원본과 다른 점은 환영창을 페이지 전체의 모달 대신 프레임 안 비모달 `dialog`로 그려 초점 이동·바깥 스크롤 잠금을 없앤 것, `h2`를 상세 제목 계층에 맞춰 `h3`로 낮춘 것, 가입·복구 입력란 네 개를 한 화면에 모은 것, 원본의 확인·다음 동작을 화면 밖 "입력값 확인"과 예시 주입 후 검사로 대신한 것, 새 비밀번호를 일반 글자로 보이고 자동완성을 끈 것, ID에 고유 접두사를 붙이고 아이디 입력의 `maxLength`를 제거해 101자도 검증 함수에 전달하며 Tabler 아이콘을 인라인 SVG로 바꾼 것이다. `loginWelcome.ts`는 같은 폴더의 `LoginWelcome.tsx`와 경로 충돌을 피하려고 `resolveLoginWelcome.ts`로 이름을 바꿨다. 복구 입력란은 원본처럼 입력을 바꾸면 오류를 지우며 blur 검증을 더하지 않고, 전화번호는 원본처럼 입력란을 벗어날 때 형식을 검사한다. 실제 가입·복구 요청·재발송 대기·API·컨트롤러·라우터·세션 관리는 옮기지 않으며, 프로필 판정의 세션 관련 인자만 인증된 현재 세션의 고정값을 쓴다.
+
 <a id="agentflow"></a>
 
 ### AgentFlow

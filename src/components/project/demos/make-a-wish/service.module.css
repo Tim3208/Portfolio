@@ -1,8 +1,9 @@
 /**
- * 원본: src/index.css
+ * 원본: src/index.css, src/features/home/components/welcome.module.css
  * 기준 커밋: 436b5ef832c5b7c03ff65bfd898c90381a45887d
  * 변경: 전역 테마 대신 서비스 화면 범위에 원본 색·폰트·포커스만 격리.
- * Hahmlet 폰트는 StampPageContent에서 불러오고 상태 줄은 기존 Pretendard를 공유한다.
+ * Hahmlet은 StampPageContent·InputQaControls에서 불러오고 상태 줄은 기존 Pretendard를 공유한다.
+ * 입력 QA 화면에서 필요한 원본 회색·오류색·환영창 색을 범위 변수로 추가했다.
  */
 .service {
   --maw-white: #ffffff;
@@ -10,6 +11,14 @@
   --maw-main-01: #35fff5;
   --maw-purple: #2a315b;
   --maw-blue: #2d7dc8;
+  --maw-gray-01: #dce2ed;
+  --maw-gray-02: #c9d0da;
+  --maw-gray-04: #7385a1;
+  --maw-red: #ff0000;
+  --maw-welcome-purple: #5e4fff;
+  --maw-welcome-glow: #0088ff;
+  --maw-welcome-logo-glow: rgb(25 93 204);
+  --maw-welcome-button-start: #465fff;
   --maw-font-display: "Hahmlet Variable", serif;
   --maw-font-body: var(--font-sans);
 
