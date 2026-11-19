@@ -251,8 +251,9 @@ export const PROJECTS: readonly Project[] = [
     cover: {
       alt: "부스 스탬프 별자리 화면. 받은 스탬프가 부스 분류에 따라 별자리에 표시된다. (샘플 계정)",
     },
-    // TODO: 샘플 계정으로 찍은 스탬프 별자리 · 부스 지도 화면을 확보하면 src 를 채운다.
-    preview: { label: "축제 웹 서비스" },
+    // TODO: 대표 행 · 상세 첫 화면에 쓸 화면(부스 지도 등)을 확보하면 cover.src 를 채운다.
+    // preview 는 상세 04 스탬프 데모(원본 코드 · 샘플 데이터)의 서비스 화면을 캡처한 것이다.
+    preview: { label: "축제 웹 서비스", src: "/images/projects/make-a-wish.png", position: "center 35%" },
   },
   {
     slug: "eodiya",
@@ -265,14 +266,14 @@ export const PROJECTS: readonly Project[] = [
     problem:
       "지도 앱에는 건물 이름만 나와서, 고유명사로 된 강의실이 어느 건물 안에 있는지 알기 어려웠습니다.",
     decision:
-      "공식 명칭을 정확히 몰라도 찾을 수 있게 장소명 · 별칭 · 건물과 층 · 설명을 모두 검색 대상으로 두고, 일치 정도와 필드에 따라 결과 순서를 정했습니다.",
+      "공식 명칭을 정확히 몰라도 찾을 수 있게 장소명 · 건물과 층 · 층별 시설 설명을 모두 검색 대상으로 두고, 일치 정도와 필드에 따라 결과 순서를 정했습니다.",
     outcome: "GitHub Pages에 배포하고 학교 커뮤니티에 소개했습니다.",
     period: "2026.02",
     role: "기획 · 개발 · 배포 전 과정",
     team: "1인 프로젝트",
     hue: "sage",
     technologies: ["TypeScript", "Kakao Maps API", "GitHub Pages"],
-    metrics: [{ value: "123", label: "장소 데이터 (건물 38 · 건물 안 시설 85)" }],
+    metrics: [{ value: "123", label: "장소 데이터 (건물 38 · 층별 항목 85)" }],
     links: {
       service: "https://tim3208.github.io/eodiya/",
       github: "https://github.com/Tim3208/eodiya",
@@ -386,7 +387,7 @@ export const PROJECTS: readonly Project[] = [
       service: "https://tim3208.github.io/math-graph/",
       github: "https://github.com/Tim3208/math-graph",
     },
-    live: { hint: "도구에서 점과 라벨을 골라 그래프에 더해 보세요." },
+    live: { hint: "'표시 추가'를 누르고 x축 라벨 글자를 바꿔 보세요." },
   },
   {
     slug: "foodmap",

@@ -71,7 +71,7 @@ Staff
 
 반영 방향:
 
-> 지원서는 한 번에 작성되는 문서가 아니기 때문에 임시 저장과 제출 상태를 분리했습니다. 제출 이후에도 발표 전까지 수정할 수 있도록 하되, 1차 결과 발표 이후에는 수정할 수 없다는 상태 경계를 화면에서 명확히 안내했습니다.
+> 지원서는 한 번에 작성되는 문서가 아니기 때문에 임시 저장과 제출 상태를 분리했습니다. 제출 이후에도 서류 마감 전까지 수정할 수 있도록 하되, 마감 이후에는 수정할 수 없다는 상태 경계를 화면에서 명확히 안내했습니다.
 
 > 결과 화면은 단순히 합격 여부만 보여주지 않습니다. 서류 합격자는 날짜와 시간을 선택해 면접을 예약하고, 최종 합격자는 OT 일정과 다음 커뮤니티 채널까지 확인할 수 있도록 다음 행동을 연결했습니다.
 
@@ -158,7 +158,7 @@ Staff
 | 이미지 | 상태 | 위치 | 증명하는 것 | 후보 캡션 |
 | --- | --- | --- | --- | --- |
 | [syu-likelion.png](../../public/images/projects/syu-likelion.png) | 사용 | Solution | 공개 랜딩과 지원 전환 | 안내를 읽던 흐름이 지원으로 이어진다. |
-| [application-submitted.png](../../public/images/projects/apply/application-submitted.png) | 사용 | Applicant Flow | 제출 완료, 발표 일정, 수정 가능 상태, 지원 취소 | “제출 완료 여부와 이후 일정을 안내하고, 결과 발표 전까지 수정할 수 있는 상태 경계를 명확히 했습니다.” |
+| [application-submitted.png](../../public/images/projects/apply/application-submitted.png) | 사용 | Applicant Flow | 제출 완료, 발표 일정, 수정 가능 상태, 지원 취소 | “제출 완료 여부와 이후 일정을 안내하고, 서류 마감 전까지 수정할 수 있는 상태 경계를 명확히 했습니다.” 캡처는 안내 문구를 바꾸기 전 화면이다([콘텐츠 기준](../../docs/content.md) 참고). |
 | [first-result-interview.png](../../public/images/projects/apply/first-result-interview.png) | 핵심 사용 | Applicant Flow | 1차 합격과 면접 날짜·시간 선택 | “서류 합격자가 별도의 연락 없이 가능한 날짜와 시간을 확인하고 면접 일정을 확정하도록 구현했습니다.” |
 | [syu-likelion-admin.png](../../public/images/projects/syu-likelion-admin.png) | 사용 | Recruitment Admin Flow | 64명의 지원자와 단계별 목록·필터 | 운영진이 모집 단계와 남은 평가 업무를 한 화면에서 본다. |
 | [syu-likelion-mypage.png](../../public/images/projects/syu-likelion-mypage.png) | 사용 | After Recruitment | 활동, 일정, 세션, 과제 마감 | “동아리원은 자신의 활동과 세션 일정, 과제 마감일을 마이페이지에서 한 번에 확인합니다.” |
