@@ -27,13 +27,14 @@ export type ShotInfo = {
 };
 
 export const SHOTS: Record<string, ShotInfo> = {
-  "/images/projects/syu-likelion-admin2.png": {
-    width: 1205,
-    height: 891,
+  // evaluation-screen 데모를 가상 지원자로 캡처한 화면이다 (2524 × 1866, 표시 기준 1262 × 933)
+  "/images/projects/syu-likelion-evaluation.png": {
+    width: 1262,
+    height: 933,
     notes: [
-      { x: 30.5, y: 17.4, text: "지원자 목록을 서류 지원자부터 최종 합격자까지 모집 단계별로 나눴습니다." },
-      { x: 33.8, y: 50, text: "지원자 한 명 안에서 서류 보기 · 점수 매기기 · 점수 현황만 바꿔 봅니다." },
-      { x: 34.2, y: 73.7, text: "총점이 같아도 어느 문항에서 갈렸는지 보이도록 문항별 점수를 함께 둡니다." },
+      { x: 29.4, y: 13.4, text: "지원자 목록을 서류 지원자부터 최종 합격자까지 모집 단계별로 나눴습니다." },
+      { x: 34.6, y: 44.5, text: "지원자 한 명 안에서 서류 보기 · 점수 매기기 · 점수 현황만 바꿔 봅니다." },
+      { x: 35.1, y: 67.2, text: "총점이 같아도 어느 문항에서 갈렸는지 보이도록 문항별 점수를 함께 둡니다." },
     ],
   },
   "/images/projects/apply/application-submitted.png": {

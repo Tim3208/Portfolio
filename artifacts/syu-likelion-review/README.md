@@ -12,7 +12,7 @@
 [src/data/caseStudies/syu-likelion.ts](../../src/data/caseStudies/syu-likelion.ts)에 아래 상태로 반영했다.
 
 - Case Study는 12개 섹션으로 구성했다: Overview, Problem, Existing Workflow, Solution, My Contribution, Applicant Flow, Recruitment Admin Flow, After Recruitment, Frontend / Backend Collaboration, Problems & Improvements, Result, Retrospective.
-- 이미지는 6장을 사용했다: `syu-likelion.png`, `application-submitted.png`, `first-result-interview.png`, `syu-likelion-admin.png`, `syu-likelion-mypage.png`, `syu-likelion-admin2.png`.
+- 이미지는 6장을 사용했다: `syu-likelion.png`, `application-submitted.png`, `first-result-interview.png`, `syu-likelion-admin.png`, `syu-likelion-mypage.png`, `syu-likelion-admin2.png`. 이 가운데 운영진 화면 두 장(`syu-likelion-admin.png`, `syu-likelion-admin2.png`)은 실제 지원자 정보가 있어 2026-11-19에 지웠고, 평가 화면은 가상 지원자로 캡처한 `syu-likelion-evaluation.png`로 바꿨다.
 - `first-result-interview.png`는 16:10 크롭에서 합격 안내와 면접 예약 UI가 같이 보이도록 `center 40%`를 적용했다.
 - `syu-likelion-mypage.png`는 캘린더와 일정·과제 패널이 보이도록 `center 88%`를 적용했다.
 - 상세 Result는 `148 / 64 / 200` 세 수치를 metrics로 쓰고, `30건`은 모집 이후 운영 문장에 연결했다.
@@ -162,9 +162,9 @@ Staff
 | [syu-likelion.png](../../public/images/projects/syu-likelion.png) | 사용 | Solution | 공개 랜딩과 지원 전환 | 안내를 읽던 흐름이 지원으로 이어진다. |
 | [application-submitted.png](../../public/images/projects/apply/application-submitted.png) | 대표 행 사용 · 상세는 데모로 교체 | 대표 프로젝트 행의 화면 전환 | 제출 완료, 발표 일정, 수정 가능 상태, 지원 취소 | “제출 완료 여부와 이후 일정을 안내하고, 서류 마감 전까지 수정할 수 있는 상태 경계를 명확히 했습니다.” 캡처는 안내 문구를 바꾸기 전 화면이다([콘텐츠 기준](../../docs/content.md) 참고). |
 | [first-result-interview.png](../../public/images/projects/apply/first-result-interview.png) | 대표 행 사용 · 상세는 데모로 교체 | 대표 프로젝트 행의 화면 전환 | 1차 합격과 면접 날짜·시간 선택 | “서류 합격자가 별도의 연락 없이 가능한 날짜와 시간을 확인하고 면접 일정을 확정하도록 구현했습니다.” |
-| [syu-likelion-admin.png](../../public/images/projects/syu-likelion-admin.png) | 사용 | Recruitment Admin Flow | 64명의 지원자와 단계별 목록·필터 | 운영진이 모집 단계와 남은 평가 업무를 한 화면에서 본다. |
+| `syu-likelion-admin.png` (2026-11-19 삭제 — 실제 지원자 정보) | 미사용 | Recruitment Admin Flow | 64명의 지원자와 단계별 목록·필터 | 운영진이 모집 단계와 남은 평가 업무를 한 화면에서 본다. |
 | [syu-likelion-mypage.png](../../public/images/projects/syu-likelion-mypage.png) | 사용 | After Recruitment | 활동, 일정, 세션, 과제 마감 | “동아리원은 자신의 활동과 세션 일정, 과제 마감일을 마이페이지에서 한 번에 확인합니다.” |
-| [syu-likelion-admin2.png](../../public/images/projects/syu-likelion-admin2.png) | 사용 | Problems & Improvements | 지원서 상세, 점수, 코멘트 대조 | 같은 지원자 안에서 서류 보기·점수 매기기·점수 현황을 전환한다. |
+| [syu-likelion-evaluation.png](../../public/images/projects/syu-likelion-evaluation.png) (가상 지원자 캡처, 이전 `syu-likelion-admin2.png`) | 사용 | Problems & Improvements | 지원서 상세, 점수, 코멘트 대조 | 같은 지원자 안에서 서류 보기·점수 매기기·점수 현황을 전환한다. |
 
 ### 검토했지만 대표 컷에서 제외한 공개 이미지
 

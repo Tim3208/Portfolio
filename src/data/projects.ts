@@ -174,18 +174,18 @@ export const PROJECTS: readonly Project[] = [
     },
     live: { hint: "지원자 · 운영진 화면은 로그인이 필요해 작업 과정에 캡처로 담았습니다." },
     cover: {
-      src: "/images/projects/syu-likelion-admin2.png",
-      aspectRatio: "1205 / 891",
-      alt: "syu-likelion 지원서 상세의 점수 현황 탭. 같은 지원자의 답변, 문항별 점수와 운영진 코멘트를 탭으로 전환하며 확인한다.",
+      src: "/images/projects/syu-likelion-evaluation.png",
+      aspectRatio: "1262 / 933",
+      alt: "syu-likelion 지원서 상세의 점수 현황 탭. 같은 지원자의 답변, 문항별 점수와 운영진 코멘트를 탭으로 전환하며 확인한다. 가상 지원자로 실행한 화면이다.",
       position: "center top",
     },
     screens: [
       {
         label: "운영진 평가",
-        src: "/images/projects/syu-likelion-admin2.png",
+        src: "/images/projects/syu-likelion-evaluation.png",
         aspectRatio: "16 / 10",
         position: "center top",
-        alt: "syu-likelion 지원서 상세의 점수 현황 탭. 왼쪽에는 모집 단계별 지원자 목록, 오른쪽에는 서류 보기·점수 매기기·점수 현황 탭과 리뷰어별 문항 점수, 코멘트가 있다.",
+        alt: "syu-likelion 지원서 상세의 점수 현황 탭. 왼쪽에는 모집 단계별 지원자 목록, 오른쪽에는 서류 보기·점수 매기기·점수 현황 탭과 리뷰어별 문항 점수, 코멘트가 있다. 가상 지원자로 실행한 화면이다.",
       },
       {
         label: "제출 후 수정",

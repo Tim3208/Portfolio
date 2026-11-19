@@ -149,11 +149,11 @@ export const syuLikelion: CaseStudy = {
         },
         {
           type: "image",
-          src: "/images/projects/syu-likelion-admin2.png",
-          alt: "syu-likelion 지원서 상세 화면의 점수 현황 탭. 지원 파트와 학과·학번·학적·지원일시가 위에 있고, 서류 보기·점수 매기기·점수 현황 탭 아래로 리뷰어별 총점과 문항별 점수, 코멘트가 나열되어 있다.",
+          src: "/images/projects/syu-likelion-evaluation.png",
+          alt: "syu-likelion 지원서 상세 화면의 점수 현황 탭. 지원 파트와 학과·학번·학적·지원일시가 위에 있고, 서류 보기·점수 매기기·점수 현황 탭 아래로 리뷰어별 총점과 문항별 점수, 코멘트가 나열되어 있다. 지원자와 점수, 코멘트는 가상 값이다.",
           caption: "같은 지원자 안에서 보는 대상만 바뀝니다. 문항별 점수를 함께 보여준 것은 총점이 같아도 어느 문항에서 갈렸는지가 합격 논의의 실제 쟁점이었기 때문입니다.",
           position: "center top",
-          aspectRatio: "1205 / 891"
+          aspectRatio: "1262 / 933"
         },
         {
           type: "prose",
