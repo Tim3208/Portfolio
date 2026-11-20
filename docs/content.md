@@ -543,7 +543,7 @@ Contact는 짧은 연락 안내와 이메일을 중심으로 구성한다. Hero�
 
 Email은 [`src/data/profile.ts`](../src/data/profile.ts)의 `PROFILE.email`을 단일 출처로 사용한다. 이 문서에는 주소 값을 중복 기록하지 않는다.
 
-GitHub는 <https://github.com/Tim3208>이다. Resume PDF는 현재 `public` 아래에서 확인되지 않으며, [`src/components/layout/Contact.tsx`](../src/components/layout/Contact.tsx)에 PDF 확보 후 추가 TODO가 남아 있다.
+GitHub는 <https://github.com/Tim3208>이다. 이력서 PDF는 [`public/resume.pdf`](../public/resume.pdf)에 두고 [`src/components/layout/Contact.tsx`](../src/components/layout/Contact.tsx)에서 다운로드 링크(`박정우_이력서.pdf`)로 제공한다.
 
 <a id="accuracy"></a>
 

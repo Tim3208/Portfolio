@@ -25,14 +25,21 @@ export function Contact() {
             </a>
             <CopyEmailButton email={PROFILE.email} />
           </div>
-          <a href={PROFILE.github} target="_blank" rel="noreferrer noopener" className={`${LINK} text-deep-ink-2 hover:text-deep-ink`}>
-            GitHub
-            <span aria-hidden="true" className="ml-1">
-              ↗
-            </span>
-            <span className="sr-only"> (새 창)</span>
-          </a>
-          {/* TODO: Resume — PDF 확보 후 추가. 그전에는 링크를 만들지 않는다. */}
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
+            <a href={PROFILE.github} target="_blank" rel="noreferrer noopener" className={`${LINK} text-deep-ink-2 hover:text-deep-ink`}>
+              GitHub
+              <span aria-hidden="true" className="ml-1">
+                ↗
+              </span>
+              <span className="sr-only"> (새 창)</span>
+            </a>
+            <a href="/resume.pdf" download="박정우_이력서.pdf" className={`${LINK} text-deep-ink-2 hover:text-deep-ink`}>
+              이력서 다운로드 (PDF)
+              <span aria-hidden="true" className="ml-1">
+                ↓
+              </span>
+            </a>
+          </div>
         </div>
       </Container>
     </section>
