@@ -185,15 +185,18 @@ export function ProjectLinks({
   project,
   detail,
   serviceOnly = false,
+  emphasizeService = false,
 }: {
   project: Project;
   detail: boolean;
   serviceOnly?: boolean;
+  emphasizeService?: boolean;
 }) {
   const external = Object.entries(project.links ?? {}).filter(([key]) => !serviceOnly || key === "service");
   if (!detail && external.length === 0) return null;
+  const serviceClass = emphasizeService ? BUTTON_OUTLINE : `${LINK} text-sm text-ink-2`;
   return (
-    <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
+    <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
       {detail ? (
         <Link href={`/projects/${project.slug}`} className={`${LINK} font-semibold`}>
           {project.name} 작업 과정 읽기
@@ -204,7 +207,13 @@ export function ProjectLinks({
       ) : null}
       {external.map(([key, href]) => {
         const outside = (
-          <a key={key} href={href} target="_blank" rel="noreferrer noopener" className={`${LINK} text-sm text-ink-2`}>
+          <a
+            key={key}
+            href={href}
+            target="_blank"
+            rel="noreferrer noopener"
+            className={key === "service" ? serviceClass : `${LINK} text-sm text-ink-2`}
+          >
             {LINK_LABEL[key as keyof typeof LINK_LABEL]} (새 창)
           </a>
         );
@@ -214,8 +223,9 @@ export function ProjectLinks({
         return (
           <Fragment key={key}>
             <span className="hidden md:contents">
-              <Link href={`${LIVE_PATH}/${project.slug}`} className={`${LINK} text-sm text-ink-2`}>
+              <Link href={`${LIVE_PATH}/${project.slug}`} className={serviceClass}>
                 서비스 열어 보기
+                {emphasizeService ? <span aria-hidden="true">→</span> : null}
               </Link>
             </span>
             <span className="contents md:hidden">{outside}</span>

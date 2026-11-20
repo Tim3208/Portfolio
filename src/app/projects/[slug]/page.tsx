@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CaseSection } from "@/components/project/CaseSection";
+import { CaseToc } from "@/components/project/CaseToc";
 import { LINK, ProjectLinks, ProjectMetrics } from "@/components/project/ProjectParts";
 import { Container } from "@/components/ui/Container";
 import { Shot } from "@/components/ui/Shot";
@@ -112,7 +113,7 @@ export default async function CaseStudyPage({ params }: Params) {
                 <p className="text-lead">{project.problem}</p>
               </div>
             ) : null}
-            {facts.length ? (
+            {facts.length || project.technologies?.length ? (
               <dl className="grid grid-cols-2 gap-x-6 gap-y-3 border-t border-rule pt-4">
                 {facts.map((row) => (
                   <div key={row.k} className="flex flex-col">
@@ -122,10 +123,16 @@ export default async function CaseStudyPage({ params }: Params) {
                     </dd>
                   </div>
                 ))}
+                {project.technologies?.length ? (
+                  <div className="col-span-2 flex flex-col">
+                    <dt className="text-xs text-ink-2">기술</dt>
+                    <dd className="font-mono text-sm leading-6">{project.technologies.join(" · ")}</dd>
+                  </div>
+                ) : null}
               </dl>
             ) : null}
             {project.links ? (
-              <ProjectLinks project={project} detail={false} />
+              <ProjectLinks project={project} detail={false} emphasizeService />
             ) : project.coverWithheld ? (
               <p className="w-fit rounded-chip border border-dashed border-rule-strong px-2.5 py-1 text-xs text-ink-2">
                 {project.coverWithheld}
@@ -182,20 +189,7 @@ export default async function CaseStudyPage({ params }: Params) {
       </Container>
 
       <Container className="pb-20 xl:grid xl:grid-cols-[12rem_minmax(0,1fr)] xl:gap-12">
-        <nav aria-label="목차" className="hidden xl:block">
-          <ol className="sticky top-6 flex flex-col border-l border-rule">
-            {caseStudy.sections.map((s) => (
-              <li key={s.num}>
-                <a
-                  href={`#section-${s.num}`}
-                  className="-ml-px flex min-h-9 items-center border-l-2 border-transparent py-1 pl-3 text-sm leading-snug text-ink-2 transition-colors duration-150 hover:border-hue-deep hover:text-ink"
-                >
-                  {s.title}
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
+        <CaseToc items={caseStudy.sections.map((s) => ({ num: s.num, title: s.title }))} />
         <div className="flex min-w-0 flex-col gap-14">
           <nav aria-label="목차" className="xl:hidden">
             <ol className="flex flex-col border-t border-rule md:grid md:grid-cols-2 md:gap-x-8">

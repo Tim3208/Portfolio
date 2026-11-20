@@ -17,7 +17,7 @@ export type SkillGroup = {
 export const SKILL_GROUPS: readonly SkillGroup[] = [
   {
     role: "화면 구현",
-    caption: "syu-likelion의 지원서·평가 화면을 Next.js로, Oshi Calendar 대시보드를 React로 구현했습니다.",
+    caption: "syu-likelion의 지원서·평가 화면을 Next.js로, Make A Wish와 Oshi Calendar를 React로 구현했습니다.",
     items: [
       "JavaScript",
       "TypeScript",
@@ -26,13 +26,15 @@ export const SKILL_GROUPS: readonly SkillGroup[] = [
       "HTML",
       "CSS",
       "Tailwind CSS",
+      "Zustand",
       "Vite",
     ],
   },
   {
     role: "데이터 연동",
-    caption: "syu-likelion의 API를 Axios로 연동하고, Oshi Calendar에서 회원과 비회원의 저장 방식을 나눴습니다.",
-    items: ["REST API", "Axios", "Supabase", "LocalStorage"],
+    caption:
+      "syu-likelion은 Axios로, Make A Wish와 Oshi Calendar는 TanStack Query로 API와 서버 상태를 다뤘고 회원·비회원 저장 방식을 나눴습니다.",
+    items: ["REST API", "TanStack Query", "Axios", "Supabase", "LocalStorage"],
   },
   {
     role: "배포와 운영",

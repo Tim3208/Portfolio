@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { FeaturedRow } from "@/components/project/FeaturedRow";
+import { OtherProjectsDisclosure } from "@/components/project/OtherProjectsDisclosure";
 import { LINK, ProjectLinks } from "@/components/project/ProjectParts";
 import { Container } from "@/components/ui/Container";
+import { SmoothAnchor } from "@/components/ui/SmoothAnchor";
 import { hasCaseStudy } from "@/data/caseStudies";
 import {
   ARCHIVE_PROJECTS,
@@ -64,13 +66,31 @@ export default function WorkPage() {
 
   return (
     <>
-      <Container className="pt-10 pb-8 md:pt-14">
+      <Container className="flex flex-col gap-4 pt-10 pb-8 md:pt-14">
         <h1 className="text-display font-bold">프로젝트</h1>
+        <nav aria-label="프로젝트 구분" className="flex flex-wrap items-center gap-x-6 gap-y-1">
+          <SmoothAnchor href="#featured" className={`${LINK} gap-1.5 text-sm text-ink-2 hover:text-ink`}>
+            대표 프로젝트
+            <span className="font-mono text-xs tabular-nums">{FEATURED_PROJECTS.length}</span>
+          </SmoothAnchor>
+          {SUPPORTING_PROJECTS.length ? (
+            <SmoothAnchor href="#supporting" className={`${LINK} gap-1.5 text-sm text-ink-2 hover:text-ink`}>
+              추가 프로젝트
+              <span className="font-mono text-xs tabular-nums">{SUPPORTING_PROJECTS.length}</span>
+            </SmoothAnchor>
+          ) : null}
+          {otherItems.length ? (
+            <SmoothAnchor href="#others" className={`${LINK} gap-1.5 text-sm text-ink-2 hover:text-ink`}>
+              그 밖의 프로젝트
+              <span className="font-mono text-xs tabular-nums">{otherItems.length}</span>
+            </SmoothAnchor>
+          ) : null}
+        </nav>
       </Container>
 
       <section aria-labelledby="featured">
         <Container className="pb-2">
-          <h2 id="featured" className="text-title font-bold">
+          <h2 id="featured" className="scroll-mt-6 text-title font-bold">
             대표 프로젝트
           </h2>
         </Container>
@@ -88,7 +108,7 @@ export default function WorkPage() {
         <section aria-labelledby="supporting" className="border-t border-rule">
           <Container className="flex flex-col gap-6 py-14 md:py-20">
             <div className="flex flex-col gap-2">
-              <h2 id="supporting" className="text-title font-bold">
+              <h2 id="supporting" className="scroll-mt-6 text-title font-bold">
                 추가 프로젝트
               </h2>
               <p className="max-w-measure text-ink-2">
@@ -118,6 +138,11 @@ export default function WorkPage() {
                     </span>
                     <h3 className="text-lg font-bold">{project.name}</h3>
                     <p className="text-sm text-ink-2">{project.headline}</p>
+                    {project.technologies?.length ? (
+                      <p className="font-mono text-xs text-ink-2">
+                        {project.technologies.join(" · ")}
+                      </p>
+                    ) : null}
                   </div>
                   <Cell label="나의 역할">{project.role}</Cell>
                   <Cell label="프로젝트 소개">{project.subtitle}</Cell>
@@ -138,23 +163,10 @@ export default function WorkPage() {
       {otherItems.length ? (
         <section aria-labelledby="others" className="border-t border-rule">
           <Container className="flex flex-col gap-4 py-14 md:py-20">
-            <h2 id="others" className="text-title font-bold">
+            <h2 id="others" className="scroll-mt-6 text-title font-bold">
               그 밖의 프로젝트
             </h2>
-            {/* 기본은 접어 둔다. 대표·보조의 무게를 흐리지 않고, 네이티브 details 라
-                JS 없이 열리며 키보드·스크린리더 상태 안내도 브라우저가 맡는다. */}
-            <details className="group">
-              <summary className="flex min-h-11 w-fit cursor-pointer list-none items-center gap-2 [&::-webkit-details-marker]:hidden">
-                <span className="underline decoration-rule-strong underline-offset-4 group-open:hidden">
-                  기타 프로젝트 펼쳐보기
-                </span>
-                <span className="hidden underline decoration-rule-strong underline-offset-4 group-open:inline">
-                  기타 프로젝트 접기
-                </span>
-                <span className="rounded-chip bg-paper-sunk px-1.5 font-mono text-xs text-ink-2">
-                  {otherItems.length}
-                </span>
-              </summary>
+            <OtherProjectsDisclosure count={otherItems.length}>
               <ul className="mt-4 grid gap-x-10 sm:grid-cols-2 xl:grid-cols-3">
                 {otherItems.map((item) => (
                   <li
@@ -194,7 +206,7 @@ export default function WorkPage() {
                   </li>
                 ))}
               </ul>
-            </details>
+            </OtherProjectsDisclosure>
           </Container>
         </section>
       ) : null}

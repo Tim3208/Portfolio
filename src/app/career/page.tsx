@@ -44,26 +44,31 @@ export default function CareerPage() {
         </dl>
       </header>
 
-      <ol className="relative flex flex-col">
-        <span aria-hidden="true" className="absolute top-2 bottom-2 left-[0.3125rem] w-px bg-rule-strong sm:left-[6.3125rem]" />
-        {TIMELINE.map((group) => (
-          <li key={group.year} className="relative grid gap-2 py-5 pl-8 sm:grid-cols-[6rem_minmax(0,1fr)] sm:gap-8 sm:pl-0">
-            <span
-              aria-hidden="true"
-              className="absolute top-[1.85rem] left-0 size-[0.6875rem] rounded-full border-2 border-hue-deep bg-paper sm:left-[5.9375rem]"
-            />
-            <p className="font-mono text-lg text-hue-deep tabular-nums">{group.year}</p>
-            <ul className="flex flex-col gap-3 sm:pl-8">
-              {group.items.map((item) => (
-                <li key={item.title}>
-                  <p className="font-semibold">{item.title}</p>
-                  {item.detail ? <p className="text-sm text-ink-2">{item.detail}</p> : null}
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ol>
+      <section aria-labelledby="timeline" className="grid gap-6 lg:grid-cols-12 lg:gap-12">
+        <h2 id="timeline" className={`${SECTION_TITLE} lg:col-span-4`}>
+          이력
+        </h2>
+        <ol className="relative flex flex-col lg:col-span-8">
+          <span aria-hidden="true" className="absolute top-2 bottom-2 left-[0.3125rem] w-px bg-rule-strong sm:left-[6.3125rem]" />
+          {TIMELINE.map((group) => (
+            <li key={group.year} className="relative grid gap-2 py-5 pl-8 sm:grid-cols-[6rem_minmax(0,1fr)] sm:gap-8 sm:pl-0">
+              <span
+                aria-hidden="true"
+                className="absolute top-[1.85rem] left-0 size-[0.6875rem] rounded-full border-2 border-hue-deep bg-paper sm:left-[5.9375rem]"
+              />
+              <p className="font-mono text-lg text-hue-deep tabular-nums">{group.year}</p>
+              <ul className="flex flex-col gap-3 sm:pl-8">
+                {group.items.map((item) => (
+                  <li key={item.title}>
+                    <p className="font-semibold">{item.title}</p>
+                    {item.detail ? <p className="text-sm text-ink-2">{item.detail}</p> : null}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ol>
+      </section>
 
       <section aria-labelledby="awards" className="grid gap-6 lg:grid-cols-12 lg:gap-12">
         <h2 id="awards" className={`${SECTION_TITLE} lg:col-span-4`}>

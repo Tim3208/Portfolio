@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { CoordinateLabel } from "@/components/project/CoordinateLabel";
-import { Labeled, ProjectLinks } from "@/components/project/ProjectParts";
+import { LINK, Labeled, ProjectLinks } from "@/components/project/ProjectParts";
 import { Container } from "@/components/ui/Container";
 import { hasCaseStudy } from "@/data/caseStudies";
 import { projectsOfKind } from "@/data/projects";
@@ -58,7 +59,18 @@ export default function TeachingPage() {
               <h2 className="text-xl font-bold">{activity.title}</h2>
               <p className="text-sm font-semibold text-hue-deep tabular-nums">{activity.period}</p>
             </div>
-            <p className="max-w-measure text-ink-2 lg:col-span-8">{activity.detail}</p>
+            <div className="flex max-w-measure flex-col gap-2 lg:col-span-8">
+              <p className="font-medium text-ink">{activity.summary}</p>
+              <p className="text-ink-2">{activity.detail}</p>
+              {activity.projectLink ? (
+                <Link href={activity.projectLink.href} className={`${LINK} w-fit text-sm font-semibold`}>
+                  {activity.projectLink.label}
+                  <span aria-hidden="true" className="ml-1.5 text-hue-deep">
+                    →
+                  </span>
+                </Link>
+              ) : null}
+            </div>
           </li>
         ))}
       </ul>
