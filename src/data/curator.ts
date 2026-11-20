@@ -73,7 +73,7 @@ const NOTES: Record<string, readonly CuratorNote[]> = {
     { target: "#section-07 [data-demo-layout]", text: "화면 속 지원자는 전부 가상 인물이에요. 실제 지원서는 옮기지 않았습니다." },
   ],
   "/projects/make-a-wish": [
-    { text: "축제가 끝나 서비스는 닫혔어요. 대신 그때 코드를 샘플 데이터로 돌려놨습니다." },
+    { text: "축제는 끝났지만 서비스는 아직 열려 있어요. 게스트 입장으로 부스맵까지 볼 수 있습니다." },
     {
       target: "#section-04 [data-demo-panel]",
       press: "샘플 부스 D",
