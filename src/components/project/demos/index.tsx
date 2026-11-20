@@ -5,6 +5,7 @@ import { CalendarFirstDemo } from "./CalendarFirstDemo";
 import { EvaluationScreenDemo } from "./EvaluationScreenDemo";
 import { InputQaDemo } from "./InputQaDemo";
 import { MapFocusDemo } from "./MapFocusDemo";
+import { MonitorScreenDemo } from "./MonitorScreenDemo";
 import { PlaceSearchDemo } from "./PlaceSearchDemo";
 import { ResultStatusDemo } from "./ResultStatusDemo";
 import { StampBoardDemo } from "./StampBoardDemo";
@@ -16,6 +17,8 @@ export function Demo({ name }: { name: DemoName }) {
       return <EvaluationScreenDemo />;
     case "approval-reset":
       return <ApprovalResetDemo />;
+    case "monitor-screen":
+      return <MonitorScreenDemo />;
     case "stamp-board":
       return <StampBoardDemo />;
     case "result-status":
@@ -31,4 +34,14 @@ export function Demo({ name }: { name: DemoName }) {
   }
 }
 
-export { ApprovalResetDemo, CalendarFirstDemo, EvaluationScreenDemo, InputQaDemo, MapFocusDemo, PlaceSearchDemo, ResultStatusDemo, StampBoardDemo };
+export {
+  ApprovalResetDemo,
+  CalendarFirstDemo,
+  EvaluationScreenDemo,
+  InputQaDemo,
+  MapFocusDemo,
+  MonitorScreenDemo,
+  PlaceSearchDemo,
+  ResultStatusDemo,
+  StampBoardDemo,
+};

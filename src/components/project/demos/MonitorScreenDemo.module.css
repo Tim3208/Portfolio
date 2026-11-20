@@ -1,0 +1,31 @@
+.frame {
+  background: #0b0d14;
+  color-scheme: dark;
+}
+
+.placeholder {
+  width: 1200px;
+  height: 740px;
+  background: #0b0d14;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.reset {
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid var(--color-rule-strong);
+  border-radius: var(--radius-xs);
+  padding-inline: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.reset:hover {
+  border-color: var(--hue-deep);
+  color: var(--hue-deep);
+}

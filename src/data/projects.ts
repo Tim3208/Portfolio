@@ -101,6 +101,7 @@ export type Project = {
     service?: string;
     github?: string;
     figma?: string;
+    releases?: string;
   };
   /**
    * 라이브 탭 — links.service 를 창 안 탭에서 그대로 연다(/live/[slug]).
@@ -424,10 +425,13 @@ export const PROJECTS: readonly Project[] = [
       },
     ],
     outcome:
-      "Make A Wish 개발에 적용해 인증 엣지 케이스 QA와 디자인 오차 검수 자동화에 활용했습니다.",
-    role: "워크플로우 설계 · 검수 기준 정의",
+      "Make A Wish 개발의 인증 QA와 디자인 오차 검수에 적용했고, 실행 상태를 확인하는 AgentFlow Monitor를 Tauri 데스크톱 앱으로 릴리즈해 함께 쓰고 있습니다.",
+    role: "워크플로우 설계 · 검수 기준 정의 · 모니터링 앱 개발",
     hue: "wheat",
-    technologies: ["Node.js", "node:test"],
+    technologies: ["Node.js", "React", "TypeScript", "Tauri", "node:test"],
+    links: {
+      releases: "https://github.com/Tim3208/agentflow-monitor-releases",
+    },
   },
   {
     slug: "campuspolio",

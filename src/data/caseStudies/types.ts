@@ -16,6 +16,7 @@
 export type DemoName =
   | "evaluation-screen"
   | "approval-reset"
+  | "monitor-screen"
   | "stamp-board"
   | "result-status"
   | "place-search"

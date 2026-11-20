@@ -22,7 +22,7 @@ export const BUTTON =
 export const BUTTON_OUTLINE =
   "inline-flex min-h-11 items-center gap-2 rounded-chip border border-hue-deep bg-paper px-4 text-sm font-semibold text-hue-deep transition-colors duration-150 hover:bg-hue-tint hover:text-ink";
 
-const LINK_LABEL = { service: "서비스", github: "GitHub", figma: "Figma" } as const;
+const LINK_LABEL = { service: "서비스", github: "GitHub", figma: "Figma", releases: "모니터 앱 릴리즈" } as const;
 
 /**
  * 대표 화면. 실제 캡처가 있으면 주석과 함께, 공개할 수 없으면 비공개 사유,
