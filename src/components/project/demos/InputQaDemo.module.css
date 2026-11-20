@@ -73,8 +73,10 @@
 
 @media (min-width: 48rem) {
   .frame {
-    /* 스탬프 데모와 동일한 폭·가용 높이 기준. 서비스 글자·입력란 크기는 줄이지 않는다. */
-    max-width: min(393px, calc((var(--viewport-height) - 15rem) * 393 / 739));
+    /* 스탬프 데모와 같은 폭·가용 높이 기준. 환영창 편지는 프레임 폭과 함께 줄어들므로
+       본문 글자가 11px 아래로 내려가지 않게 320px 아래로는 줄이지 않고, 넘치는 높이는
+       페이지 스크롤로 받는다. 입력란 보기의 서비스 글자·입력란 크기는 줄이지 않는다. */
+    max-width: clamp(320px, calc((var(--viewport-height) - 15rem) * 393 / 739), 393px);
   }
 
   .examples {

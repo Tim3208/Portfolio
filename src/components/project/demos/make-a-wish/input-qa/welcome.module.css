@@ -2,7 +2,11 @@
  * 원본: src/features/home/components/welcome.module.css
  * 기준 커밋: 436b5ef832c5b7c03ff65bfd898c90381a45887d
  * 변경: 비모달 dialog를 프레임 안 absolute로 배치하고 뷰포트 높이를 프레임 높이로 대체.
- * backdrop은 제외하고 서비스 색·폰트는 --maw-* 범위 변수로 참조한다. 나머지 원본 규칙 유지.
+ * backdrop은 제외하고 서비스 색·폰트는 --maw-* 범위 변수로 참조한다.
+ * 편지를 393 기준 고정 비율로 환산: 편지 안 px 치수를 --u(= 1/393 장면 폭)로 바꿔
+ * 프레임 폭이 달라도 봉투가 늘어나지 않게 한다. 393px에서 1u = 1px이라 원본과 같다.
+ * 이름 한 줄 말줄임: 인사말과 본문 둘째 줄을 한 줄로 고정하고 이름만 줄인다.
+ * 원본은 긴 이름을 줄바꿈해 편지가 세로로 늘어났다. 버튼 크기와 나머지 원본 규칙 유지.
  */
 .dialog {
   --maw-welcome-accent: var(--maw-blue);
@@ -36,14 +40,17 @@
 }
 
 .letter {
+  /* 장면(.scene) 폭의 1/393. 편지 안 치수는 모두 이 단위로 적는다. */
+  --u: calc(100cqw / 393);
+
   position: relative;
-  min-height: 433.033px;
-  padding: 46.06cqw 8.65% 42px 33.08%;
+  height: calc(433.033 * var(--u));
+  padding: 46.06cqw 8.65% calc(42 * var(--u)) 33.08%;
 }
 
 .envelope {
   position: absolute;
-  top: 5px;
+  top: calc(5 * var(--u));
   left: -5.79%;
   width: 110.186%;
   max-width: none;
@@ -51,7 +58,7 @@
   pointer-events: none;
   transform: rotate(-1.347deg);
   /* 원본 PNG의 투명 실루엣에만 Figma의 파란 광채를 적용한다. */
-  filter: drop-shadow(0 0 13.1px var(--maw-welcome-glow));
+  filter: drop-shadow(0 0 calc(13.1 * var(--u)) var(--maw-welcome-glow));
 }
 
 .logo {
@@ -67,8 +74,8 @@
 
 .copy {
   position: relative;
-  top: 4px;
-  left: 5px;
+  top: calc(4 * var(--u));
+  left: calc(5 * var(--u));
   transform: rotate(4deg);
   transform-origin: center top;
   overflow-wrap: anywhere;
@@ -76,10 +83,28 @@
 }
 
 .salutation {
+  display: flex;
+  justify-content: center;
   margin: 0;
-  font-size: 16px;
+  font-size: calc(16 * var(--u));
   font-weight: 500;
-  line-height: 24px;
+  line-height: calc(24 * var(--u));
+  /* "Dear. " 끝 공백을 지키고 한 줄로 둔다. */
+  white-space: pre;
+}
+
+/* 인사말·본문 둘째 줄의 이름. 앞뒤 문구는 줄지 않고 이름만 말줄임한다. */
+.line {
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .salutation:focus {
@@ -92,13 +117,13 @@
 
 .introduction,
 .message {
-  font-size: 14px;
+  font-size: calc(14 * var(--u));
   font-weight: 400;
-  line-height: 21px;
+  line-height: calc(21 * var(--u));
 }
 
 .introduction {
-  margin: 21px 0 0;
+  margin: calc(21 * var(--u)) 0 0;
 }
 
 .introduction strong {
@@ -106,15 +131,15 @@
 }
 
 .message {
-  margin: 13px 0 0;
+  margin: calc(13 * var(--u)) 0 0;
 }
 
 .wish {
-  margin: 18px 0 0;
+  margin: calc(18 * var(--u)) 0 0;
   color: var(--maw-welcome-accent);
-  font-size: 16px;
+  font-size: calc(16 * var(--u));
   font-weight: 600;
-  line-height: 24px;
+  line-height: calc(24 * var(--u));
 }
 
 .paid .wish {
@@ -138,7 +163,7 @@
 }
 
 .starBottom {
-  bottom: 39px;
+  bottom: calc(39 * var(--u));
   left: 18.57%;
   width: 20.3%;
   height: 19.6cqw;

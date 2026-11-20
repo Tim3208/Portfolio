@@ -18,6 +18,10 @@ export const LINK =
 export const BUTTON =
   "inline-flex min-h-11 items-center gap-2 rounded-chip bg-hue-deep px-4 text-sm font-semibold text-paper transition-colors duration-150 hover:bg-ink";
 
+/** 보조 버튼. 대표 2–4번처럼 상세 진입을 일반 링크보다 분명하게 구분할 때 쓴다. */
+export const BUTTON_OUTLINE =
+  "inline-flex min-h-11 items-center gap-2 rounded-chip border border-hue-deep bg-paper px-4 text-sm font-semibold text-hue-deep transition-colors duration-150 hover:bg-hue-tint hover:text-ink";
+
 const LINK_LABEL = { service: "서비스", github: "GitHub", figma: "Figma" } as const;
 
 /**
@@ -30,11 +34,15 @@ export function ProjectCover({
   project,
   sizes,
   preload = false,
+  annotated = true,
+  original = true,
   notesClassName,
 }: {
   project: Project;
   sizes: string;
   preload?: boolean;
+  annotated?: boolean;
+  original?: boolean;
   notesClassName?: string;
 }) {
   if (project.coverWithheld) return <WithheldNote project={project} />;
@@ -47,6 +55,8 @@ export function ProjectCover({
         position={project.cover.position}
         sizes={sizes}
         preload={preload}
+        annotated={annotated}
+        original={original}
         notesClassName={notesClassName}
       />
     );
@@ -63,6 +73,8 @@ export function ProjectCover({
             position={screen.position}
             sizes="(min-width: 1024px) 26vw, 46vw"
             preload={preload && i === 0}
+            annotated={annotated}
+            original={original}
             notesClassName="grid gap-y-2"
           />
         ))}

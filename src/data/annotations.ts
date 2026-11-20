@@ -69,7 +69,7 @@ export const SHOTS: Record<string, ShotInfo> = {
     width: 391,
     height: 798,
     notes: [
-      { x: 38, y: 43.6, text: "이름에 HTML 마크업을 넣어도 실행하지 않고 글자 그대로 보여줍니다." },
+      { x: 27.5, y: 43.2, text: "이름에 HTML 마크업을 넣어도 실행하지 않고 글자 그대로 보여줍니다." },
       { x: 90, y: 37.5, text: "납부자 표시인 별은 학생회비 납부 값이 boolean true일 때만 그립니다." },
     ],
   },

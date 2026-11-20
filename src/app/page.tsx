@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 
 import { ApprovalResetDemo } from "@/components/project/demos";
@@ -45,7 +46,7 @@ export default function HomePage() {
   const methods = projectsOfKind("method");
   const shown = new Set([...FEATURED_PROJECTS, ...methods].map((p) => p.slug));
   const remaining = PROJECTS.filter((p) => p.tier === "supporting" && !shown.has(p.slug));
-  const otherNames = [...ARCHIVE_PROJECTS, ...OTHER_PROJECTS].map((p) => p.name);
+  const otherNames = OTHER_PROJECTS.map((p) => p.name);
 
   return (
     <>
@@ -55,7 +56,7 @@ export default function HomePage() {
             {/* h1 이 이 사이트가 누구의 포트폴리오인지부터 말한다: 직무 · 이름 → 메인 문구 */}
             <h1>
               <span className="block text-lg font-semibold tracking-tight text-ink-2 md:text-xl">
-                Web Developer {PROFILE.name}
+                Frontend Developer {PROFILE.name}
               </span>{" "}
               <span className="mt-3 block text-hero font-bold">
                 {PROFILE.headline.map((line, i) => (
@@ -69,6 +70,16 @@ export default function HomePage() {
           </div>
           <div className="flex flex-col gap-5 lg:col-span-4 lg:pb-1.5 xl:col-span-5">
             <p className="max-w-[30rem] text-lead text-ink-2">{PROFILE.intro}</p>
+            <ul aria-label="핵심 기술 스택" className="flex flex-wrap gap-1.5">
+              {PROFILE.coreSkills.map((skill) => (
+                <li
+                  key={skill}
+                  className="rounded-chip border border-rule bg-paper-raised px-2.5 py-0.5 font-mono text-xs text-ink-2"
+                >
+                  {skill}
+                </li>
+              ))}
+            </ul>
             {/* GitHub · 연락처는 도구줄과 바탕화면에 늘 있으므로, 여기서는 다음 행동 하나만 둔다 */}
             <SmoothAnchor href="#featured" className={`${BUTTON} w-fit`}>
               프로젝트 둘러보기
@@ -159,18 +170,53 @@ export default function HomePage() {
           <div className="flex flex-col gap-4 lg:col-span-8">
             {remaining.length ? (
               <ul className="flex flex-col">
-                {remaining.map((p) => (
-                  <li
-                    key={p.slug}
-                    className="grid gap-x-6 gap-y-1 border-b border-rule py-3 first:border-t md:grid-cols-[9rem_minmax(0,1fr)]"
-                  >
-                    <span className="font-semibold">{p.name}</span>
-                    <span className="text-ink-2">{p.headline}</span>
-                  </li>
-                ))}
+                {remaining.map((p) => {
+                  const href = hasCaseStudy(p.slug) ? `/projects/${p.slug}` : "/work#supporting";
+                  return (
+                    <li key={p.slug} className="border-b border-rule first:border-t">
+                      <Link
+                        href={href}
+                        className="group grid gap-x-6 gap-y-1 py-3 transition-colors duration-150 md:grid-cols-[9rem_minmax(0,1fr)]"
+                      >
+                        <span className="font-semibold underline decoration-transparent underline-offset-4 transition-colors duration-150 group-hover:decoration-hue-deep">
+                          {p.name}
+                        </span>
+                        <span className="text-ink-2 transition-colors duration-150 group-hover:text-ink">{p.headline}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             ) : null}
-            {otherNames.length ? <p className="text-ink-2">그리고 {otherNames.join(" · ")}</p> : null}
+            {ARCHIVE_PROJECTS.length || otherNames.length ? (
+              <p className="text-ink-2">
+                그리고{" "}
+                {ARCHIVE_PROJECTS.map((p, i) => (
+                  <Fragment key={p.slug}>
+                    {i > 0 ? " · " : null}
+                    {hasCaseStudy(p.slug) ? (
+                      <Link
+                        href={`/projects/${p.slug}`}
+                        className="font-medium text-ink underline decoration-rule-strong underline-offset-4 transition-colors duration-150 hover:decoration-hue-deep"
+                      >
+                        {p.name}
+                      </Link>
+                    ) : (
+                      p.name
+                    )}
+                  </Fragment>
+                ))}
+                {ARCHIVE_PROJECTS.length && otherNames.length ? " · " : null}
+                {otherNames.length ? (
+                  <Link
+                    href="/work#others"
+                    className="underline decoration-rule-strong underline-offset-4 transition-colors duration-150 hover:text-ink hover:decoration-hue-deep"
+                  >
+                    {otherNames.join(" · ")}
+                  </Link>
+                ) : null}
+              </p>
+            ) : null}
           </div>
         </Container>
       </section>

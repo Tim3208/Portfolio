@@ -5,7 +5,6 @@ import type { ReactNode } from "react";
 import { useBrowser } from "@/components/browser/BrowserProvider";
 import { animateScroll } from "@/components/ui/SmoothAnchor";
 import { PROFILE } from "@/data/profile";
-import { PAGES } from "@/lib/pages";
 import { SECTION } from "@/lib/sections";
 
 /** 바탕화면 아이콘 그림. 크롬 아이콘과 같은 선 하나로, 한 단계 크게 그린다. */
@@ -34,12 +33,6 @@ const BrowserGlyph = () => (
   </Glyph>
 );
 
-const FolderGlyph = () => (
-  <Glyph>
-    <path d="M3 7.5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
-  </Glyph>
-);
-
 const CodeGlyph = () => (
   <Glyph>
     <path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12" />
@@ -64,8 +57,9 @@ type DeskItem = {
  * 창 왼쪽의 바탕화면 아이콘 (lg 이상).
  *
  * 첫 방문 연출에서 큐레이터가 포트폴리오 아이콘을 눌러 창을 열고, 연출이
- * 끝난 뒤에도 그대로 남아 방문자가 직접 쓸 수 있다. 페이지 바로가기는 그 페이지를
- * 연 탭으로 옮겨 가거나 새 탭으로 연다.
+ * 끝난 뒤에도 그대로 남아 방문자가 직접 쓸 수 있다.
+ * 브라우저 도구줄은 사이트 내부 페이지 이동을 맡고, 바탕화면은 실행할 앱과
+ * 외부 링크 · 연락처 바로가기(포트폴리오 · GitHub · 연락처)만 두어 중복을 없앤다.
  *
  * 모양은 바탕화면 아이콘이지만 웹의 링크처럼 한 번 누르면 열린다. 방문자는 웹
  * 페이지에서 더블클릭을 기대하지 않아, 한 번 눌러 고르기만 되면 고장으로 읽힌다.
@@ -78,12 +72,6 @@ export function DeskIcons() {
 
   const items: DeskItem[] = [
     { id: "portfolio", label: "포트폴리오", glyph: <BrowserGlyph />, activate: () => openPage("/") },
-    ...PAGES.filter((p) => p.href !== "/").map((page) => ({
-      id: page.href,
-      label: page.label,
-      glyph: <FolderGlyph />,
-      activate: () => openPage(page.href),
-    })),
     {
       id: "github",
       label: "GitHub",

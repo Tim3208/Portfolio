@@ -1,3 +1,4 @@
+import { CopyEmailButton } from "@/components/layout/CopyEmailButton";
 import { Container } from "@/components/ui/Container";
 import { CONTACT_STATEMENT, PROFILE } from "@/data/profile";
 import { SECTION } from "@/lib/sections";
@@ -18,9 +19,12 @@ export function Contact() {
           <p className="text-deep-ink-2">{CONTACT_STATEMENT}</p>
         </div>
         <div className="flex flex-col gap-1 lg:col-span-7">
-          <a href={`mailto:${PROFILE.email}`} className={`${LINK} text-xl font-semibold break-all md:text-2xl`}>
-            {PROFILE.email}
-          </a>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <a href={`mailto:${PROFILE.email}`} className={`${LINK} text-xl font-semibold break-all md:text-2xl`}>
+              {PROFILE.email}
+            </a>
+            <CopyEmailButton email={PROFILE.email} />
+          </div>
           <a href={PROFILE.github} target="_blank" rel="noreferrer noopener" className={`${LINK} text-deep-ink-2 hover:text-deep-ink`}>
             GitHub
             <span aria-hidden="true" className="ml-1">

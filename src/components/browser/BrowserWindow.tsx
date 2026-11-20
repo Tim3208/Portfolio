@@ -71,20 +71,10 @@ export function BrowserWindow({ children }: { children: ReactNode }) {
                     {page.label}
                   </Link>
                 ))}
-                <SmoothAnchor href={`#${SECTION.contact}`} className={PAGE_LINK}>
+                {/* lg 이상에서는 바탕화면 아이콘이 연락처 · GitHub 을 맡아 도구줄과 중복하지 않는다 */}
+                <SmoothAnchor href={`#${SECTION.contact}`} className={`${PAGE_LINK} lg:hidden`}>
                   Contact
                 </SmoothAnchor>
-                {/* 768–1023px 에는 도구줄이 좁아 GitHub 은 본문 · 연락처의 링크에 맡긴다 */}
-                <span aria-hidden="true" className="mx-1 hidden h-4 border-l border-rule-strong lg:block" />
-                <a
-                  href={PROFILE.github}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className={`${PAGE_LINK} hidden lg:flex`}
-                >
-                  GitHub
-                  <span className="sr-only"> (새 창)</span>
-                </a>
               </nav>
             </Toolbar>
           </div>

@@ -162,6 +162,7 @@ export const PROJECTS: readonly Project[] = [
       "14기 지원서 접수와 서류·면접 평가를 이 플랫폼으로 진행했고, 현재도 30건 이상의 공지·세션 자료와 과제 운영에 실사용 중입니다.",
     period: "2026.01 — 현재",
     role: "Frontend Developer",
+    team: "Frontend 2 · Backend 2 · Designer 1",
     status: "운영 · 유지보수 중",
     ownership: {
       mine: [
@@ -179,6 +180,13 @@ export const PROJECTS: readonly Project[] = [
     },
     hue: "mocha",
     technologies: ["Next.js", "TypeScript", "React", "Axios"],
+    metrics: [
+      {
+        value: "30+",
+        label: "운영 공지 · 세션 자료",
+        asOf: "2026-08-16",
+      },
+    ],
     links: {
       service: "https://syu-likelion.org",
       github: "https://github.com/No4hh4oN/Likelion14th-FE",

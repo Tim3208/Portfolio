@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 
 import {
   BUTTON,
+  BUTTON_OUTLINE,
   Labeled,
   ProjectCover,
   ProjectLinks,
@@ -52,9 +53,10 @@ export function FeaturedRow({
 }) {
   const detail = hasCaseStudy(project.slug);
   const sizes = lead ? "(min-width: 1024px) 64vw, 100vw" : "(min-width: 1024px) 56vw, 100vw";
-  const who = [project.role, project.team].filter(Boolean).join(" · ");
+  const compactMeta = [project.period ?? project.status, project.role, project.team].filter(Boolean).join(" · ");
+  const compactTech = project.technologies?.slice(0, 3);
   const switching = Boolean(project.screens && project.screens.length > 1);
-  const media = mediaShape(project, switching);
+  const media = mediaShape(project, switching, compact);
 
   return (
     <article aria-labelledby={`project-${project.slug}`} className={project.hue ? HUE_CLASS[project.hue] : undefined}>
@@ -85,12 +87,20 @@ export function FeaturedRow({
                     position={screen.position}
                     sizes={sizes}
                     preload={firstScreen && i === 0}
+                    annotated={!compact}
+                    original={!compact}
                   />
                 ),
               }))}
             />
           ) : (
-            <ProjectCover project={project} sizes={sizes} preload={firstScreen} />
+            <ProjectCover
+              project={project}
+              sizes={sizes}
+              preload={firstScreen}
+              annotated={!compact}
+              original={!compact}
+            />
           )}
         </div>
         <div className="flex min-w-0 flex-col gap-5 lg:sticky lg:top-8 lg:self-start">
@@ -109,7 +119,12 @@ export function FeaturedRow({
           <ProjectMetrics project={project} limit={compact ? 2 : undefined} />
           <div className="flex flex-col gap-1 border-t border-rule pt-4">
             {compact ? (
-              <p className="text-sm text-ink-2">{who}</p>
+              <>
+                <p className="text-sm text-ink-2 tabular-nums">{compactMeta}</p>
+                {compactTech?.length ? (
+                  <p className="font-mono text-xs text-ink-2">{compactTech.join(" · ")}</p>
+                ) : null}
+              </>
             ) : (
               <>
                 <ProjectMeta project={project} />
@@ -119,16 +134,16 @@ export function FeaturedRow({
               </>
             )}
           </div>
-          {lead && detail ? (
-            <div className="flex flex-col items-start gap-1">
-              <Link href={`/projects/${project.slug}`} className={BUTTON}>
+          {detail ? (
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+              <Link href={`/projects/${project.slug}`} className={lead ? BUTTON : BUTTON_OUTLINE}>
                 {project.name} 작업 과정 읽기
                 <span aria-hidden="true">→</span>
               </Link>
               <ProjectLinks project={project} detail={false} serviceOnly={compact} />
             </div>
           ) : (
-            <ProjectLinks project={project} detail={detail} serviceOnly={compact} />
+            <ProjectLinks project={project} detail={false} serviceOnly={compact} />
           )}
         </div>
         </div>
@@ -141,20 +156,20 @@ export function FeaturedRow({
  * 화면 칸의 가로세로 비와, 화면 말고 같이 보여야 하는 것(전환 컨트롤 · 주석 목록)의
  * 높이. 화면이 없는 행(담당 범위 도식 · 비공개 사유)은 창 높이로 제한하지 않는다.
  */
-function mediaShape(project: Project, switching: boolean) {
+function mediaShape(project: Project, switching: boolean, compact: boolean) {
   if (project.coverWithheld) return null;
   if (switching && project.screens) {
     // 전환 패널은 한 칸에 겹치므로 가장 세로로 긴 화면에 맞춘다
     const ratios = project.screens.map((screen) => parseRatio(screen.aspectRatio ?? "16 / 10"));
-    return { ratio: Math.min(...ratios), rest: "13rem" };
+    return { ratio: Math.min(...ratios), rest: compact ? "7rem" : "13rem" };
   }
-  if (project.cover?.src) return { ratio: parseRatio(project.cover.aspectRatio ?? "3 / 2"), rest: "10rem" };
+  if (project.cover?.src) return { ratio: parseRatio(project.cover.aspectRatio ?? "3 / 2"), rest: compact ? "4rem" : "10rem" };
   if (project.phones?.length) {
     const ratio = project.phones.reduce((sum, screen) => {
       const info = SHOTS[screen.src];
       return sum + (info ? info.width / info.height : 0.5);
     }, 0);
-    return { ratio, rest: "12rem" };
+    return { ratio, rest: compact ? "4rem" : "12rem" };
   }
   return null;
 }

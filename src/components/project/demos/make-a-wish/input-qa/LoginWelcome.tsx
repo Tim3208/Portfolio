@@ -3,7 +3,9 @@
  * 기준 커밋: 436b5ef832c5b7c03ff65bfd898c90381a45887d
  * 변경: 에셋을 공개 경로로 참조하고 h2를 상세 섹션 아래 h3로 바꾼다.
  * showModal·초점 이동/복원·Tab 가두기를 제거하고 open 비모달 dialog를 프레임에만 그린다.
- * Escape는 이 dialog 안에서만 닫고, 원본 텍스트·마크업·닫기 콜백은 유지한다.
+ * Escape는 이 dialog 안에서만 닫고, 원본 텍스트·닫기 콜백은 유지한다.
+ * 편지를 393 기준 고정 비율로 환산, 이름 한 줄 말줄임: 본문 둘째 줄을 .line으로 감싸고
+ * 두 이름에 .name을 더해 이름만 CSS 말줄임한다. DOM 텍스트는 전체 이름 그대로다.
  */
 /* eslint-disable @next/next/no-img-element -- 원본 환영창 에셋의 표시 방식과 크기를 유지한다. */
 import { useId } from 'react'
@@ -49,15 +51,17 @@ export function LoginWelcome({ invitation, onDismiss }: LoginWelcomeProps) {
           <img src={logo} alt="" className={styles.logo} />
           <div className={styles.copy}>
             <h3 id={titleId} className={styles.salutation}>
-              Dear. <span className={styles.accent}>{invitation.name}</span>
+              Dear. <span className={`${styles.accent} ${styles.name}`}>{invitation.name}</span>
               {invitation.suffix}
             </h3>
             <div id={descriptionId}>
               <p className={styles.introduction}>
                 <span className={styles.accent}>120번째 생일</span>을 맞은 삼육대학교가
                 <br />
-                <strong className={styles.accent}>{invitation.name}</strong>
-                {invitation.suffix}을 생일파티에 초대합니다.
+                <span className={styles.line}>
+                  <strong className={`${styles.accent} ${styles.name}`}>{invitation.name}</strong>
+                  {invitation.suffix}을 생일파티에 초대합니다.
+                </span>
               </p>
               <p className={styles.message}>
                 함께 축하하고, 함께 웃으며

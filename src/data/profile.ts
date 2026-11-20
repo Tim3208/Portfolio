@@ -12,6 +12,8 @@ export const PROFILE = {
   /** 메인 문구 아래 한 문장 — 이 포트폴리오에서 무엇을 보게 되는지 */
   intro:
     "디자인과 컴퓨터공학을 함께 전공했습니다. React·Next.js로 동아리 운영 플랫폼과 축제 서비스처럼 실제 사용자가 쓰는 웹을 만들고 개선해 왔습니다.",
+  /** HERO 핵심 기술 스택 — 대표 프로젝트에서 실제로 사용한 프론트엔드 주력 기술 */
+  coreSkills: ["React", "TypeScript", "Next.js", "TanStack Query", "Tailwind CSS"],
   github: GITHUB_URL,
   email: "joungou.park@gmail.com",
 } as const;
