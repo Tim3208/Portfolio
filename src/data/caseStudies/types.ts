@@ -11,8 +11,7 @@
  */
 
 /**
- * approval-reset · map-focus 는 설명용 재구성이다(map-focus 는 화면만 다시 그리고 계산은 원본 코드가 한다).
- * 나머지는 원본 서비스 코드를 샘플 데이터로 실행한다.
+ * approval-reset 만 설명용 재구성이다. 나머지는 원본 서비스 코드를 샘플 데이터로 실행한다.
  */
 export type DemoName =
   | "evaluation-screen"

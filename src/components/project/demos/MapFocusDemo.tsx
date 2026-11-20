@@ -4,15 +4,15 @@ import { DemoSurface } from "./shell/DemoSurface";
 /**
  * 부스 지도의 선택 · 이동 — Make A Wish 상세 05 (docs/design.md#option-3-demos).
  *
- * 지도 SDK 와 팀원이 만든 시트 · 카드는 옮기지 않고 도식으로 다시 그렸다. 보이는 영역,
- * 이동 오프셋, 전체 보기 범위, 선택과 이동 요청의 분리는 원본 코드가 계산한다.
+ * 원본 부스맵 화면을 샘플 부스로 실행한다. 지도 · 시트 · 카드는 팀원이 먼저 만든 화면이라
+ * 공동 작성임을 밝히고, 네이버 지도 SDK 자리에는 OpenStreetMap 이미지를 둔다.
  */
 export function MapFocusDemo() {
   return (
     <DemoSurface
       hue="blush"
-      label="설명용 재구성 · 원본 계산 코드 · 샘플 부스"
-      caption="지도와 화면은 도식이고, 이동할 자리는 원본 계산 코드가 그 순간의 배치를 다시 재서 정합니다. 실제 지도와 부스 위치가 아닙니다."
+      label="실제 서비스 코드 · 팀원과 공동 작성 · 샘플 부스"
+      caption="부스 지도와 목록 시트 · 카드는 팀원이 먼저 만들었고, 선택한 부스가 목록에 가리지 않게 지도를 옮기는 계산과 선택 · 이동의 분리를 맡았습니다. 지도 바탕은 네이버 지도 대신 OpenStreetMap 이미지이고, 부스는 지어낸 샘플입니다."
     >
       <MapFocusControls />
     </DemoSurface>

@@ -2,7 +2,7 @@
   max-width: 393px;
 }
 
-/* 도식의 화면 틀과 같은 비율(시안 393 × 852)로 자리를 지킨다. */
+/* 서비스 화면 틀과 같은 비율(시안 393 × 852)로 자리를 지킨다. */
 .placeholder {
   aspect-ratio: 393 / 852;
   background: var(--color-paper-sunk);
@@ -25,6 +25,14 @@
   min-width: 44px;
   padding-inline: 0.5rem;
   font-size: 0.75rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
 }
 
 .readout {

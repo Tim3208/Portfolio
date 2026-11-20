@@ -1,9 +1,10 @@
 /**
  * 원본: src/features/booths/lib/mapSelection.ts
  * 기준 커밋: 436b5ef832c5b7c03ff65bfd898c90381a45887d
- * 변경: 시트 단계 · 필터 타입을 가져오는 경로만 변경. 선택과 이동 요청을 나누는 reducer 는 줄 단위로 보존.
+ * 변경: 시트 단계 타입을 가져오는 경로만 변경. 선택과 이동 요청을 나누는 reducer 는 줄 단위로 보존.
  */
-import type { BoothFilter, BoothSheetSnap } from './types'
+import type { BoothSheetSnap } from './BoothSheet'
+import type { BoothFilter } from './category'
 
 export type BoothMapSelectionState = {
   filter: BoothFilter

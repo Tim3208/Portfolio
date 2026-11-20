@@ -1,0 +1,96 @@
+/*
+ * 지도 SDK 자리. 한 장으로 붙인 지도 이미지를 CSS 변수 카메라(--map-x · --map-y · --map-scale)로
+ * 옮기고 배율을 바꾼다. 값은 BoothMap 이 원본 계산 결과로 직접 써 넣는다.
+ */
+.map {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f2efe9;
+  cursor: grab;
+  user-select: none;
+}
+
+.map[data-dragging] {
+  cursor: grabbing;
+}
+
+.plane {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translate(
+      calc(var(--map-x) * var(--map-scale) * -1px),
+      calc(var(--map-y) * var(--map-scale) * -1px)
+    )
+    scale(var(--map-scale));
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.tiles {
+  display: block;
+  max-width: none;
+}
+
+.marker {
+  position: absolute;
+  top: calc(50% + (var(--py) - var(--map-y)) * var(--map-scale) * 1px);
+  left: calc(50% + (var(--px) - var(--map-x)) * var(--map-scale) * 1px);
+  display: flex;
+  translate: -50% -50%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  border-radius: 50%;
+  font-family: var(--maw-font-body);
+}
+
+/* 원본의 panTo · morph 처럼 요청으로 움직일 때만 부드럽게 옮긴다. 끄는 동안과 첫 배치는 바로 놓는다. */
+.map[data-animated]:not([data-dragging]) .plane {
+  transition: transform 300ms ease-out;
+}
+
+.map[data-animated]:not([data-dragging]) .marker {
+  transition:
+    top 300ms ease-out,
+    left 300ms ease-out;
+}
+
+.attribution {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 3;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 0.8);
+  padding: 0 0.375rem;
+  color: #2a315b;
+  font-size: 10px;
+  line-height: 18px;
+}
+
+/* 데모에서만 켜는 표시: 시트에 가리지 않고 실제로 보이는 지도 영역과 그 가운데 */
+.visible {
+  position: absolute;
+  z-index: 1;
+  border: 2px dashed var(--maw-blue);
+  pointer-events: none;
+}
+
+.visibleCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  translate: -50% -50%;
+  border: 2px solid var(--maw-blue);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.7);
+}
