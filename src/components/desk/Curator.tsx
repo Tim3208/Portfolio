@@ -4,13 +4,13 @@ import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } f
 
 import { useBrowser } from "@/components/browser/BrowserProvider";
 import { curator, registerCurator } from "@/components/desk/curatorChannel";
-import { CURATOR, type CuratorNote } from "@/data/curator";
+import { CURATOR } from "@/data/curator";
 import { INTRO_KEY } from "@/lib/intro";
 
 type Point = { x: number; y: number };
 type Burst = Point & { key: number };
-/** 큐레이터가 할 말 한마디. target 이 있으면 그 곁으로 가서 말한다. */
-type Line = { text: string; target?: Element | null };
+/** 큐레이터가 할 말 한마디. target 이 있으면 그 곁으로 가서 말하고, press 가 있으면 말한 뒤 눌러 보인다. */
+type Line = { text: string; target?: Element | null; press?: HTMLElement | null };
 
 /** 이미 한 말. 한 번 들어온 동안(sessionStorage) 같은 말을 되풀이하지 않는다. */
 const HEARD_KEY = "curator-heard";
@@ -37,22 +37,47 @@ function markHeard(text: string) {
 }
 
 /**
- * 지금 자리에서 꺼낼 말. 본문 가운데(높이의 15–85%)에 걸친 요소의 말을 먼저,
- * 없으면 이 페이지 전체의 말을 고른다. 이미 한 말은 건너뛴다.
+ * 대신 눌러 보일 조작부. 글자나 aria-label 이 name 과 같은 버튼 · 라디오 · 체크박스 가운데
+ * 본문 영역에 온전히 보이고, 막혀 있지 않고, 아직 켜지지 않은 것만 고른다.
  */
-function findNote(viewport: Element | null): CuratorNote | null {
+function findControl(scope: Element, name: string, view: DOMRect): HTMLElement | null {
+  for (const el of scope.querySelectorAll<HTMLElement>("button, label, input")) {
+    if (el.getAttribute("aria-label") !== name && el.textContent?.trim() !== name) continue;
+    const control = el instanceof HTMLLabelElement ? el.control : el;
+    if (control instanceof HTMLInputElement && (control.disabled || control.checked)) continue;
+    if (control instanceof HTMLButtonElement && control.disabled) continue;
+    if (el.getAttribute("aria-pressed") === "true" || el.closest("[inert]")) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width > 0 && r.top >= view.top && r.bottom <= view.bottom) return el;
+  }
+  return null;
+}
+
+/**
+ * 지금 자리에서 꺼낼 말. 본문 가운데(높이의 15–85%)에 걸친 요소의 말과 지금 눌러 보일 수
+ * 있는 조작부의 말을 먼저, 없으면 이 페이지 전체의 말을 고른다. 이미 한 말은 건너뛴다.
+ */
+function findNote(viewport: Element | null): Line | null {
   const done = getHeard();
   const view = viewport?.getBoundingClientRect();
-  let page: CuratorNote | null = null;
+  let page: Line | null = null;
   for (const note of [...(CURATOR.notes[location.pathname] ?? []), ...(CURATOR.notes["*"] ?? [])]) {
     if (done.has(note.text)) continue;
     if (!note.target) {
-      page ??= note;
+      page ??= { text: note.text };
       continue;
     }
-    const r = document.querySelector(note.target)?.getBoundingClientRect();
-    if (!r || !view || r.height === 0) continue;
-    if (r.bottom > view.top + view.height * 0.15 && r.top < view.top + view.height * 0.85) return note;
+    const target = document.querySelector(note.target);
+    if (!target || !view) continue;
+    if (note.press) {
+      const control = findControl(target, note.press, view);
+      if (control) return { text: note.text, target: control, press: control };
+      continue;
+    }
+    const r = target.getBoundingClientRect();
+    if (r.height > 0 && r.bottom > view.top + view.height * 0.15 && r.top < view.top + view.height * 0.85) {
+      return { text: note.text, target };
+    }
   }
   return page;
 }
@@ -213,8 +238,8 @@ export function Curator() {
     setTyping(false);
   }
 
-  async function click(target: HTMLElement, signal: AbortSignal) {
-    target.dataset.pressed = "";
+  /** 커서가 한 번 누르는 모습 */
+  async function tap(signal: AbortSignal) {
     setPressed(true);
     await sleep(90, signal);
     setPressed(false);
@@ -285,7 +310,8 @@ export function Curator() {
         if (icon) {
           await moveTo(centerOf(icon), 900, run.signal);
           await sleep(160, run.signal);
-          await click(icon, run.signal);
+          icon.dataset.pressed = "";
+          await tap(run.signal);
         }
         openWindow(icon);
         await sleep(520, run.signal);
@@ -306,7 +332,7 @@ export function Curator() {
       mode.current = "idle";
     }
 
-    async function say({ text, target }: Line) {
+    async function say({ text, target, press }: Line) {
       if (life.signal.aborted || !homePoint()) {
         mode.current = "idle";
         return;
@@ -324,6 +350,15 @@ export function Curator() {
         const spot = target ? beside(target, text, viewportRef.current) : perchPoint();
         if (spot) await moveTo(spot, 700, run.signal);
         await type(text, run.signal);
+        // 말을 읽을 틈을 두고 대신 눌러 보인다. 그 사이 조작부가 사라졌으면 누르지 않는다.
+        if (press) {
+          await sleep(600, run.signal);
+          if (press.isConnected) {
+            await moveTo(centerOf(press), 300, run.signal);
+            await tap(run.signal);
+            press.click();
+          }
+        }
         markHeard(text);
         // 긴 말일수록 오래 보여준다
         await sleep(1600 + Array.from(text).length * 70, run.signal);
@@ -452,7 +487,7 @@ export function Curator() {
 
     const note = findNote(viewportRef.current);
     if (note) {
-      speak.current({ text: note.text, target: note.target ? document.querySelector(note.target) : null });
+      speak.current(note);
       return;
     }
 
