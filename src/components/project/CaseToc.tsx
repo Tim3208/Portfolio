@@ -7,36 +7,77 @@ type TocItem = {
   title: string;
 };
 
+/** 데스크톱 Viewport 또는 모바일 문서 중 실제 스크롤 주체를 찾는다. */
+function findScrollParent(el: HTMLElement): HTMLElement | null {
+  for (let node = el.parentElement; node; node = node.parentElement) {
+    const { overflowY } = getComputedStyle(node);
+    if ((overflowY === "auto" || overflowY === "scroll") && node.scrollHeight > node.clientHeight) {
+      return node;
+    }
+  }
+  return null;
+}
+
 /**
  * Case Study 왼쪽 고정 목차 (xl 이상).
- * 스크롤 위치에 따라 현재 읽고 있는 섹션을 강조한다.
+ * 화면 중상단(보이는 영역 위에서 약 38% 지점)을 지나는 마지막 섹션을 현재 위치로 잡는다.
+ * 짧은 섹션이 이어질 때도 시선이 다음 섹션에 닿으면 바로 전환된다.
  */
 export function CaseToc({ items }: { items: readonly TocItem[] }) {
   const [active, setActive] = useState(items[0]?.num ?? "");
 
   useEffect(() => {
-    const elements = items
-      .map((item) => document.getElementById(`section-${item.num}`))
-      .filter((el): el is HTMLElement => el !== null);
+    const targets = items
+      .map((item) => ({ num: item.num, el: document.getElementById(`section-${item.num}`) }))
+      .filter((entry): entry is { num: string; el: HTMLElement } => entry.el !== null);
 
-    if (!elements.length || typeof IntersectionObserver === "undefined") return;
+    if (!targets.length) return;
 
-    const visible = new Set<string>();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          const num = entry.target.id.replace(/^section-/, "");
-          if (entry.isIntersecting) visible.add(num);
-          else visible.delete(num);
+    const scroller = findScrollParent(targets[0].el);
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const rect = scroller?.getBoundingClientRect();
+      const top = rect ? rect.top : 0;
+      const height = rect ? rect.height : window.innerHeight;
+      const readingLine = top + height * 0.38;
+
+      // 맨 아래까지 내렸을 때는 마지막 짧은 섹션도 활성화한다
+      const atBottom = scroller
+        ? scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4
+        : window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4;
+
+      if (atBottom) {
+        setActive(targets[targets.length - 1].num);
+        return;
+      }
+
+      let current = targets[0].num;
+      for (const target of targets) {
+        if (target.el.getBoundingClientRect().top <= readingLine) {
+          current = target.num;
+        } else {
+          break;
         }
-        const first = items.find((item) => visible.has(item.num));
-        if (first) setActive(first.num);
-      },
-      { root: null, rootMargin: "-12% 0px -68% 0px", threshold: 0 },
-    );
+      }
+      setActive(current);
+    };
 
-    for (const el of elements) observer.observe(el);
-    return () => observer.disconnect();
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    const scrollTarget = scroller ?? window;
+    scrollTarget.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      scrollTarget.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
   }, [items]);
 
   return (

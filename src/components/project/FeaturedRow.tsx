@@ -53,8 +53,7 @@ export function FeaturedRow({
 }) {
   const detail = hasCaseStudy(project.slug);
   const sizes = lead ? "(min-width: 1024px) 64vw, 100vw" : "(min-width: 1024px) 56vw, 100vw";
-  const compactMeta = [project.period ?? project.status, project.role, project.team].filter(Boolean).join(" · ");
-  const compactTech = project.technologies?.slice(0, 3);
+  const when = project.period ?? project.status;
   const switching = Boolean(project.screens && project.screens.length > 1);
   const media = mediaShape(project, switching, compact);
 
@@ -105,7 +104,12 @@ export function FeaturedRow({
         </div>
         <div className="flex min-w-0 flex-col gap-5 lg:sticky lg:top-8 lg:self-start">
           <div className="flex flex-col gap-1.5">
-            {project.category ? <p className="text-sm font-semibold text-hue-deep">{project.category}</p> : null}
+            {project.category || when ? (
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
+                {project.category ? <p className="text-sm font-semibold text-hue-deep">{project.category}</p> : null}
+                {when ? <p className="text-xs text-ink-2 tabular-nums">{when}</p> : null}
+              </div>
+            ) : null}
             <h3 id={`project-${project.slug}`} className="text-2xl font-bold tracking-tight">
               {project.name}
             </h3>
@@ -117,23 +121,7 @@ export function FeaturedRow({
             <Labeled label="결과">{project.outcome}</Labeled>
           </div>
           <ProjectMetrics project={project} limit={compact ? 2 : undefined} />
-          <div className="flex flex-col gap-1 border-t border-rule pt-4">
-            {compact ? (
-              <>
-                <p className="text-sm text-ink-2 tabular-nums">{compactMeta}</p>
-                {compactTech?.length ? (
-                  <p className="font-mono text-xs text-ink-2">{compactTech.join(" · ")}</p>
-                ) : null}
-              </>
-            ) : (
-              <>
-                <ProjectMeta project={project} />
-                {project.technologies ? (
-                  <p className="font-mono text-xs text-ink-2">{project.technologies.join(" · ")}</p>
-                ) : null}
-              </>
-            )}
-          </div>
+          <ProjectMeta project={project} compact={compact} />
           {detail ? (
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <Link href={`/projects/${project.slug}`} className={lead ? BUTTON : BUTTON_OUTLINE}>

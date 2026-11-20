@@ -135,10 +135,35 @@ function WithheldNote({ project }: { project: Project }) {
   );
 }
 
-/** 역할 · 기간 · 팀 · 상태 한 줄 */
-export function ProjectMeta({ project }: { project: Project }) {
-  const items = [project.role, project.period, project.team, project.status].filter(Boolean);
-  return <p className="text-sm text-ink-2">{items.join(" · ")}</p>;
+/** 역할 · 팀 · 상태 · 기술을 라벨과 값으로 나눈 메타 그리드. 기간은 제목 위 줄에 둔다. */
+export function ProjectMeta({ project, compact = false }: { project: Project; compact?: boolean }) {
+  const rows = [
+    { label: "역할", value: project.role },
+    { label: "팀", value: project.team },
+    // period 가 없을 때는 status 가 상단 시점 자리에 올라가므로 중복 표시하지 않는다
+    { label: "상태", value: !compact && project.period ? project.status : undefined },
+  ].filter((row): row is { label: string; value: string } => Boolean(row.value));
+
+  const tech = compact ? project.technologies?.slice(0, 3) : project.technologies;
+
+  if (!rows.length && !tech?.length) return null;
+
+  return (
+    <dl className="grid grid-cols-2 gap-x-6 gap-y-3 border-t border-rule pt-4">
+      {rows.map((row) => (
+        <div key={row.label} className={`flex flex-col gap-0.5 ${rows.length === 1 ? "col-span-2" : ""}`}>
+          <dt className="text-xs text-ink-3">{row.label}</dt>
+          <dd className="text-sm leading-snug text-ink">{row.value}</dd>
+        </div>
+      ))}
+      {tech?.length ? (
+        <div className="col-span-2 flex flex-col gap-0.5">
+          <dt className="text-xs text-ink-3">기술</dt>
+          <dd className="font-mono text-xs leading-5 text-ink-2">{tech.join(" · ")}</dd>
+        </div>
+      ) : null}
+    </dl>
+  );
 }
 
 /**
