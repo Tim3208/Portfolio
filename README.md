@@ -1,141 +1,67 @@
 # 박정우 포트폴리오
 
-> 프론트엔드 개발자 박정우
+**Live Site:** [https://tim3208.kro.kr](https://tim3208.kro.kr/)
 
-동아리 모집·운영 화면과 캠퍼스 지도를 만들었습니다. 사용자 화면과 운영진 기능, API 연동부터 배포 이후 수정까지 경험했습니다. 실제 프로젝트 화면과 본인이 맡은 일, 선택한 이유, 확인된 결과를 담은 포트폴리오입니다.
+프론트엔드 개발자 박정우의 개인 포트폴리오 저장소입니다.  
+단순한 스크린샷 나열 대신 **실제 서비스 코드를 옮겨 실행하는 인터랙티브 데모**, **브라우저 창 인터페이스**, **데이터 기반 Case Study 구조**로 문제 해결 과정을 직접 체험할 수 있게 구현했습니다.
 
-## 로컬 실행
+---
 
-Node.js와 npm이 필요합니다. 잠금 파일에 기록된 Next.js의 Node 요구 범위는 `>=20.9.0`이며, 프로젝트 자체의 Node 버전 고정 파일은 없습니다.
+## 주요 구현 포인트
 
-```sh
-npm ci
-npm run dev
-```
+### 1. 원본 서비스 코드를 실행하는 인터랙티브 데모
 
-[로컬 개발 서버](http://localhost:3000)를 엽니다. Windows PowerShell에서 `npm.ps1` 실행이 제한되면 같은 명령에 `npm.cmd`를 사용합니다.
+로그인 뒤에 숨어 있거나 특정 오류·시간 조건에서만 나타나는 화면은 정적 스크린샷으로 맥락을 전달하기 어렵습니다. 실제 프로젝트에서 순수 로직과 화면 컴포넌트를 최소 수정으로 이식하고, 서버 통신·인증만 샘플 응답으로 대체해 방문자가 직접 조작해 볼 수 있게 구성했습니다.
 
-| 명령 | 용도 |
-| --- | --- |
-| `npm run dev` | 개발 서버 |
-| `npm run lint` | ESLint 검사 |
-| `npm run typecheck` | TypeScript 검사 |
-| `npm run build` | 프로덕션 빌드·정적 페이지 생성 |
-| `npm start` | 빌드 결과로 프로덕션 서버 실행 |
+| 프로젝트          | 데모                  | 직접 확인할 수 있는 판단                                                                      |
+| ----------------- | --------------------- | --------------------------------------------------------------------------------------------- |
+| **syu-likelion**  | 지원 결과 · 면접 예약 | 서류 마감 경계 안내, 결과 상태별 분기, 선착순 슬롯 예약·충돌 처리                             |
+| **syu-likelion**  | 운영진 평가 화면      | 단계별 지원자 목록 분리, 블라인드 서류 vs 면접 신원 노출, 권한별 합격 처리 _(팀원 공동 작성)_ |
+| **Make A Wish**   | 부스 스탬프 별자리    | 비정상·누락 응답 검증, 지급 시각·분류 기반 별 배치, 실패 시 자동 갱신 중단                    |
+| **Make A Wish**   | 비정상 입력 QA        | HTML 마크업 텍스트 처리, boolean `true` 엄격 판별, 입력 서식·경계값 검증                      |
+| **Make A Wish**   | 부스 지도 포커스      | 하단 시트 높이를 반영한 중심 이동 계산과 선택·이동 상태 분리                                  |
+| **삼육대 어디야** | 장소 검색 순위        | 원본 123개 장소 데이터 검색 및 일치 필드·정확도·반복 보정 점수 시각화                         |
+| **Oshi Calendar** | 개편 전 캘린더 화면   | 날짜 격자와 남은 일수 목록의 정보 밀도 차이 비교 (고정 기준일 이동)                           |
+| **AgentFlow**     | 승인 무효화 규칙      | 승인 이후 파일 변경 시 기존 승인이 무효화되는 워크플로우 재구성                               |
 
-명령의 기준은 [package.json](package.json)입니다. 별도 `test`·`deploy` 스크립트는 없습니다.
+### 2. 브라우저 창 UI · 라이브 탭 · 큐레이터
 
-## 환경 변수와 배포 URL
+- **창과 탭 상태 관리:** 데스크톱(`md` 이상)에서는 사이트 전체를 하나의 브라우저 창으로 구성했습니다. `sessionStorage` 기반의 탭 전환·닫기·방문 기록(뒤로/앞으로)과 커스텀 주소창 라우팅을 구현했고, 모바일에서는 이중 스크롤을 피하기 위해 창 연출을 해제해 일반 페이지로 전환합니다.
+- **라이브 탭 (`/live/[slug]`):** 배포 중인 실제 서비스(`syu-likelion`, `삼육대 어디야`, `Oshi Calendar`, `mathGraph`)를 포트폴리오 창 안에서 바로 열어 조작할 수 있습니다. 주소창에는 실제 서비스 도메인이 표시되며, `sandbox` 속성으로 안전하게 격리했습니다.
+- **바탕화면 아이콘과 큐레이터 커서:** 넓은 화면(`lg` 이상)에서는 왼쪽 바탕화면 아이콘으로 주요 페이지를 바로 열 수 있고, 연출 커서(큐레이터)가 첫 방문 안내와 라이브 탭 진입 시 짧은 가이드를 제공합니다.
 
-로컬 실행에는 환경 변수 설정이 필요하지 않습니다. 배포 도메인을 지정할 때는 [.env.example](.env.example)을 참고해 `.env.local` 또는 배포 환경에 `NEXT_PUBLIC_SITE_URL`을 설정합니다. 예시의 `https://example.com`은 실제 도메인으로 바꿉니다.
+### 3. 렌더링 구조와 디자인 시스템
 
-[src/lib/site.ts](src/lib/site.ts)의 URL 결정 순서는 다음과 같습니다.
+- **Server Components 기본, 최소 클라이언트 경계:** 페이지와 Case Study 본문, 화면 주석(`Shot`), 라디오 전환 패널(`Switcher`)은 서버 컴포넌트와 CSS(`:has()`) 중심으로 동작하게 설계했습니다. 클라이언트 경계는 브라우저 탭 상태, 데모 조작부, 지연 마운트(`IntersectionObserver`) 등 상호작용이 필요한 영역에만 한정했습니다.
+- **의미 기반 6색 팔레트와 3상태 테마:** 프로젝트별 고유 색상(`mocha`, `terracotta`, `wheat`, `sage`, `plum`, `blush`)을 CSS 변수 스코프로 관리하고, 라이트·다크 모드 모두에서 동일한 명도 대비를 유지합니다. `next-themes` 없이 동기 초기화 스크립트와 DOM 구독으로 시스템·라이트·다크 전환 시 FOUC를 방지했습니다.
+- **데이터 중심 콘텐츠 설계:** 프로필·프로젝트·Case Study·화면 주석을 `src/data/`의 정적 TypeScript 모듈로 분리해, 컴포넌트 수정 없이 데이터만으로 프로젝트 노출 순서와 레이아웃을 제어합니다.
 
-1. `NEXT_PUBLIC_SITE_URL`: 프로토콜을 포함한 절대 URL
-2. `VERCEL_PROJECT_PRODUCTION_URL`: Vercel 도메인에 `https://`를 붙인 값
-3. `http://localhost:3000`: 로컬 기본값
+---
 
-이 URL은 창 안 주소창의 호스트, canonical URL, sitemap, OG 이미지의 절대 경로에 사용됩니다. 배포 시에는 실제 공개 주소가 적용됐는지 확인합니다.
+## 기술 스택
 
-## 페이지 구성
+- **Framework & Language:** Next.js 16 (App Router), React 19, TypeScript 6
+- **Styling:** Tailwind CSS 4, CSS Modules (데모별 원본 스타일 격리)
+- **Fonts:** Pretendard, JetBrains Mono (자체 호스팅), Hahmlet (Make A Wish 데모 한정)
+- **Utilities:** date-fns, @date-fns/tz, clsx, lucide-react
 
-사이트 전체를 화면 가운데의 브라우저 창 하나로 표현합니다. 데스크톱에서는 창이 화면 높이에 고정되고 본문은 창 안에서 스크롤합니다. 크롬은 탭줄(탭 전환·닫기·새 탭)과 도구줄(뒤로·앞으로·새로고침·주소창·주요 페이지·테마) 2행입니다. 모바일에서는 창 연출 없이 일반 페이지로 보입니다.
+---
 
-넓은 화면(1024px 이상)에서는 창 왼쪽에 바탕화면 아이콘이 있고, 홈에 처음 들어오면 연출 커서가 인사한 뒤 포트폴리오 아이콘을 눌러 창을 엽니다. 바탕화면 아이콘은 한 번 누르면 열립니다. 다시 보려면 브라우저 개발자 도구에서 `localStorage`의 `intro-seen`을 지웁니다. 기준은 [바탕화면과 큐레이터](docs/design.md#intro)입니다.
-
-이 브랜치(`design/3-claude`)는 디자인 **도색 시안 3안**입니다. 실제 서비스 화면에 번호 주석을 달아 판단을 화면 위에서 짚고, 승인 무효화 판단은 합성 데이터로 만든 설명용 재구성 데모로 바꿔 볼 수 있습니다. Make A Wish 스탬프·이상한 값 입력과 syu-likelion 결과 확인·면접 예약은 원본 서비스 코드를 샘플 응답으로 실행하는 데모입니다. syu-likelion 평가 화면은 팀원과 공동 작성한 운영진 화면을 가상 지원자로 실행합니다. 삼육대 어디야 검색은 원본 장소 데이터와 검색 패널을 실행하고, 화면 밖에서 결과 순서의 이유를 보여줍니다. Oshi Calendar는 가운데 캘린더를 바꾸기 전 첫 화면을 샘플 일정으로 실행하고, 같은 일정의 날짜 배치와 남은 일수 목록을 견줍니다. 기준은 [디자인 기준의 3안](docs/design.md#option-3)입니다.
-
-| 경로 | 콘텐츠 |
-| --- | --- |
-| `/` | 홈(스토리형 요약) — 소개 → 대표 프로젝트 → AI와 일하는 방식(AgentFlow) → 교육 경험 → 경력 → 그 밖의 프로젝트 |
-| `/work` | 프로젝트 — 대표, 보조(나의 역할·프로젝트 소개·확인된 결과 비교), 그 밖의 프로젝트 |
-| `/career` | 경력 — 타임라인, 수상, 프로젝트에서 사용한 기술 |
-| `/teaching` | 교육 경험 — 교육 대상·내용·기간·결과, 설명을 맞추는 방법 |
-| `/projects/[slug]` | Case Study — 프로젝트별 문제·판단·구현·결과 |
-| `/new` | 새 탭 시작 페이지 — 주소창 입력과 페이지 바로가기 (연출용) |
-| `/external` | 주소창에 사이트 밖 주소나 검색어를 입력했을 때의 안내 (연출용) |
-| `/live/[slug]` | 라이브 탭 — 배포된 실제 서비스를 창 안에서 그대로 연다. 주소창에는 서비스의 실제 주소가 보인다 (연출용) |
-| 그 밖의 경로 | 창 안에서 보여주는 404와 홈으로 돌아가기 |
-
-상세 페이지가 있는 프로젝트 slug는 `syu-likelion`, `make-a-wish`, `eodiya`, `oshi-calendar`, `agentflow`, `cctv-scheduler`입니다. Contact와 Footer는 모든 페이지의 공통 마무리로 유지됩니다.
-
-라이브 탭이 있는 프로젝트 slug는 `syu-likelion`, `eodiya`, `oshi-calendar`, `math-graph`입니다. 데스크톱(768px 이상)에서는 "서비스 열어 보기"가 창 안에서 서비스를 열고, 주소창에 `syu-likelion.org`처럼 서비스 주소를 입력해도 같은 탭이 열립니다. 모바일에서는 같은 링크가 실제 새 창으로 열립니다. 기준은 [디자인 기준의 라이브 탭](docs/design.md#live)입니다.
-
-창 안의 탭은 sessionStorage에 저장되어 새로고침에는 유지되고, 실제 브라우저 탭을 닫으면 사라집니다. 본문 링크를 Ctrl/Cmd·휠 클릭하면 실제 브라우저의 새 탭으로 열립니다.
-
-syu-likelion 상세는 일곱 섹션으로 구성하며, 통합 전 `#section-01`부터 `#section-12`까지의 링크를 유지합니다. 수치는 관련 경험 옆에만 표시하고, 팀 집계처럼 출처가 따로 있는 수치는 출처와 시점을 함께 적습니다.
-
-## 기술과 구조
-
-[package.json](package.json) 기준으로 Next.js 16.3.0 App Router, React 19.2.8, TypeScript 6, Tailwind CSS 4를 사용합니다. Pretendard와 JetBrains Mono는 패키지에서 자체 호스팅합니다. Make A Wish 데모의 서비스 화면 안에서만 `@fontsource-variable/hahmlet`의 Hahmlet을 사용하고, 삼육대 어디야 데모의 서비스 화면은 원본의 시스템 sans-serif를 유지합니다. 콘텐츠는 정적 TypeScript 데이터로 관리합니다.
+## 코드 탐색 가이드
 
 ```text
 src/
-├─ app/                 라우트, 공통 레이아웃, CSS, metadata·OG·sitemap
+├─ app/                  라우트(/, /work, /career, /teaching, /projects/[slug], /live/[slug]), OG 이미지, sitemap
 ├─ components/
-│  ├─ browser/          창, 탭 상태, 탭줄, 도구줄·주소창, 본문 영역
-│  ├─ layout/           Contact, Footer, ThemeToggle
-│  ├─ project/          대표 프로젝트 행, Case Study 블록 렌더링, 재구성·실제 코드 실행 데모
-│  │  └─ demos/         데모별 서버 표면과 클라이언트 조작
-│  │     ├─ shell/      표면·배치·패널·지연 마운트 공통 틀
-│  │     ├─ eodiya/     원본에서 옮긴 검색 패널·장소 데이터·순위 로직
-│  │     ├─ make-a-wish/ 원본에서 옮긴 스탬프 화면·순수 로직, 서비스 색·폰트 범위
-│  │     │  ├─ input-qa/ 환영창·입력란 네 개와 이름·납부 판정·검증·전화번호 서식
-│  │     │  └─ map-focus/ 원본에서 옮긴 부스맵 화면과 이동 계산·선택 reducer
-│  │     ├─ oshi-calendar/ 바꾸기 전 게임 허브·임박 일정·캘린더와 날짜 로직
-│  │     └─ syu-likelion/ 원본에서 옮긴 제출·결과·예약 화면·순수 로직, 서비스 색 범위
-│  │        └─ evaluation/ 공동 작성한 단계별 지원자 표·평가 상세·권한 판정과 가상 지원자
-│  └─ ui/               공통 요소 (Container, Shot 화면 주석, Switcher 전환, Placeholder)
-├─ data/                프로필, 프로젝트, 경력, 수상, 기술, 교육, 홈 스토리 요약
-│  └─ caseStudies/      프로젝트별 상세 본문과 블록 타입
-└─ lib/                 주요 페이지 목록, 주소창 해석, 테마, 색맥락, 사이트 URL, OG 공통 설정
-public/images/projects/ 실제 서비스 이미지
-docs/                   콘텐츠 근거, 디자인 규칙, 이전 문서 참조표
-artifacts/              기존 콘텐츠 점검 기록과 검토용 캡처
+│  ├─ browser/           브라우저 창 셸, 탭·방문 기록 스토어(tabStore), 주소창, 뷰포트 스크롤
+│  ├─ desk/              바탕화면 아이콘, 큐레이터 커서 및 메시지 채널
+│  ├─ project/
+│  │  └─ demos/          실제 서비스 코드 이식 데모 및 공통 프레임(shell/)
+│  │     ├─ syu-likelion/
+│  │     ├─ make-a-wish/
+│  │     ├─ eodiya/
+│  │     └─ oshi-calendar/
+│  └─ ui/                화면 주석(Shot), JS 없는 전환 컨트롤(Switcher), Container
+├─ data/                 프로젝트 메타데이터, 경력·교육, 화면 주석, Case Study 본문(caseStudies/)
+└─ lib/                  주소창 파싱, 색상 스코프, 테마·인트로 초기화 스크립트, OG 설정
 ```
-
-## 수정할 파일 찾기
-
-| 수정 내용 | 기준 파일 |
-| --- | --- |
-| 홈 HERO 메인 문구 · 소개 한 문장, 연락 이메일, `/career` 전공 배경 | [profile.ts](src/data/profile.ts) |
-| GitHub 공통 주소, 섹션 ID | [sections.ts](src/lib/sections.ts) |
-| 프로젝트 목록, 기본 정보·성과, 표지와 이미지 비율 | [projects.ts](src/data/projects.ts) |
-| Case Study 본문·등록·블록 모델·기존 앵커 호환 | [caseStudies](src/data/caseStudies), [index.ts](src/data/caseStudies/index.ts), [types.ts](src/data/caseStudies/types.ts) |
-| 실제 코드 실행 데모 공통 틀(표면·배치·패널·지연 마운트) | [shell](src/components/project/demos/shell) |
-| Make A Wish 스탬프 데모·응답 조작·옮긴 서비스 코드·그림 | [StampBoardDemo.tsx](src/components/project/demos/StampBoardDemo.tsx), [StampBoardControls.tsx](src/components/project/demos/StampBoardControls.tsx), [make-a-wish](src/components/project/demos/make-a-wish), [stamps](public/images/projects/make-a-wish/stamps) |
-| Make A Wish 이상한 값 입력 데모·환영창·입력 검증·그림 | [InputQaDemo.tsx](src/components/project/demos/InputQaDemo.tsx), [InputQaControls.tsx](src/components/project/demos/InputQaControls.tsx), [input-qa](src/components/project/demos/make-a-wish/input-qa), [welcome](public/images/projects/make-a-wish/welcome) |
-| Make A Wish 부스 지도 데모·이동 기준 비교·원본 부스맵 화면과 이동 계산 | [MapFocusDemo.tsx](src/components/project/demos/MapFocusDemo.tsx), [MapFocusControls.tsx](src/components/project/demos/MapFocusControls.tsx), [map-focus](src/components/project/demos/make-a-wish/map-focus) |
-| syu-likelion 제출 완료·결과 확인·면접 예약 데모와 그림 | [ResultStatusDemo.tsx](src/components/project/demos/ResultStatusDemo.tsx), [ResultStatusControls.tsx](src/components/project/demos/ResultStatusControls.tsx), [syu-likelion](src/components/project/demos/syu-likelion), [result](public/images/projects/syu-likelion/result) |
-| syu-likelion 평가 화면 데모·공개 범위 조작·옮긴 공동 작성 코드 | [EvaluationScreenDemo.tsx](src/components/project/demos/EvaluationScreenDemo.tsx), [EvaluationScreenControls.tsx](src/components/project/demos/EvaluationScreenControls.tsx), [evaluation](src/components/project/demos/syu-likelion/evaluation) |
-| 삼육대 어디야 검색 데모·순서 설명·옮긴 서비스 코드와 장소 데이터 | [PlaceSearchDemo.tsx](src/components/project/demos/PlaceSearchDemo.tsx), [PlaceSearchControls.tsx](src/components/project/demos/PlaceSearchControls.tsx), [eodiya](src/components/project/demos/eodiya) |
-| Oshi Calendar 바꾸기 전 첫 화면 데모·오늘 이동·샘플 일정·게임 그림 | [CalendarFirstDemo.tsx](src/components/project/demos/CalendarFirstDemo.tsx), [CalendarFirstControls.tsx](src/components/project/demos/CalendarFirstControls.tsx), [oshi-calendar](src/components/project/demos/oshi-calendar), [games](public/images/projects/oshi-calendar/games) |
-| 경력, 수상, 기술, 교육 | [experiences.ts](src/data/experiences.ts), [awards.ts](src/data/awards.ts), [skills.ts](src/data/skills.ts), [teaching.ts](src/data/teaching.ts) |
-| 프로젝트 층·성격·판단·결과·담당 구분 | [projects.ts](src/data/projects.ts)의 `tier`·`kind`·`decision`·`outcome`·`ownership` |
-| 주요 페이지 목록(도구줄·모바일 내비·sitemap) | [pages.ts](src/lib/pages.ts) |
-| 스크린샷 위 화면 주석(번호와 설명) | [annotations.ts](src/data/annotations.ts) |
-| 홈 HERO 프로젝트 칸(서비스 종류 · 잘라 쓸 화면) | [projects.ts](src/data/projects.ts)의 `preview` |
-| 대표 프로젝트 행에서 고르는 실제 화면 | [projects.ts](src/data/projects.ts)의 `screens` |
-| 창 안 탭·방문 기록·주소창 동작 | [tabStore.ts](src/components/browser/tabStore.ts), [BrowserProvider.tsx](src/components/browser/BrowserProvider.tsx), [address.ts](src/lib/address.ts) |
-| 라이브 탭으로 여는 서비스와 해 볼 것 안내 | [projects.ts](src/data/projects.ts)의 `live`, `src/app/live/[slug]/page.tsx`, [LiveFrame.tsx](src/components/project/LiveFrame.tsx) |
-| 색상·타이포·간격·반응형 토큰 | [globals.css](src/app/globals.css), [hue.ts](src/lib/hue.ts) |
-| 시스템·라이트·다크 테마 | [theme.ts](src/lib/theme.ts), [ThemeToggle.tsx](src/components/layout/ThemeToggle.tsx) |
-| 사이트 URL·검색 및 공유 정보 | [site.ts](src/lib/site.ts), [layout.tsx](src/app/layout.tsx), [sitemap.ts](src/app/sitemap.ts), [og.ts](src/lib/og.ts), [홈 OG 이미지](src/app/opengraph-image.tsx) |
-
-프로젝트를 추가할 때는 카드 데이터(홈의 `problem` 포함), 상세 데이터, `caseStudies/index.ts` 등록을 함께 확인합니다. sitemap은 주요 페이지 목록과 상세 slug 목록에서 생성됩니다. OG 이미지가 읽는 Pretendard OTF 파일은 [next.config.ts](next.config.ts)의 `outputFileTracingIncludes`에 등록되어 있습니다.
-
-소개를 바꾸면 페이지 제목·설명과 홈 OG 이미지도 함께 갱신합니다. 이미지별 비율은 선택 속성 `aspectRatio`로 지정하며, 미지정 이미지는 기존 잘림을 유지합니다. 실제 화면을 공개할 수 없는 CCTV는 도식과 비공개 사유를 제공합니다.
-
-Resume 다운로드는 PDF 확보 전까지 표시하지 않습니다. 파일이 준비되면 [Contact.tsx](src/components/layout/Contact.tsx)의 TODO를 처리합니다.
-
-## 문서 안내
-
-| 문서 | 역할 |
-| --- | --- |
-| [AGENTS.md](AGENTS.md) | 에이전트 작업 규칙, 변경 시 지켜야 할 계약 |
-| [콘텐츠 기준](docs/content.md) | 개발자·프로젝트 사실, 성과 근거, Case Study 작성 원칙 |
-| [디자인 기준](docs/design.md) | 팔레트, 창 프레임, 테마, 반응형, 접근성 |
-| [이전 절 번호 참조표](docs/reference-map.md) | 소스 주석에 남은 기존 AGENTS.md §1–56의 새 위치 |
-| [syu-likelion 점검 기록](artifacts/syu-likelion-review/README.md) | 2026-08-16 콘텐츠·이미지 검토 및 반영 근거 |
-
-프로젝트 사실과 성과를 바꿀 때는 콘텐츠 기준의 근거와 화면 데이터를 함께 갱신합니다. 디자인 규칙을 바꿀 때는 디자인 기준과 구현 토큰을 함께 확인합니다.
