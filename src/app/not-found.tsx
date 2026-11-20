@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { CuratorCue } from "@/components/desk/CuratorCue";
 import { BUTTON } from "@/components/project/ProjectParts";
 import { Container } from "@/components/ui/Container";
 
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <Container className="flex flex-col items-start gap-5 py-20 md:py-28">
+      <CuratorCue cue="missing" />
       <p className="font-mono text-sm text-ink-2">404</p>
       <h1 className="text-title font-bold">페이지를 찾을 수 없습니다</h1>
       <p className="max-w-measure text-ink-2">

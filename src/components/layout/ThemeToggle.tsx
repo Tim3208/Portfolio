@@ -3,6 +3,7 @@
 import { useSyncExternalStore } from "react";
 
 import { MoonIcon, SunIcon, SystemIcon } from "@/components/browser/icons";
+import { curator } from "@/components/desk/curatorChannel";
 import { THEME_KEY, type Theme } from "@/lib/theme";
 
 type Mode = "auto" | Theme;
@@ -52,9 +53,10 @@ const LABEL: Record<Mode, string> = {
 export function ThemeToggle() {
   const mode = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  function cycle() {
+  function cycle(button: HTMLButtonElement) {
     const next = NEXT[mode];
     const root = document.documentElement;
+    if (next === "dark") curator.react("dark", button);
 
     // DOM 만 바꾼다. MutationObserver 가 그 변화를 보고 리렌더를 일으킨다.
     if (next === "auto") {
@@ -76,7 +78,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      onClick={cycle}
+      onClick={(e) => cycle(e.currentTarget)}
       aria-label={LABEL[mode]}
       title={LABEL[mode]}
       className="flex size-11 shrink-0 items-center justify-center rounded-chip text-ink-2 transition-colors duration-150 hover:bg-paper-sunk hover:text-ink md:size-8"

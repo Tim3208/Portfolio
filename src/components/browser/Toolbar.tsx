@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { useBrowser } from "@/components/browser/BrowserProvider";
 import { BackIcon, ForwardIcon, ReloadIcon } from "@/components/browser/icons";
 import { activeTab, current } from "@/components/browser/tabStore";
+import { curator } from "@/components/desk/curatorChannel";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { displayAddress, pathOf } from "@/lib/address";
 import { NEW_TAB_PATH } from "@/lib/pages";
@@ -68,7 +69,10 @@ export function Toolbar({ children }: { children?: ReactNode }) {
           autoFocus={isNewTab}
           autoComplete="off"
           spellCheck={false}
-          onFocus={(e) => e.currentTarget.select()}
+          onFocus={(e) => {
+            e.currentTarget.select();
+            curator.react("address", e.currentTarget);
+          }}
           onKeyDown={(e) => {
             if (e.key === "Escape") {
               e.currentTarget.value = shown;

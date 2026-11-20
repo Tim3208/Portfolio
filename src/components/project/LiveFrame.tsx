@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 
 import { curator } from "@/components/desk/curatorChannel";
-import { CURATOR } from "@/data/curator";
 
 /** 창 연출이 있는 폭(md 이상). 그 아래에서는 실제 서비스를 창 안에 넣지 않는다. */
 const WINDOWED = "(min-width: 48rem)";
@@ -13,9 +12,6 @@ function subscribe(onChange: () => void) {
   query.addEventListener("change", onChange);
   return () => query.removeEventListener("change", onChange);
 }
-
-/** 큐레이터의 안내는 한 번 들어온 동안 한 번만 한다 */
-let nudged = false;
 
 /**
  * 라이브 탭의 본문 — 실제 서비스를 그대로 연다 (docs/design.md#live).
@@ -57,9 +53,7 @@ export function LiveFrame({
 
   function onLoad() {
     setLoaded(true);
-    if (nudged) return;
-    nudged = true;
-    void curator.say({ text: CURATOR.live, target: frameRef.current });
+    curator.react("live", frameRef.current);
   }
 
   return (
