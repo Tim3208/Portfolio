@@ -103,20 +103,55 @@ function BlockView({ block }: { block: Block }) {
       );
     case "decision":
       return (
-        <div className="grid gap-6 rounded-xs border border-rule bg-paper-raised p-5 md:p-6 lg:grid-cols-2 lg:gap-10">
-          <div className="flex flex-col gap-4">
-            <p className="text-lead">{block.problem}</p>
-            <ul aria-label="검토한 선택지" className="flex flex-col border-t border-rule">
-              {block.options.map((option) => (
-                <li key={option} className="border-b border-rule py-2.5 text-ink-2">
-                  {option}
-                </li>
-              ))}
-            </ul>
+        <div className="flex flex-col overflow-hidden rounded-xs border border-rule bg-paper-raised">
+          <div className="flex flex-col gap-1.5 border-b border-rule px-5 py-4 md:px-6 md:py-5">
+            <p className="flex items-center gap-2 text-xs font-semibold text-ink-3">
+              <span className="font-mono text-hue-deep tabular-nums">01</span>
+              <span>문제 상황</span>
+            </p>
+            <p className="max-w-measure text-lead text-ink">{block.problem}</p>
           </div>
-          <div className="flex flex-col gap-3 border-l-2 border-hue-deep pl-5">
-            <p className="text-lead font-semibold">{block.choice}</p>
-            <p className="text-ink-2">{block.reason}</p>
+
+          <div className="grid items-stretch gap-4 p-5 md:p-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-5">
+            <div className="flex flex-col gap-3">
+              <p className="flex items-center gap-2 text-xs font-semibold text-ink-3">
+                <span className="font-mono text-hue-deep tabular-nums">02</span>
+                <span>검토한 선택지</span>
+              </p>
+              <ol aria-label="검토한 선택지" className="flex flex-col gap-2">
+                {block.options.map((option, i) => (
+                  <li
+                    key={option}
+                    className="flex items-baseline gap-2.5 rounded-xs border border-rule bg-paper px-3.5 py-2.5 text-sm text-ink-2"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="flex size-5 shrink-0 items-center justify-center rounded-xs bg-paper-sunk font-mono text-xs font-semibold text-ink-2"
+                    >
+                      {String.fromCharCode(65 + i)}
+                    </span>
+                    <span>{option}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <span
+              aria-hidden="true"
+              className="self-center justify-self-center font-mono text-sm font-semibold text-hue-deep"
+            >
+              <span className="lg:hidden">↓</span>
+              <span className="hidden lg:inline">→</span>
+            </span>
+
+            <div className="flex flex-col gap-3 rounded-xs border border-hue-deep/40 bg-hue-wash p-4 md:p-5">
+              <p className="flex items-center gap-2 text-xs font-semibold text-hue-deep">
+                <span className="font-mono tabular-nums">03</span>
+                <span>선택한 방향</span>
+              </p>
+              <p className="text-lead font-semibold text-ink">{block.choice}</p>
+              <p className="text-sm leading-relaxed text-ink-2">{block.reason}</p>
+            </div>
           </div>
         </div>
       );
